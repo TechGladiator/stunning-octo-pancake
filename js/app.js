@@ -1,4 +1,4 @@
-// replace "Choose file" with file name
+// replace input placeholder with file name
 $('#inputGroupFile02').on('change',function(){
   var fileName = $(this).val();
   fileName = fileName.substring(fileName.lastIndexOf('\\') + 1);
