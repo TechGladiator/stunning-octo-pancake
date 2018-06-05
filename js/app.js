@@ -1,3 +1,11 @@
+// replace "Choose file" with file name
+$('#inputGroupFile02').on('change',function(){
+  var fileName = $(this).val();
+  fileName = fileName.substring(fileName.lastIndexOf('\\') + 1);
+  $(this).next('.custom-file-label').addClass("selected").html(fileName);
+})
+
+// select files using jQuery
 $('input[type=file]').parse({
 	config: {
 		// base config to use for each file
