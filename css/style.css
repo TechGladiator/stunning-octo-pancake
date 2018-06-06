@@ -1,0 +1,5 @@
+/* cursor pointer when hover over file picker */
+.custom-file-input,
+.input-group-append {
+  cursor: pointer;
+}
