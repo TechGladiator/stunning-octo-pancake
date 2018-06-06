@@ -13,27 +13,17 @@ $('#upload').click(function () {
 	$('input[type=file]').parse({
 		config: {
 			// base config to use for each file
-			delimiter: "", // auto-detect
-			newline: "", // auto-detect
-			quoteChar: '"',
-			escapeChar: '"',
-			header: false,
-			trimHeader: false,
-			dynamicTyping: false,
-			preview: 0,
-			encoding: "",
-			worker: false,
-			comments: false,
-			step: undefined,
+			delimiter: $('#delimiter').val(),
+			header: $('#header').prop('checked'),
+			dynamicTyping: $('#dynamicTyping').prop('checked'),
+			skipEmptyLines: $('#skipEmptyLines').prop('checked'),
+			preview: parseInt($('#preview').val() || 0),
+			step: $('#stream').prop('checked') ? stepFn : undefined,
+			encoding: $('#encoding').val(),
+			worker: $('#worker').prop('checked'),
+			comments: $('#comments').val(),
 			complete: undefined,
 			error: undefined,
-			download: false,
-			skipEmptyLines: false,
-			chunk: undefined,
-			fastMode: undefined,
-			beforeFirstChunk: undefined,
-			withCredentials: undefined,
-			transform: undefined
 		},
 		before: function (file, inputElem) {
 			// executed before parsing each file begins;
