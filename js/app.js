@@ -8,10 +8,10 @@ let start;
 
 function printStats(msg) {
 	if (msg) console.log(msg);
-	console.log("       Time:", end - start || "(Unknown; your browser does not support the Performance API)", "ms");
-	console.log("  Row count:", rowCount);
-	console.log("     Errors:", errorCount);
-	if (errorCount) console.log("First error:", firstError);
+	console.log('       Time:', end - start || '(Unknown; your browser does not support the Performance API)', 'ms');
+	console.log('  Row count:', rowCount);
+	console.log('     Errors:', errorCount);
+	if (errorCount) console.log('First error:', firstError);
 }
 
 function now() {
@@ -29,24 +29,24 @@ function completeFn(results) {
 		if (results.data && results.data.length > 0) rowCount = results.data.length;
 	}
 
-	printStats("Parse complete");
-	console.log("    Results:", results);
+	printStats('Parse complete');
+	console.log('    Results:', results);
 }
 
 function errorFn(err, file) {
 	end = now();
-	console.log("ERROR:", err, file);
+	console.log('ERROR:', err, file);
 }
 
 function buildConfig() {
 	return {
-		delimiter: "",
+		delimiter: '',
 		header: true,
 		dynamicTyping: false,
 		skipEmptyLines: false,
 		preview: 0,
 		step: undefined,
-		encoding: "",
+		encoding: '',
 		worker: false,
 		comments: false,
 		complete: completeFn,
@@ -69,17 +69,18 @@ $(() => {
 		else firstRun = false;
 
 		if (!$('#inputGroupFile02')[0].files.length) {
-			alert("Please choose at least one file to parse.");
+			$('#errorAlert').modal('show');
+			$('#modalBody').html(`<h5 class="text-center">Please choose at least one file to parse.</h5>`);
 		}
 
 		$('#inputGroupFile02').parse({
 			config,
 			before: function before(file, inputElem) {
 				start = now();
-				console.log("Parsing file...", file);
+				console.log('Parsing file...', file);
 			},
 			error: function error(err, file) {
-				console.log("ERROR:", err, file);
+				console.log('ERROR:', err, file);
 				firstError = firstError || err;
 				errorCount++;
 			},
@@ -89,7 +90,8 @@ $(() => {
 				if (firstError) {
 					let errorMsg = JSON.stringify(firstError.message);
 					let row = JSON.stringify(firstError.row + 2);
-					alert(`${errorMsg.replace(/['"]+/g, '')} ${fileName} Row: ${row}`);
+					$('#errorAlert').modal('show');
+					$('#modalBody').html(`<h5 class="text-center">${errorMsg.replace(/['"]+/g, '')} ${fileName} Row: ${row}</h5>`);
 				}
 			}
 		});
@@ -100,5 +102,5 @@ $(() => {
 $('#inputGroupFile02').on('change', function () {
 	fileName = $(this).val();
 	fileName = fileName.substring(fileName.lastIndexOf('\\') + 1);
-	$(this).next('.custom-file-label').addClass("selected").html(fileName);
+	$(this).next('.custom-file-label').addClass('selected').html(fileName);
 });
