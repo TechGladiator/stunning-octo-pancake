@@ -1,5 +1,6 @@
 let end;
 let errorCount = 0;
+let fileName;
 let firstError;
 let firstRun = true;
 let rowCount = 0;
@@ -30,6 +31,12 @@ function completeFn(results) {
 	
 	printStats("Parse complete");
 	console.log("    Results:", results);
+
+	if (firstError) {
+		let errorMsg = JSON.stringify(firstError.message);
+		let row = JSON.stringify(firstError.row + 1);
+		alert(`${errorMsg.replace(/['"]+/g, '')} ${fileName} Row: ${row}`);
+	}
 }
 
 function errorFn(err, file) {
@@ -92,7 +99,7 @@ $(() => {
 
 // replace input placeholder with file name
 $('#inputGroupFile02').on('change', function () {
-	let fileName = $(this).val();
+	fileName = $(this).val();
 	fileName = fileName.substring(fileName.lastIndexOf('\\') + 1);
 	$(this).next('.custom-file-label').addClass("selected").html(fileName);
 });
