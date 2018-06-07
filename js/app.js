@@ -20,7 +20,7 @@ function now() {
 
 function completeFn(results) {
 	end = now();
-	
+
 	if (results && results.errors) {
 		if (results.errors) {
 			errorCount = results.errors.length;
@@ -28,15 +28,9 @@ function completeFn(results) {
 		}
 		if (results.data && results.data.length > 0) rowCount = results.data.length;
 	}
-	
+
 	printStats("Parse complete");
 	console.log("    Results:", results);
-
-	if (firstError) {
-		let errorMsg = JSON.stringify(firstError.message);
-		let row = JSON.stringify(firstError.row + 1);
-		alert(`${errorMsg.replace(/['"]+/g, '')} ${fileName} Row: ${row}`);
-	}
 }
 
 function errorFn(err, file) {
@@ -92,6 +86,11 @@ $(() => {
 			complete: function complete() {
 				end = now();
 				printStats("Done with all files");
+				if (firstError) {
+					let errorMsg = JSON.stringify(firstError.message);
+					let row = JSON.stringify(firstError.row + 1);
+					alert(`${errorMsg.replace(/['"]+/g, '')} ${fileName} Row: ${row}`);
+				}
 			}
 		});
 	});
