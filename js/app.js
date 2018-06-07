@@ -88,7 +88,7 @@ $(() => {
 				printStats("Done with all files");
 				if (firstError) {
 					let errorMsg = JSON.stringify(firstError.message);
-					let row = JSON.stringify(firstError.row + 1);
+					let row = JSON.stringify(firstError.row + 2);
 					alert(`${errorMsg.replace(/['"]+/g, '')} ${fileName} Row: ${row}`);
 				}
 			}
