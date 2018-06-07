@@ -42,7 +42,7 @@ function buildConfig() {
 		delimiter: "",
 		header: true,
 		dynamicTyping: false,
-		skipEmptyLines: false,
+		skipEmptyLines: true,
 		preview: 0,
 		step: undefined,
 		encoding: "",
