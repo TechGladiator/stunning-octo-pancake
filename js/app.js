@@ -31,7 +31,9 @@ function completeFn(results) {
 
 	printStats('Parse complete');
 	console.log('    Results:', results);
-	$('.csv').html(JSON.stringify(results.data));
+	if (errorCount == 0) {
+		$('.csv').html(JSON.stringify(results.data));
+	}
 }
 
 function errorFn(err, file) {
