@@ -31,38 +31,53 @@ function completeFn(results) {
 
 	printStats('Parse complete');
 	console.log('    Results:', results);
+
+	const fieldNames = results.meta.fields;
+	const fieldData = results.data;
+
+	let columnHeads = '';
+	let fields = '';
+
+	function getFieldNames() {
+		for (let i = 0; i < fieldNames.length; i++) {
+			columnHeads += `<th scope="col">${fieldNames[i]}</th>`;
+		}
+	}
+	
+	function getFieldData() {
+		for (let i = 0; i < fieldData.length; i++) {
+			const e = fieldData[i];
+			console.log(e);
+			fields += `
+				<tr>
+					<th scope="row">${i + 1}</th>
+			`;
+			for (const k in e) {
+				if (e.hasOwnProperty(k)) {
+					const f = e[k];
+					console.log(f);
+					fields += `<td>${f}</td>`;
+				}
+			}
+			fields += `</tr>`;
+		}
+	}
+
 	if (errorCount == 0) {
+		getFieldNames();
+		getFieldData();
 		$('.csv').html(`
-			<div class="card">
+		<div class="card">
 			<div class="card-body">
 				<table class="table table-bordered">
 					<thead>
 						<tr>
 							<th scope="col">#</th>
-							<th scope="col">Name</th>
-							<th scope="col">Address</th>
-							<th scope="col">Address 2</th>
-							<th scope="col">City</th>
-							<th scope="col">State</th>
-							<th scope="col">Zip</th>
-							<th scope="col">Purpose</th>
-							<th scope="col">Property Owner</th>
-							<th scope="col">Creation Date</th>
+							${columnHeads}
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<th scope="row">1</th>
-							<td>National Zoological Park</td>
-							<td>3001 Connecticut Avenue NW</td>
-							<td>Suite 1001</td>
-							<td>Washington</td>
-							<td>DC</td>
-							<td>20008</td>
-							<td>Data Center</td>
-							<td>Smithsonian</td>
-							<td>2018-04-10</td>
-						</tr>
+						${fields}
 					</tbody>
 				</table>
 			</div>
