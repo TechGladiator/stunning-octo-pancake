@@ -1,3 +1,4 @@
+// global variables
 let end;
 let errorCount = 0;
 let fileName;
@@ -14,6 +15,7 @@ function printStats(msg) {
 	if (errorCount) console.log('First error:', firstError);
 }
 
+// tracks parsing time
 function now() {
 	return typeof window.performance !== 'undefined' ? window.performance.now() : 0;
 }
@@ -41,6 +43,17 @@ function completeFn(results) {
 	function getFieldNames() {
 		for (let i = 0; i < fieldNames.length; i++) {
 			columnHeads += `<th scope="col">${fieldNames[i]}</th>`;
+		}
+	}
+
+	function validate(field) {
+		const states = [ 'AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY' ];
+
+		if (field) {
+			
+		}
+		for (let i = 0; i < states.length; i++) {
+			
 		}
 	}
 	
