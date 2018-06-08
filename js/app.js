@@ -33,6 +33,8 @@ function completeFn(results) {
 	console.log('    Results:', results);
 	if (errorCount == 0) {
 		$('.csv').html(JSON.stringify(results.data));
+	} else {
+		$('.csv').html('');
 	}
 }
 
