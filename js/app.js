@@ -31,6 +31,61 @@ function completeFn(results) {
 
 	printStats('Parse complete');
 	console.log('    Results:', results);
+
+	const fieldNames = results.meta.fields;
+	const fieldData = results.data;
+
+	let columnHeads = '';
+	let fields = '';
+
+	function getFieldNames() {
+		for (let i = 0; i < fieldNames.length; i++) {
+			columnHeads += `<th scope="col">${fieldNames[i]}</th>`;
+		}
+	}
+	
+	function getFieldData() {
+		for (let i = 0; i < fieldData.length; i++) {
+			const e = fieldData[i];
+			console.log(e);
+			fields += `
+				<tr>
+					<th scope="row">${i + 1}</th>
+			`;
+			for (const k in e) {
+				if (e.hasOwnProperty(k)) {
+					const f = e[k];
+					console.log(f);
+					fields += `<td>${f}</td>`;
+				}
+			}
+			fields += `</tr>`;
+		}
+	}
+
+	if (errorCount == 0) {
+		getFieldNames();
+		getFieldData();
+		$('.csv').html(`
+		<div class="card">
+			<div class="card-body">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							${columnHeads}
+						</tr>
+					</thead>
+					<tbody>
+						${fields}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		`);
+	} else {
+		$('.csv').html('');
+	}
 }
 
 function errorFn(err, file) {
@@ -95,6 +150,8 @@ $(() => {
 				}
 			}
 		});
+
+
 	});
 });
 
