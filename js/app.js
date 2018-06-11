@@ -1,3 +1,4 @@
+// global variables
 let end;
 let errorCount = 0;
 let fileName;
@@ -5,6 +6,7 @@ let firstError;
 let firstRun = true;
 let rowCount = 0;
 let start;
+
 
 function printStats(msg) {
 	if (msg) console.log(msg);
@@ -14,6 +16,7 @@ function printStats(msg) {
 	if (errorCount) console.log('First error:', firstError);
 }
 
+// parsing timer
 function now() {
 	return typeof window.performance !== 'undefined' ? window.performance.now() : 0;
 }
