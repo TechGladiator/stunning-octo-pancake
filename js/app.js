@@ -4,6 +4,7 @@ let errorCount = 0;
 let fileName;
 let firstError;
 let firstRun = true;
+let name = false;
 let rowCount = 0;
 let start;
 
@@ -18,6 +19,32 @@ function printStats(msg) {
 // tracks parsing time
 function now() {
 	return typeof window.performance !== 'undefined' ? window.performance.now() : 0;
+}
+
+function validateFieldNames(fieldName) {
+
+	const names = [ 'Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date' ];
+
+	if (fieldName.length != names.length) {
+		if (fieldName.length > names.length) {
+			console.log('You have too many field headers');
+		} else {
+			console.log('You don\'t have enough field headers');
+		}
+	} else {
+		console.log('field header count is good')
+	}
+	
+	for (let i = 0; i < names.length; i++) {
+		if(fieldName == names[i]) {
+			console.log(`${fieldName} is valid`);
+			name = true;
+		}
+	}
+
+	if (!name) {
+		console.log(`${fieldName} is invalid`);
+	}
 }
 
 function completeFn(results) {
@@ -42,11 +69,12 @@ function completeFn(results) {
 
 	function getFieldNames() {
 		for (let i = 0; i < fieldNames.length; i++) {
+			validateFieldNames(fieldNames[i]);
 			columnHeads += `<th scope="col">${fieldNames[i]}</th>`;
 		}
 	}
 
-	function validate(field) {
+	function validateState(field) {
 
 		fieldState = false;
 
@@ -67,8 +95,7 @@ function completeFn(results) {
 	function getFieldData() {
 		for (let i = 0; i < fieldData.length; i++) {
 			const e = fieldData[i];
-			console.log(e);
-			validate(e);
+			validateState(e);
 			fields += `
 				<tr>
 					<th scope="row">${i + 1}</th>
@@ -150,7 +177,7 @@ $(() => {
 
 		$('#inputGroupFile02').parse({
 			config,
-			before: function before(file, inputElem) {
+			before: function before(file) {
 				start = now();
 				console.log('Parsing file...', file);
 			},
@@ -164,7 +191,12 @@ $(() => {
 				printStats("Done with all files");
 				if (firstError) {
 					let errorMsg = JSON.stringify(firstError.message);
-					let row = JSON.stringify(firstError.row + 2);
+					let row;
+					if (!firstError.row[0]) {
+						row = JSON.stringify(firstError.row + 2);
+					} else {
+						row = JSON.stringify(firstError.row + 1);
+					}
 					$('#errorAlert').modal('show');
 					$('#modalBody').html(`<h5 class="text-center">${errorMsg.replace(/['"]+/g, '')} ${fileName} Row: ${row}</h5>`);
 				}
