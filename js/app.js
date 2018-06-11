@@ -4,7 +4,6 @@ let errorCount = 0;
 let fileName;
 let firstError;
 let firstRun = true;
-let name = false;
 let rowCount = 0;
 let start;
 
@@ -22,18 +21,10 @@ function now() {
 }
 
 function validateFieldNames(fieldName) {
-
+	
 	const names = [ 'Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date' ];
-
-	if (fieldName.length != names.length) {
-		if (fieldName.length > names.length) {
-			console.log('You have too many field headers');
-		} else {
-			console.log('You don\'t have enough field headers');
-		}
-	} else {
-		console.log('field header count is good')
-	}
+	
+	let name = false;
 	
 	for (let i = 0; i < names.length; i++) {
 		if(fieldName == names[i]) {
@@ -76,7 +67,7 @@ function completeFn(results) {
 
 	function validateState(field) {
 
-		fieldState = false;
+		let fieldState = false;
 
 		const states = [ 'AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY' ];
 
