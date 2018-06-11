@@ -1,9 +1,12 @@
 // global variables
 let end;
 let errorCount = 0;
+let fieldNames;
+let fieldData;
 let fileName;
 let firstError;
 let firstRun = true;
+const names = [ 'Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date' ];
 let rowCount = 0;
 let start;
 
@@ -20,9 +23,15 @@ function now() {
 	return typeof window.performance !== 'undefined' ? window.performance.now() : 0;
 }
 
+function validateRowLength(fieldNames) {
+	if (fieldNames.length != names.length) {
+		console.log('incorrect number of headers');
+	} else {
+		console.log('correct number of headers');
+	}
+}
+
 function validateFieldNames(fieldName) {
-	
-	const names = [ 'Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date' ];
 	
 	let name = false;
 	
@@ -52,8 +61,8 @@ function completeFn(results) {
 	printStats('Parse complete');
 	console.log('    Results:', results);
 
-	const fieldNames = results.meta.fields;
-	const fieldData = results.data;
+	fieldNames = results.meta.fields;
+	fieldData = results.data;
 
 	let columnHeads = '';
 	let fields = '';
@@ -180,6 +189,7 @@ $(() => {
 			complete: function complete() {
 				end = now();
 				printStats("Done with all files");
+				validateRowLength(fieldNames);
 				if (firstError) {
 					let errorMsg = JSON.stringify(firstError.message);
 					let row;
