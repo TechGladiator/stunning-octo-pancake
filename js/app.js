@@ -26,8 +26,9 @@ function now() {
 	return typeof window.performance !== 'undefined' ? window.performance.now() : 0;
 }
 
-function modalShow() {
+function modal(moMsg) {
 	$('#errorAlert').modal('show');
+	$('#modalBody').html(`<h5 class="text-center">${moMsg}</h5>`);
 }
 
 function validateRowLength(fieldNames) {
@@ -203,8 +204,7 @@ $(() => {
 		else firstRun = false;
 
 		if (!$('#inputGroupFile02')[0].files.length) {
-			modalShow();
-			$('#modalBody').html(`<h5 class="text-center">Please choose at least one file to parse.</h5>`);
+			modal('Please choose at least one file to parse');
 		}
 
 		$('#inputGroupFile02').parse({
@@ -229,8 +229,7 @@ $(() => {
 					} else {
 						row = JSON.stringify(firstError.row + 1);
 					}
-					modalShow();
-					$('#modalBody').html(`<h5 class="text-center">${errorMsg.replace(/['"]+/g, '')} ${fileName} Row: ${row}</h5>`);
+					modal(`${errorMsg.replace(/['"]+/g, '')} ${fileName} Row: ${row}`);
 				}
 			}
 		});
