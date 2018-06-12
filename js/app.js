@@ -9,6 +9,7 @@ let firstError;
 let firstRun = true;
 let lengthHigh = false;
 let lengthLow = false;
+let name = false;
 const names = ['Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date'];
 let rowCount = 0;
 let start;
@@ -44,18 +45,16 @@ function validateRowLength(fieldNames) {
 }
 
 function validateFieldNames(fieldName) {
-
-	let name = false;
-
+	name = false;
 	for (let i = 0; i < names.length; i++) {
 		if (fieldName == names[i]) {
 			console.log(`${fieldName} is valid`);
 			name = true;
 		}
 	}
-
 	if (!name) {
 		console.log(`${fieldName} is invalid`);
+		modal(`Header ${fieldName} is invalid`);
 	}
 }
 
@@ -103,7 +102,11 @@ function completeFn(results) {
 	function getFieldNames() {
 		for (let i = 0; i < fieldNames.length; i++) {
 			validateFieldNames(fieldNames[i]);
-			columnHeads += `<th scope="col">${fieldNames[i]}</th>`;
+			if (!name) {
+				columnHeads += `<th scope="col" class="table-warning">${fieldNames[i]}</th>`;
+			} else {
+				columnHeads += `<th scope="col">${fieldNames[i]}</th>`;
+			}
 		}
 	}
 
