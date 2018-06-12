@@ -1,12 +1,15 @@
 // global variables
 let end;
 let errorCount = 0;
-let fieldNames;
 let fieldData;
+let fieldCount;
+let fieldNames;
 let fileName;
 let firstError;
 let firstRun = true;
-const names = [ 'Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date' ];
+let lengthHigh = false;
+let lengthLow = false;
+const names = ['Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date'];
 let rowCount = 0;
 let start;
 
@@ -23,20 +26,28 @@ function now() {
 	return typeof window.performance !== 'undefined' ? window.performance.now() : 0;
 }
 
+function modalShow() {
+	$('#errorAlert').modal('show');
+}
+
 function validateRowLength(fieldNames) {
-	if (fieldNames.length != names.length) {
-		console.log('incorrect number of headers');
-	} else {
-		console.log('correct number of headers');
+	console.log(fieldNames.length);
+	console.log(names.length);
+	lengthHigh = false;
+	lengthLow = false;
+	if (fieldNames.length > names.length) {
+		lengthHigh = true;
+	} else if (fieldNames.length < names.length) {
+		lengthLow = true;
 	}
 }
 
 function validateFieldNames(fieldName) {
-	
+
 	let name = false;
-	
+
 	for (let i = 0; i < names.length; i++) {
-		if(fieldName == names[i]) {
+		if (fieldName == names[i]) {
 			console.log(`${fieldName} is valid`);
 			name = true;
 		}
@@ -52,8 +63,27 @@ function completeFn(results) {
 
 	if (results && results.errors) {
 		if (results.errors) {
-			errorCount = results.errors.length;
-			firstError = results.errors[0];
+			let code;
+			let codeMsg;
+			if (lengthHigh || lengthLow) {
+				if (lengthHigh) {
+					code = "TooManyFields";
+					codeMsg = "Too Many Fields: ";
+				} else if (lengthLow) {
+					code = "TooFewFields";
+					codeMsg = "Too Few Fields: ";
+				}
+				errorCount = results.errors.length + 1;
+				firstError = {
+					"type": "FieldMismatch",
+					"code": code,
+					"message": `${codeMsg}expected ${names.length} but parsed ${fieldNames.length}`,
+					"row": 0
+				}
+			} else {
+				errorCount = results.errors.length;
+				firstError = results.errors[0];
+			}
 		}
 		if (results.data && results.data.length > 0) rowCount = results.data.length;
 	}
@@ -63,6 +93,8 @@ function completeFn(results) {
 
 	fieldNames = results.meta.fields;
 	fieldData = results.data;
+
+	validateRowLength(fieldNames);
 
 	let columnHeads = '';
 	let fields = '';
@@ -78,10 +110,10 @@ function completeFn(results) {
 
 		let fieldState = false;
 
-		const states = [ 'AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY' ];
+		const states = ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY'];
 
 		for (let i = 0; i < states.length; i++) {
-			if(field.State.toUpperCase() == states[i]) {
+			if (field.State.toUpperCase() == states[i]) {
 				console.log(`${field.State} is valid`);
 				fieldState = true;
 			}
@@ -91,7 +123,7 @@ function completeFn(results) {
 			console.log(`${field.State} is invalid`);
 		}
 	}
-	
+
 	function getFieldData() {
 		for (let i = 0; i < fieldData.length; i++) {
 			const e = fieldData[i];
@@ -171,7 +203,7 @@ $(() => {
 		else firstRun = false;
 
 		if (!$('#inputGroupFile02')[0].files.length) {
-			$('#errorAlert').modal('show');
+			modalShow();
 			$('#modalBody').html(`<h5 class="text-center">Please choose at least one file to parse.</h5>`);
 		}
 
@@ -189,16 +221,15 @@ $(() => {
 			complete: function complete() {
 				end = now();
 				printStats("Done with all files");
-				validateRowLength(fieldNames);
 				if (firstError) {
 					let errorMsg = JSON.stringify(firstError.message);
 					let row;
-					if (!firstError.row[0]) {
+					if (firstError.row != 0) {
 						row = JSON.stringify(firstError.row + 2);
 					} else {
 						row = JSON.stringify(firstError.row + 1);
 					}
-					$('#errorAlert').modal('show');
+					modalShow();
 					$('#modalBody').html(`<h5 class="text-center">${errorMsg.replace(/['"]+/g, '')} ${fileName} Row: ${row}</h5>`);
 				}
 			}
