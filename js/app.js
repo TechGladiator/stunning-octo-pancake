@@ -5,6 +5,7 @@ let fieldData;
 let fieldCount;
 let fieldNames;
 let fieldState = false;
+let fieldZip = false;
 let fileName;
 let firstError;
 let firstRun = true;
@@ -75,6 +76,26 @@ function validateState(field) {
 	}
 }
 
+function validUSZip(field) {
+	const digits = '0123456789';
+
+	if (field.Zip.length != 5) {
+		modal(`${field.Zip} is not a valid 5 digit Zip Code`);
+		fieldZip = false;
+		console.log(`${field.Zip} is invalid`);
+	}
+	for (let i = 0; i < field.Zip.length; i++) {
+		temp = `${field.Zip.substring(i, i+1)}`;
+		if (digits.indexOf(temp) == '-1') {
+			modal(`${field.Zip} is not a valid 5 digit Zip Code`);
+			fieldZip = false;
+			console.log(`${field.Zip} is invalid`);
+		}
+	}
+	fieldZip = true;
+	console.log(`${field.Zip} is valid`);
+}
+
 function completeFn(results) {
 	end = now();
 
@@ -131,6 +152,7 @@ function completeFn(results) {
 		for (let i = 0; i < fieldData.length; i++) {
 			const e = fieldData[i];
 			validateState(e);
+			validUSZip(e);
 			fields += `
 				<tr>
 					<th scope="row">${i + 1}</th>
