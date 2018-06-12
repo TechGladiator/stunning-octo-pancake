@@ -24,6 +24,7 @@ function now() {
 function completeFn(results) {
 	end = now();
 
+	// capture errors
 	if (results && results.errors) {
 		if (results.errors) {
 			errorCount = results.errors.length;
