@@ -224,7 +224,7 @@ $(() => {
 				if (firstError) {
 					let errorMsg = JSON.stringify(firstError.message);
 					let row;
-					if (firstError.row != 0) {
+					if (firstError.row != 0 || !lengthHigh && !lengthLow) {
 						row = JSON.stringify(firstError.row + 2);
 					} else {
 						row = JSON.stringify(firstError.row + 1);
