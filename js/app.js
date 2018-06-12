@@ -4,6 +4,7 @@ let errorCount = 0;
 let fieldData;
 let fieldCount;
 let fieldNames;
+let fieldState = false;
 let fileName;
 let firstError;
 let firstRun = true;
@@ -55,6 +56,22 @@ function validateFieldNames(fieldName) {
 	if (!name) {
 		console.log(`${fieldName} is invalid`);
 		modal(`Header ${fieldName} is invalid`);
+	}
+}
+
+function validateState(field) {
+	fieldState = false;
+	const states = ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY'];
+
+	for (let i = 0; i < states.length; i++) {
+		if (field.State.toUpperCase() == states[i]) {
+			console.log(`${field.State} is valid`);
+			fieldState = true;
+		}
+	}
+	if (!fieldState) {
+		console.log(`${field.State} is invalid`);
+		modal(`${field.State} is an invalid State abbreviation`);
 	}
 }
 
@@ -110,24 +127,6 @@ function completeFn(results) {
 		}
 	}
 
-	function validateState(field) {
-
-		let fieldState = false;
-
-		const states = ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY'];
-
-		for (let i = 0; i < states.length; i++) {
-			if (field.State.toUpperCase() == states[i]) {
-				console.log(`${field.State} is valid`);
-				fieldState = true;
-			}
-		}
-
-		if (!fieldState) {
-			console.log(`${field.State} is invalid`);
-		}
-	}
-
 	function getFieldData() {
 		for (let i = 0; i < fieldData.length; i++) {
 			const e = fieldData[i];
@@ -139,7 +138,11 @@ function completeFn(results) {
 			for (const k in e) {
 				if (e.hasOwnProperty(k)) {
 					const f = e[k];
-					fields += `<td>${f}</td>`;
+					if (!fieldState) {
+						fields += `<td class="table-warning">${f}</td>`
+					} else {
+						fields += `<td>${f}</td>`;
+					}
 				}
 			}
 			fields += `</tr>`;
