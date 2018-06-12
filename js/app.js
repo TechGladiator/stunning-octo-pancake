@@ -61,6 +61,11 @@ function validateFieldNames(fieldName) {
 function completeFn(results) {
 	end = now();
 
+	fieldNames = results.meta.fields;
+	fieldData = results.data;
+
+	validateRowLength(fieldNames);
+
 	if (results && results.errors) {
 		if (results.errors) {
 			let code;
@@ -90,11 +95,6 @@ function completeFn(results) {
 
 	printStats('Parse complete');
 	console.log('    Results:', results);
-
-	fieldNames = results.meta.fields;
-	fieldData = results.data;
-
-	validateRowLength(fieldNames);
 
 	let columnHeads = '';
 	let fields = '';
