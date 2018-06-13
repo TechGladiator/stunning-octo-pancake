@@ -2,6 +2,7 @@
 let end;
 let errorCount = 0;
 let fieldData;
+let fieldDate = true;
 let fieldCount;
 let fieldNames;
 let fieldState = false;
@@ -94,6 +95,22 @@ function validateZip(field) {
 	}
 }
 
+function validateDate(field) {
+	fieldDate = true;
+	const regEx = /^\d{4}-\d{2}-\d{2}$/;
+	if (!field['Creation Date'].match(regEx)) { // Invalid format
+		fieldDate = false;
+		console.log(`${field['Creation Date']} is an invalid date format`);
+		modal(`${field['Creation Date']} is an invalid date format`);
+	}
+	const d = new Date(field['Creation Date']);
+	if (!d.getTime() && d.getTime() !== 0 && fieldDate) { // Invalid date
+		fieldDate = false;
+		console.log(`${field['Creation Date']} is an invalid date`);
+		modal(`${field['Creation Date']} is an invalid date`);
+	}
+}
+
 function completeFn(results) {
 	end = now();
 
@@ -151,6 +168,7 @@ function completeFn(results) {
 			const e = fieldData[i];
 			validateState(e);
 			validateZip(e);
+			validateDate(e);
 			fields += `
 				<tr>
 					<th scope="row">${i + 1}</th>
@@ -158,7 +176,7 @@ function completeFn(results) {
 			for (const k in e) {
 				if (e.hasOwnProperty(k)) {
 					const f = e[k];
-					if (f == e.State && !fieldState || f == e.Zip && !fieldZip) {
+					if (f == e.State && !fieldState || f == e.Zip && !fieldZip || f == e['Creation Date'] && !fieldDate) {
 						fields += `<td class="table-warning">${f}</td>`
 					} else {
 						fields += `<td>${f}</td>`;
