@@ -158,7 +158,7 @@ function completeFn(results) {
 			for (const k in e) {
 				if (e.hasOwnProperty(k)) {
 					const f = e[k];
-					if (!fieldState) {
+					if (f == e.State && !fieldState || f == e.Zip && !fieldZip) {
 						fields += `<td class="table-warning">${f}</td>`
 					} else {
 						fields += `<td>${f}</td>`;
