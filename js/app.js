@@ -156,7 +156,7 @@ function completeFn(results) {
 		for (let i = 0; i < fieldNames.length; i++) {
 			validateFieldNames(fieldNames[i]);
 			if (!name) {
-				columnHeads += `<th scope="col" class="table-warning">${fieldNames[i]}</th>`;
+				columnHeads += `<th scope="col" class="table-danger">${fieldNames[i]}</th>`;
 			} else {
 				columnHeads += `<th scope="col">${fieldNames[i]}</th>`;
 			}
@@ -177,7 +177,7 @@ function completeFn(results) {
 				if (e.hasOwnProperty(k)) {
 					const f = e[k];
 					if (f == e.State && !fieldState || f == e.Zip && !fieldZip || f == e['Creation Date'] && !fieldDate) {
-						fields += `<td class="table-warning">${f}</td>`
+						fields += `<td class="table-danger">${f}</td>`
 					} else {
 						fields += `<td>${f}</td>`;
 					}
