@@ -5,7 +5,7 @@ let fieldData;
 let fieldCount;
 let fieldNames;
 let fieldState = false;
-let fieldZip = false;
+let fieldZip = true;
 let fileName;
 let firstError;
 let firstRun = true;
@@ -50,7 +50,6 @@ function validateFieldNames(fieldName) {
 	name = false;
 	for (let i = 0; i < names.length; i++) {
 		if (fieldName == names[i]) {
-			console.log(`${fieldName} is valid`);
 			name = true;
 		}
 	}
@@ -66,7 +65,6 @@ function validateState(field) {
 
 	for (let i = 0; i < states.length; i++) {
 		if (field.State.toUpperCase() == states[i]) {
-			console.log(`${field.State} is valid`);
 			fieldState = true;
 		}
 	}
@@ -76,24 +74,24 @@ function validateState(field) {
 	}
 }
 
-function validUSZip(field) {
+function validateZip(field) {
+	fieldZip = true;
 	const digits = '0123456789';
 
 	if (field.Zip.length != 5) {
 		modal(`${field.Zip} is not a valid 5 digit Zip Code`);
 		fieldZip = false;
-		console.log(`${field.Zip} is invalid`);
 	}
 	for (let i = 0; i < field.Zip.length; i++) {
 		temp = `${field.Zip.substring(i, i+1)}`;
 		if (digits.indexOf(temp) == '-1') {
-			modal(`${field.Zip} is not a valid 5 digit Zip Code`);
 			fieldZip = false;
-			console.log(`${field.Zip} is invalid`);
 		}
 	}
-	fieldZip = true;
-	console.log(`${field.Zip} is valid`);
+	if (!fieldZip) {
+		console.log(`${field.Zip} is invalid`);
+		modal(`${field.Zip} is not a valid 5 digit Zip Code`);
+	}
 }
 
 function completeFn(results) {
@@ -152,7 +150,7 @@ function completeFn(results) {
 		for (let i = 0; i < fieldData.length; i++) {
 			const e = fieldData[i];
 			validateState(e);
-			validUSZip(e);
+			validateZip(e);
 			fields += `
 				<tr>
 					<th scope="row">${i + 1}</th>
