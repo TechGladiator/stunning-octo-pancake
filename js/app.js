@@ -121,6 +121,7 @@ function validateDate(field) {
 }
 
 function getFieldNames() {
+	columnHeads = '';
 	for (let i = 0; i < fieldNames.length; i++) {
 		validateFieldNames(fieldNames[i]);
 		if (!name) {
@@ -132,6 +133,7 @@ function getFieldNames() {
 }
 
 function getFieldData() {
+	fields = '';
 	for (let i = 0; i < fieldData.length; i++) {
 		const e = fieldData[i];
 		validateState(e);
