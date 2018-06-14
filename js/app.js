@@ -1,5 +1,6 @@
 // global variables
 let columnHeads = '';
+let columnNumb = '';
 let end;
 let errorCount = 0;
 let fieldData;
@@ -41,7 +42,7 @@ function now() {
 
 function modal(moMsg) {
 	$('#errorAlert').modal('show');
-	$('#modalBody').html(`<h5 class="text-center">${moMsg}</h5>`);
+	$('#modalBody').html(moMsg);
 }
 
 function validateRowLength(fieldNames) {
@@ -121,6 +122,7 @@ function validateDate(field) {
 }
 
 function getFieldNames() {
+	columnHeads = '';
 	for (let i = 0; i < fieldNames.length; i++) {
 		validateFieldNames(fieldNames[i]);
 		if (!name) {
@@ -132,6 +134,7 @@ function getFieldNames() {
 }
 
 function getFieldData() {
+	fields = '';
 	for (let i = 0; i < fieldData.length; i++) {
 		const e = fieldData[i];
 		validateState(e);
@@ -260,6 +263,12 @@ function getRowNumb(row) {
 	return row;
 }
 
+function columnCounter() {
+	for (let i = 0; i < fieldNames.length; i++) {
+		columnNumb += `<th scope="col">${i + 1}</th>`;
+	}
+}
+
 function parseFile(config) {
 	$('#inputGroupFile02').parse({
 		config,
@@ -280,10 +289,14 @@ function parseFile(config) {
 				let row;
 				row = getRowNumb(row);
 				columnHeads = '';
+				columnCounter();
 				getFieldNames();
-				modal(`${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}
+				modal(`<h5 class="text-centered">${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}</h5>
 				<table class="table table-bordered">
 					<thead>
+						<tr>
+							${columnNumb}
+						</tr>
 						<tr>
 							${columnHeads}
 						</tr>
@@ -305,7 +318,7 @@ function beginParsing() {
 		else
 			firstRun = false;
 		if (!$('#inputGroupFile02')[0].files.length) {
-			modal('Please choose at least one file to parse');
+			modal('<h5 class="text-center">Please choose at least one file to parse</h5>');
 		}
 		parseFile(config);
 	});
