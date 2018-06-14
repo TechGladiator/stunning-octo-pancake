@@ -279,17 +279,7 @@ function parseFile(config) {
 				let errorMsg = JSON.stringify(firstError.message);
 				let row;
 				row = getRowNumb(row);
-				columnHeads = '';
-				getFieldNames();
-				modal(`${errorMsg.replace(/['"]+/g, '')} ${fileName} Row: ${row}
-				<table>
-					<thead>
-						<tr>
-							<th scope="col">#</th>
-							${columnHeads}
-						</tr>
-					</thead>
-				`);
+				modal(`${errorMsg.replace(/['"]+/g, '')} ${fileName} Row: ${row}`);
 			}
 		}
 	});
