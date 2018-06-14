@@ -43,10 +43,15 @@ function modal(moBody, moFooter) {
 	$('#errorAlert').modal('show');
 	$('#modalBody').html(`<h5 class="text-center">${moBody}</h5>`);
 	if (moFooter) {
-		$('#modalFooter').html(`<button type="button" class="btn btn-danger" onclick="errorModal()">${moFooter}</button><button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>`);
+		$('#modalFooter').html(`${moFooter}<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>`);
 	} else {
 		$('#modalFooter').html(`<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>`);
 	}
+}
+
+function errorModal() {
+	$('#errorAlert').modal('hide');
+	buildTable();
 }
 
 function validateRowLength(fieldNames) {
@@ -78,12 +83,14 @@ function validateState(field) {
 	fieldState = false;
 	const states = ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY'];
 
-	for (let i = 0; i < states.length; i++) {
-		if (field.State.toUpperCase() == states[i]) {
-			fieldState = true;
+	if (field.State) {
+		for (let i = 0; i < states.length; i++) {
+			if (field.State.toUpperCase() == states[i]) {
+				fieldState = true;
+			}
 		}
 	}
-	if (!fieldState) {
+	if (!fieldState && !undefined) {
 		console.log(`${field.State} is invalid`);
 		modal(`${field.State} is an invalid State abbreviation`);
 	}
@@ -93,17 +100,19 @@ function validateZip(field) {
 	fieldZip = true;
 	const digits = '0123456789';
 
-	if (field.Zip.length != 5) {
-		modal(`${field.Zip} is not a valid 5 digit Zip Code`);
-		fieldZip = false;
-	}
-	for (let i = 0; i < field.Zip.length; i++) {
-		temp = `${field.Zip.substring(i, i+1)}`;
-		if (digits.indexOf(temp) == '-1') {
+	if (field.Zip) {
+		if (field.Zip.length != 5) {
+			modal(`${field.Zip} is not a valid 5 digit Zip Code`);
 			fieldZip = false;
 		}
+		for (let i = 0; i < field.Zip.length; i++) {
+			temp = `${field.Zip.substring(i, i+1)}`;
+			if (digits.indexOf(temp) == '-1') {
+				fieldZip = false;
+			}
+		}
 	}
-	if (!fieldZip) {
+	if (!fieldZip && !undefined) {
 		console.log(`${field.Zip} is invalid`);
 		modal(`${field.Zip} is not a valid 5 digit Zip Code`);
 	}
@@ -112,16 +121,21 @@ function validateZip(field) {
 function validateDate(field) {
 	fieldDate = true;
 	const regEx = /^\d{4}-\d{2}-\d{2}$/;
-	if (!field['Creation Date'].match(regEx)) { // Invalid format
-		fieldDate = false;
-		console.log(`${field['Creation Date']} is an invalid date format`);
-		modal(`${field['Creation Date']} is an invalid date format`);
-	}
-	const d = new Date(field['Creation Date']);
-	if (!d.getTime() && d.getTime() !== 0 && fieldDate) { // Invalid date
-		fieldDate = false;
-		console.log(`${field['Creation Date']} is an invalid date`);
-		modal(`${field['Creation Date']} is an invalid date`);
+
+	if (field['Creation Date']) {
+		if (!field['Creation Date'].match(regEx)) { // Invalid format
+			fieldDate = false;
+			console.log(`${field['Creation Date']} is an invalid date format`);
+			modal(`${field['Creation Date']} is an invalid date format`);
+		}
+		
+		const d = new Date(field['Creation Date']);
+		
+		if (!d.getTime() && d.getTime() !== 0 && fieldDate) { // Invalid date
+			fieldDate = false;
+			console.log(`${field['Creation Date']} is an invalid date`);
+			modal(`${field['Creation Date']} is an invalid date`);
+		}
 	}
 }
 
@@ -285,7 +299,7 @@ function parseFile(config) {
 				let errorMsg = JSON.stringify(firstError.message);
 				let row;
 				row = getRowNumb(row);
-				modal(`${errorMsg.replace(/['"]+/g, '')} ${fileName} Row: ${row}`, `Fix`);
+				modal(`${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}`, `<button type="button" class="btn btn-danger" onclick="errorModal()">Fix</button>`);
 				if (fieldNames.length != 9) {
 					console.log(fieldNames);
 				}
@@ -308,14 +322,6 @@ function beginParsing() {
 			modal('Please choose at least one file to parse');
 		}
 		parseFile(config);
-	});
-}
-
-function errorModal() {
-	$('#errorAlert').modal('hide');
-	$('#errorAlert').on('hidden.bs.modal', () => {
-		console.log('test');
-		// modal('This is a test modal');
 	});
 }
 
