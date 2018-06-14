@@ -39,9 +39,14 @@ function now() {
 	return typeof window.performance !== 'undefined' ? window.performance.now() : 0;
 }
 
-function modal(moMsg) {
+function modal(moBody, moFooter) {
 	$('#errorAlert').modal('show');
-	$('#modalBody').html(`<h5 class="text-center">${moMsg}</h5>`);
+	$('#modalBody').html(`<h5 class="text-center">${moBody}</h5>`);
+	if (moFooter) {
+		$('#modalFooter').html(`<button type="button" class="btn btn-danger" onclick="errorModal()">${moFooter}</button><button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>`);
+	} else {
+		$('#modalFooter').html(`<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>`);
+	}
 }
 
 function validateRowLength(fieldNames) {
@@ -200,8 +205,7 @@ function errorCap(results) {
 					"message": `${codeMsg}expected ${names.length} but parsed ${fieldNames.length}`,
 					"row": 0
 				};
-			}
-			else {
+			} else {
 				errorCount = results.errors.length;
 				firstError = results.errors[0];
 			}
@@ -281,14 +285,17 @@ function parseFile(config) {
 				let errorMsg = JSON.stringify(firstError.message);
 				let row;
 				row = getRowNumb(row);
-				modal(`${errorMsg.replace(/['"]+/g, '')} ${fileName} Row: ${row}`);
+				modal(`${errorMsg.replace(/['"]+/g, '')} ${fileName} Row: ${row}`, `Fix`);
+				if (fieldNames.length != 9) {
+					console.log(fieldNames);
+				}
 			}
 		}
 	});
 }
 
 function beginParsing() {
-	$('#upload').click(function () {
+	$('#upload').click(() => {
 		rowCount = 0;
 		errorCount = 0;
 		firstError = undefined;
@@ -301,6 +308,14 @@ function beginParsing() {
 			modal('Please choose at least one file to parse');
 		}
 		parseFile(config);
+	});
+}
+
+function errorModal() {
+	$('#errorAlert').modal('hide');
+	$('#errorAlert').on('hidden.bs.modal', () => {
+		console.log('test');
+		// modal('This is a test modal');
 	});
 }
 
