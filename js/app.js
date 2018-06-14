@@ -144,7 +144,9 @@ function getFieldNames() {
 	for (let i = 0; i < fieldNames.length; i++) {
 		validateFieldNames(fieldNames[i]);
 		if (!name) {
-			columnHeads += `<th scope="col" class="table-danger">${fieldNames[i]}</th>`;
+			$('#jumboHeader').html('Edit CSV Data');
+			$('.wrapper').addClass('invisible');
+			columnHeads += `<th scope="col" class="table-danger" contenteditable="true">${fieldNames[i]}</th>`;
 		} else {
 			columnHeads += `<th scope="col">${fieldNames[i]}</th>`;
 		}
