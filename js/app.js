@@ -281,7 +281,7 @@ function parseFile(config) {
 				row = getRowNumb(row);
 				columnHeads = '';
 				getFieldNames();
-				modal(`${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}
+				modal(`${errorMsg.replace(/['"]+/g, '')} ${fileName} Row: ${row}
 				<table class="table table-bordered">
 					<thead>
 						<tr>
