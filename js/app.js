@@ -124,7 +124,7 @@ function getFieldNames() {
 	for (let i = 0; i < fieldNames.length; i++) {
 		validateFieldNames(fieldNames[i]);
 		if (!name) {
-			columnHeads += `<th scope="col" class="table-danger p-1">${fieldNames[i]}</th>`;
+			columnHeads += `<th scope="col" class="table-danger">${fieldNames[i]}</th>`;
 		} else {
 			columnHeads += `<th scope="col">${fieldNames[i]}</th>`;
 		}
@@ -282,9 +282,10 @@ function parseFile(config) {
 				columnHeads = '';
 				getFieldNames();
 				modal(`${errorMsg.replace(/['"]+/g, '')} ${fileName} Row: ${row}
-				<table class="table table-bordered">
+				<table>
 					<thead>
 						<tr>
+							<th scope="col">#</th>
 							${columnHeads}
 						</tr>
 					</thead>
