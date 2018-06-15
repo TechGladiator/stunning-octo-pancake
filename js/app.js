@@ -146,15 +146,16 @@ function getFieldNames() {
 		if (!name) {
 			$('#jumboHeader').html('Edit CSV Data');
 			$('.wrapper').addClass('invisible');
-			columnHeads += `<th scope="col" class="table-danger" id="${i + 1}" contenteditable="true" onclick="editContent()">${fieldNames[i]}</th>`;
+			let colId = i +1;
+			columnHeads += `<th scope="col" class="table-danger" id="${colId}" contenteditable="true" onclick="editContent(${colId})">${fieldNames[i]}</th>`;
 		} else {
 			columnHeads += `<th scope="col">${fieldNames[i]}</th>`;
 		}
 	}
 }
 
-function editContent() {
-	console.log($('.table-danger').html());
+function editContent(colId) {
+	console.log($(`#${colId}`).html());
 }
 
 function getFieldData() {
