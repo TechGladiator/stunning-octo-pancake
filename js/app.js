@@ -141,16 +141,22 @@ function validateDate(field) {
 
 function getFieldNames() {
 	columnHeads = '';
+	let colArray = [];
 	for (let i = 0; i < fieldNames.length; i++) {
 		validateFieldNames(fieldNames[i]);
 		if (!name) {
 			$('#jumboHeader').html('Edit CSV Data');
 			$('.wrapper').addClass('invisible');
-			columnHeads += `<th scope="col" class="table-danger editHeader" contenteditable="true">${fieldNames[i]}</th>`;
+			let colId = i + 1;
+			columnHeads += `<th scope="col" class="table-danger" id="${colId}" contenteditable="true">${fieldNames[i]}</th>`;
+			let colIdSelector = `#${colId}`;
+			console.log(colIdSelector);
+			colArray.push($(colIdSelector).val());
 		} else {
 			columnHeads += `<th scope="col">${fieldNames[i]}</th>`;
 		}
 	}
+	console.log(colArray);
 }
 
 function getFieldData() {
