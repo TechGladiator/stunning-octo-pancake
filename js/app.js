@@ -154,7 +154,7 @@ function getFieldNames() {
 }
 
 function editContent() {
-	console.log($('#5').html());
+	console.log($('.table-danger').html());
 }
 
 function getFieldData() {
