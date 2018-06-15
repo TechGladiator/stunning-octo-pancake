@@ -162,7 +162,6 @@ function editHeaderContent(colId, i) {
 	console.log(fieldNames);
 	if (fieldNames[i] == '') {
 		fieldNames.pop(i);
-		getFieldNames();
 		buildTable();
 	}
 	$(`#${colId}`).keyup(() => {
