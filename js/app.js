@@ -158,7 +158,11 @@ function editContent(colId, i) {
 	console.log($(`#${colId}`).html());
 	console.log(i);
 	console.log(fieldNames);
-	fieldNames[i] = $(`#${colId}`).html();
+	$(`#${colId}`).keyup(() => {
+		fieldNames[i] = $(`#${colId}`).html();
+		$('.csv').html('');
+		buildTable();
+	});
 }
 
 function getFieldData() {
