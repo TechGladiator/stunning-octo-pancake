@@ -51,6 +51,8 @@ function modal(moBody, moFooter) {
 
 function errorModal() {
 	$('#errorAlert').modal('hide');
+	getFieldNames();
+	getFieldData();
 	buildTable();
 }
 
@@ -160,11 +162,13 @@ function editContent(colId, i) {
 	console.log(fieldNames);
 	if (fieldNames[i] == '') {
 		fieldNames.pop(i);
+		getFieldNames();
 		buildTable();
 	}
 	$(`#${colId}`).keyup(() => {
 		fieldNames[i] = $(`#${colId}`).html();
 		$('.csv').html('');
+		getFieldNames();
 		buildTable();
 	});
 }
@@ -195,8 +199,6 @@ function getFieldData() {
 }
 
 function buildTable() {
-	getFieldNames();
-	getFieldData();
 	$('.csv').html(`
 		<div class="card">
 			<div class="card-body">
@@ -261,6 +263,8 @@ function completeFn(results) {
 	console.log('    Results:', results);
 
 	if (errorCount == 0) {
+		getFieldNames();
+		getFieldData();
 		buildTable();
 	} else {
 		$('.csv').html('');
