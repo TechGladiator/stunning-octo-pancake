@@ -146,7 +146,7 @@ function getFieldNames() {
 		if (!name) {
 			$('#jumboHeader').html('Edit CSV Data');
 			$('.wrapper').addClass('invisible');
-			columnHeads += `<th scope="col" class="table-danger" id="${i + 1}" contenteditable="true">${fieldNames[i]}</th>`;
+			columnHeads += `<th scope="col" class="table-danger editHeader" contenteditable="true">${fieldNames[i]}</th>`;
 		} else {
 			columnHeads += `<th scope="col">${fieldNames[i]}</th>`;
 		}
