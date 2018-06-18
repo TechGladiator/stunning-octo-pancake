@@ -43,10 +43,11 @@ function now() {
 function modal(moBody, moFooter) {
 	$('#errorAlert').modal('show');
 	$('#modalBody').html(`<h5 class="text-center">${moBody}</h5>`);
+	let okButton = `<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>`;
 	if (moFooter) {
-		$('#modalFooter').html(`${moFooter}<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>`);
+		$('#modalFooter').html(`${moFooter}${okButton}`);
 	} else {
-		$('#modalFooter').html(`<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>`);
+		$('#modalFooter').html(okButton);
 	}
 }
 
