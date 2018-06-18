@@ -40,6 +40,15 @@ function now() {
 	return typeof window.performance !== 'undefined' ? window.performance.now() : 0;
 }
 
+function modalDispose(moId) {
+	$(`#${moId}Close1`).click(() => {
+		$(`#${moId}`).modal('dispose');
+	});
+	$(`#${moId}Close2`).click(() => {
+		$(`#${moId}`).modal('dispose');
+	});
+}
+
 function modal(moId, moBody, moFooter) {
 	$('body').append(`
 	<!-- Modal -->
@@ -66,6 +75,7 @@ function modal(moId, moBody, moFooter) {
 	} else {
 		$('#modalFooter').html(okButton);
 	}
+	modalDispose(moId);
 }
 
 function fixError(moId) {
