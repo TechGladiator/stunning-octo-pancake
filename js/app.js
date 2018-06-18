@@ -97,7 +97,6 @@ function fixError(code) {
 					let cancel = `<button type="button" class="btn btn-secondary" id="${code}Close3">Cancel</button>`;
 					modal(`${code}`, `Empty headers found. Would you like to remove them?`, cancel);
 					$(`#${code}`).on('shown.bs.modal', f => {
-						// console.log('test');
 						$(`#${code}Close2`).click(() => {
 							$(`#${code}`).on('hidden.bs.modal', g => {
 								fieldNames.pop(i);
