@@ -178,11 +178,8 @@ function getFieldData() {
 	for (let i = 0; i < fieldData.length; i++) {
 		const e = fieldData[i];
 		validateState(e);
-		console.log(e.State);
 		validateZip(e);
-		console.log(e.Zip);
 		validateDate(e);
-		console.log(e['Creation Date']);
 		fields += `
 			<tr>
 				<th scope="row">${i + 1}</th>
