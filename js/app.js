@@ -101,10 +101,15 @@ function fixError(code) {
 				if (e == '') {
 					code = 'emptyHeadersAlert';
 					let cancel = `<button type="button" class="btn btn-secondary" id="${code}Close3">Cancel</button>`
-					modal(`${code}Alert`, `Empty header found. Would you like to remove it?`, cancel);
+					modal(`${code}`, `Empty headers found. Would you like to remove them?`, cancel);
 					$(`#${code}`).on('shown.bs.modal', f => {
 						console.log('test');
-
+						$(`#${code}Close2`).click(() => {
+							$(`#${code}`).on('hidden.bs.modal', g => {
+								fieldNames.pop(i);
+								$(`#${code}`).remove();
+							});
+						});
 					})
 				}
 			}
