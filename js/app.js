@@ -89,7 +89,7 @@ function fixError(code) {
 		$(`#${code}`).on('hidden.bs.modal', e => {
 			$(`#${code}`).remove();
 		});
-		getFieldNames();
+		// getFieldNames();
 		for (let i = 0; i < fieldNames.length; i++) {
 			const e = fieldNames[i];
 			if (e == '') {
