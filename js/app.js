@@ -57,8 +57,7 @@ function modalDispose(moId) {
 
 function modal(moId, moBody, moFooter) {
 	$('body').append(`
-	<!-- Modal -->
-  <div class="modal fade" id="${moId}" tabindex="-1" role="dialog" aria-labelledby="${moId}Label" aria-hidden="true">
+  <div class="modal fade" id="${moId}" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="${moId}Label" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
