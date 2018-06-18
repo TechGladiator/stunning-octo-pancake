@@ -83,9 +83,9 @@ function modal(moId, moBody, moFooter) {
 	modalDispose(moId);
 }
 
-function fixError(moId) {
-	$(`#${moId}`).modal('dispose');
-	$(`#${moId}`).on('hidden.bs.modal', e => {
+function fixError(code) {
+	$(`#${code}`).modal('hide');
+	$(`#${code}`).on('hidden.bs.modal', e => {
 		getFieldNames();
 		for (let i = 0; i < fieldNames.length; i++) {
 			const e = fieldNames[i];
