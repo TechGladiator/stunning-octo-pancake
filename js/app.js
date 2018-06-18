@@ -43,9 +43,15 @@ function now() {
 function modalDispose(moId) {
 	$(`#${moId}Close1`).click(() => {
 		$(`#${moId}`).modal('hide');
+		$(`#${moId}`).on('hidden.bs.modal', e => {
+			$(`#${moId}`).remove();
+		});
 	});
 	$(`#${moId}Close2`).click(() => {
 		$(`#${moId}`).modal('hide');
+		$(`#${moId}`).on('hidden.bs.modal', e => {
+			$(`#${moId}`).remove();
+		});
 	});
 }
 
