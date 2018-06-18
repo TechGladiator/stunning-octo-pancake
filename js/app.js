@@ -84,8 +84,11 @@ function modal(moId, moBody, moFooter) {
 }
 
 function fixError(code) {
-	$(`#${code}`).modal('hide');
-	$(`#${code}`).on('hidden.bs.modal', e => {
+	$(`#${code}`).click(() => {
+		$(`#${code}`).modal('hide');
+		$(`#${code}`).on('hidden.bs.modal', e => {
+			$(`#${code}`).remove();
+		});
 		getFieldNames();
 		for (let i = 0; i < fieldNames.length; i++) {
 			const e = fieldNames[i];
@@ -363,7 +366,8 @@ function parseFile(config) {
 				let errorMsg = JSON.stringify(firstError.message);
 				let row;
 				row = getRowNumb(row);
-				modal(`${firstError.code}`, `${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}`, `<button type="button" class="btn btn-danger" id="${firstError.code}" onclick="fixError(${firstError.code})">Fix</button>`);
+				modal(`${firstError.code}`, `${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}`, `<button type="button" class="btn btn-danger" id="${firstError.code}">Fix</button>`);
+				fixError(firstError.code);
 				if (fieldNames.length != 9) {
 					console.log(fieldNames);
 				}
