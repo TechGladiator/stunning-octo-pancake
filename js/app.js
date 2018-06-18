@@ -344,6 +344,7 @@ function parseFile(config) {
 			end = now();
 			printStats("Done with all files");
 			if (firstError) {
+				let code = firstError.code;
 				let errorMsg = JSON.stringify(firstError.message);
 				let row;
 				row = getRowNumb(row);
