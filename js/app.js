@@ -69,7 +69,7 @@ function modal(moId, moBody, moFooter) {
 }
 
 function fixError(moId) {
-	$(`#${moId}`).modal('hide');
+	$(`#${moId}`).modal('dispose');
 	$(`#${moId}`).on('hidden.bs.modal', e => {
 		getFieldNames();
 		for (let i = 0; i < fieldNames.length; i++) {
