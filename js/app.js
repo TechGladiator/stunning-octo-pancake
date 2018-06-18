@@ -54,8 +54,6 @@ function modal(moBody, moFooter) {
 function fixError() {
 	$('#errorAlert').modal('hide');
 	getFieldNames();
-	getFieldData();
-	buildTable();
 }
 
 function validateRowLength(fieldNames) {
