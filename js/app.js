@@ -53,7 +53,15 @@ function modal(moBody, moFooter) {
 
 function fixError() {
 	$('#errorAlert').modal('hide');
-	getFieldNames();
+	$('#errorAlert').on('hidden.bs.modal', e => {
+		getFieldNames();
+		for (let i = 0; i < fieldNames.length; i++) {
+			const e = fieldNames[i];
+			if (e == '') {
+				modal('Empty headers were found. Would you like to remove them?');
+			}
+		}
+	});
 }
 
 function validateRowLength(fieldNames) {
