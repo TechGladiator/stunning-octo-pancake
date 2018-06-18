@@ -95,18 +95,18 @@ function fixError(code) {
 				if (e == '') {
 					code = 'emptyHeadersAlert';
 					let cancel = `<button type="button" class="btn btn-secondary" id="${code}Close3">Cancel</button>`;
-					$(`#${code}Close3`).click(() => {
-						$(`#${code}`).modal('hide');
-						$(`#${code}`).on('hidden.bs.modal', e => {
-							$(`#${code}`).remove();
-						});
-					});
 					modal(`${code}`, `Empty headers found. Would you like to remove them?`, cancel);
 					$(`#${code}`).on('shown.bs.modal', f => {
 						console.log('test');
 						$(`#${code}Close2`).click(() => {
 							$(`#${code}`).on('hidden.bs.modal', g => {
 								fieldNames.pop(i);
+								$(`#${code}`).remove();
+							});
+						});
+						$(`#${code}Close3`).click(() => {
+							$(`#${code}`).modal('hide');
+							$(`#${code}`).on('hidden.bs.modal', e => {
 								$(`#${code}`).remove();
 							});
 						});
