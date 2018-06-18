@@ -84,7 +84,7 @@ function modal(moId, moBody, moFooter) {
 }
 
 function fixError(code) {
-	$(`#${code}`).click(() => {
+	$(`#${code}Fix`).click(() => {
 		$(`#${code}`).modal('hide');
 		$(`#${code}`).on('hidden.bs.modal', e => {
 			$(`#${code}`).remove();
@@ -384,7 +384,7 @@ function parseFile(config) {
 				let errorMsg = JSON.stringify(firstError.message);
 				let row;
 				row = getRowNumb(row);
-				modal(`${firstError.code}`, `${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}`, `<button type="button" class="btn btn-danger" id="${firstError.code}">Fix</button>`);
+				modal(`${firstError.code}`, `${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}`, `<button type="button" class="btn btn-danger" id="${firstError.code}Fix">Fix</button>`);
 				fixError(firstError.code);
 				if (fieldNames.length != 9) {
 					console.log(fieldNames);
