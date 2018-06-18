@@ -99,8 +99,11 @@ function fixError(code) {
 				const e = fieldNames[i];
 				console.log(e);
 				if (e == '') {
-					let cancel = `<button type="button" class="btn btn-secondary" id="${code}Close3">Cancel</button>`
+					let cancel = `<button type="button" class="btn btn-secondary" id="emptyHeadersAlertClose3">Cancel</button>`
 					modal('emptyHeadersAlert', `Empty header found. Would you like to remove it?`, cancel);
+					$('#emptyHeadersAlert').on('shown.bs.modal', f => {
+						console.log('test');
+					})
 				}
 			}
 		});
