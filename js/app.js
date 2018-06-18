@@ -12,6 +12,7 @@ let fieldZip = true;
 let fileName;
 let firstError;
 let firstRun = true;
+let fullResults;
 let lengthHigh = false;
 let lengthLow = false;
 let name = false;
@@ -252,15 +253,16 @@ function errorCap(results) {
 function completeFn(results) {
 	end = now();
 
-	fieldNames = results.meta.fields;
-	fieldData = results.data;
+	fullResults = results;
+	fieldNames = fullResults.meta.fields;
+	fieldData = fullResults.data;
 	
 	validateRowLength(fieldNames);
 	
-	errorCap(results);
+	errorCap(fullResults);
 
 	printStats('Parse complete');
-	console.log('    Results:', results);
+	console.log('    Results:', fullResults);
 
 	if (errorCount == 0) {
 		getFieldNames();
