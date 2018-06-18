@@ -42,10 +42,10 @@ function now() {
 
 function modalDispose(moId) {
 	$(`#${moId}Close1`).click(() => {
-		$(`#${moId}`).modal('dispose');
+		$(`#${moId}`).modal('hide');
 	});
 	$(`#${moId}Close2`).click(() => {
-		$(`#${moId}`).modal('dispose');
+		$(`#${moId}`).modal('hide');
 	});
 }
 
