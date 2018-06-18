@@ -48,7 +48,7 @@ function modal(moId, moBody, moFooter) {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="errorAlertLabel">CSV File Error</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" id="${moId}Close1" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -60,7 +60,7 @@ function modal(moId, moBody, moFooter) {
 	`);
 	$(`#${moId}`).modal('show');
 	$('#modalBody').html(`<h5 class="text-center">${moBody}</h5>`);
-	let okButton = `<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>`;
+	let okButton = `<button type="button" class="btn btn-primary" id="${moId}Close2">Ok</button>`;
 	if (moFooter) {
 		$('#modalFooter').html(`${moFooter}${okButton}`);
 	} else {
