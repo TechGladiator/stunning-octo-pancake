@@ -386,8 +386,8 @@ function parseFile(config) {
 				let errorMsg = JSON.stringify(firstError.message);
 				let row;
 				row = getRowNumb(row);
-				modal(`${firstError.code}`, `${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}`, `<button type="button" class="btn btn-danger" id="${firstError.code}Fix">Fix</button>`);
-				fixError(firstError.code);
+				modal(`${code}`, `${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}`, `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`);
+				fixError(code);
 				if (fieldNames.length != 9) {
 					console.log(fieldNames);
 				}
