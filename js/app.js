@@ -40,8 +40,25 @@ function now() {
 	return typeof window.performance !== 'undefined' ? window.performance.now() : 0;
 }
 
-function modal(moBody, moFooter) {
-	$('#errorAlert').modal('show');
+function modal(moId, moBody, moFooter) {
+	$('body').append(`
+	<!-- Modal -->
+  <div class="modal fade" id="${moId}" tabindex="-1" role="dialog" aria-labelledby="errorAlertLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="errorAlertLabel">CSV File Error</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-footer" id="modalFooter"></div>
+      </div>
+    </div>
+	</div>
+	`);
+	$(`#${moId}`).modal('show');
 	$('#modalBody').html(`<h5 class="text-center">${moBody}</h5>`);
 	let okButton = `<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>`;
 	if (moFooter) {
@@ -51,14 +68,14 @@ function modal(moBody, moFooter) {
 	}
 }
 
-function fixError() {
-	$('#errorAlert').modal('hide');
-	$('#errorAlert').on('hidden.bs.modal', e => {
+function fixError(moId) {
+	$(`#${moId}`).modal('hide');
+	$(`#${moId}`).on('hidden.bs.modal', e => {
 		getFieldNames();
 		for (let i = 0; i < fieldNames.length; i++) {
 			const e = fieldNames[i];
 			if (e == '') {
-				modal('Empty headers were found. Would you like to remove them?');
+				modal('emptyHeadersAlert', 'Empty headers were found. Would you like to remove them?');
 			}
 		}
 	});
@@ -85,7 +102,7 @@ function validateFieldNames(fieldName) {
 	}
 	if (!name) {
 		console.log(`${fieldName} is invalid`);
-		modal(`Header ${fieldName} is invalid`);
+		modal('errorAlert', `Header ${fieldName} is invalid`);
 	}
 }
 
@@ -102,7 +119,7 @@ function validateState(field) {
 	}
 	if (!fieldState && !undefined) {
 		console.log(`${field.State} is invalid`);
-		modal(`${field.State} is an invalid State abbreviation`);
+		modal('errorAlert', `${field.State} is an invalid State abbreviation`);
 	}
 }
 
@@ -112,7 +129,7 @@ function validateZip(field) {
 
 	if (field.Zip) {
 		if (field.Zip.length != 5) {
-			modal(`${field.Zip} is not a valid 5 digit Zip Code`);
+			modal('errorAlert', `${field.Zip} is not a valid 5 digit Zip Code`);
 			fieldZip = false;
 		}
 		for (let i = 0; i < field.Zip.length; i++) {
@@ -124,7 +141,7 @@ function validateZip(field) {
 	}
 	if (!fieldZip && !undefined) {
 		console.log(`${field.Zip} is invalid`);
-		modal(`${field.Zip} is not a valid 5 digit Zip Code`);
+		modal('errorAlert', `${field.Zip} is not a valid 5 digit Zip Code`);
 	}
 }
 
@@ -136,7 +153,7 @@ function validateDate(field) {
 		if (!field['Creation Date'].match(regEx)) { // Invalid format
 			fieldDate = false;
 			console.log(`${field['Creation Date']} is an invalid date format`);
-			modal(`${field['Creation Date']} is an invalid date format`);
+			modal('errorAlert', `${field['Creation Date']} is an invalid date format`);
 		}
 		
 		const d = new Date(field['Creation Date']);
@@ -144,7 +161,7 @@ function validateDate(field) {
 		if (!d.getTime() && d.getTime() !== 0 && fieldDate) { // Invalid date
 			fieldDate = false;
 			console.log(`${field['Creation Date']} is an invalid date`);
-			modal(`${field['Creation Date']} is an invalid date`);
+			modal('errorAlert', `${field['Creation Date']} is an invalid date`);
 		}
 	}
 }
@@ -350,7 +367,7 @@ function beginParsing() {
 		else
 			firstRun = false;
 		if (!$('#inputGroupFile02')[0].files.length) {
-			modal('Please choose at least one file to parse');
+			modal('errorAlert', 'Please choose at least one file to parse');
 		}
 		parseFile(config);
 	});
