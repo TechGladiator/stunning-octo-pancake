@@ -53,6 +53,12 @@ function modalDispose(moId) {
 			$(`#${moId}`).remove();
 		});
 	});
+	$(`#${moId}Close3`).click(() => {
+		$(`#${moId}`).modal('hide');
+		$(`#${moId}`).on('hidden.bs.modal', e => {
+			$(`#${moId}`).remove();
+		});
+	});
 }
 
 function modal(moId, moBody, moFooter) {
