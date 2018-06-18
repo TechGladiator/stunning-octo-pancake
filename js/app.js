@@ -88,14 +88,15 @@ function fixError(code) {
 		$(`#${code}`).modal('hide');
 		$(`#${code}`).on('hidden.bs.modal', e => {
 			$(`#${code}`).remove();
-		});
-		// getFieldNames();
-		for (let i = 0; i < fieldNames.length; i++) {
-			const e = fieldNames[i];
-			if (e == '') {
-				modal('emptyHeadersAlert', 'Empty headers were found. Would you like to remove them?');
+			// getFieldNames();
+			for (let i = 0; i < fieldNames.length; i++) {
+				const e = fieldNames[i];
+				console.log(e);
+				if (e == '') {
+					modal('emptyHeadersAlert', `Empty header found. Would you like to remove it?`);
+				}
 			}
-		}
+		});
 	});
 }
 
