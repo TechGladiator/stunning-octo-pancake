@@ -40,7 +40,9 @@ function now() {
 	return typeof window.performance !== 'undefined' ? window.performance.now() : 0;
 }
 
-function modalDispose(moId) {
+
+
+function modalClose(moId) {
 	$(`#${moId}Close1`).click(() => {
 		$(`#${moId}`).modal('hide');
 		$(`#${moId}`).on('hidden.bs.modal', e => {
@@ -80,7 +82,7 @@ function modal(moId, moBody, moFooter) {
 	} else {
 		$('#modalFooter').html(okButton);
 	}
-	modalDispose(moId);
+	modalClose(moId);
 }
 
 function fixError(code) {
