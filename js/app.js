@@ -92,16 +92,14 @@ function fixError(code) {
 				code = 'emptyHeadersAlert';
 				let cancel = `<button type="button" class="btn btn-secondary" id="${code}Close3">Cancel</button>`;
 				modal(`${code}`, `Empty headers found. Would you like to remove them?`, cancel);
-				$(`#${code}`).on('shown.bs.modal', () => {
-					$(`#${code}Close2`).click(() => {
-						$(`#${code}`).on('hidden.bs.modal', () => {
-							fieldNames.pop(i);
-							$(`#${code}`).remove();
-							console.log(fieldNames);
-						});
+				$(`#${code}Close2`).click(() => {
+					$(`#${code}`).on('hidden.bs.modal', () => {
+						fieldNames.pop(i);
+						$(`#${code}`).remove();
+						console.log(fieldNames);
 					});
-					modalDispose(code, 'Close3');
 				});
+				modalDispose(code, 'Close3');
 			}
 		}
 	}
@@ -375,7 +373,9 @@ function parseFile(config) {
 				let row;
 				row = getRowNumb(row);
 				modal(`${code}`, `${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}`, `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`);
-				fixError(code);
+				$(`#${code}`).on('shown.bs.modal', () => {
+					fixError(code);
+				});
 				if (fieldNames.length != 9) {
 					console.log(fieldNames);
 				}
