@@ -308,18 +308,20 @@ function completeFn(results) {
 	fieldNames = fullResults.meta.fields;
 	fieldData = fullResults.data;
 	
-	validateRowLength(fieldNames);
-	
-	errorCap(fullResults);
+	processResults();
+}
 
+function processResults() {
+	validateRowLength(fieldNames);
+	errorCap(fullResults);
 	printStats('Parse complete');
 	console.log('    Results:', fullResults);
-
 	if (errorCount == 0) {
 		getFieldNames();
 		getFieldData();
 		buildTable();
-	} else {
+	}
+	else {
 		$('.csv').html('');
 	}
 }
