@@ -100,6 +100,7 @@ function fixError(code) {
 					});
 				});
 				modalDispose(code, 'Close3');
+				break;
 			}
 		}
 	}
@@ -370,12 +371,11 @@ function parseFile(config) {
 			if (firstError) {
 				let code = firstError.code;
 				let errorMsg = JSON.stringify(firstError.message);
+				let func = fixError(code);
 				let row;
 				row = getRowNumb(row);
 				modal(`${code}`, `${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}`, `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`);
-				$(`#${code}`).on('shown.bs.modal', () => {
-					fixError(code);
-				});
+				modalDispose(code, 'Fix', func);
 				if (fieldNames.length != 9) {
 					console.log(fieldNames);
 				}
