@@ -371,18 +371,22 @@ function parseFile(config) {
 			end = now();
 			printStats("Done with all files");
 			if (firstError) {
-				let code = firstError.code;
-				let errorMsg = JSON.stringify(firstError.message);
-				let row;
-				row = getRowNumb(row);
-				modal(`${code}`, `${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}`, `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`);
-				fixError(code);
-				if (fieldNames.length != 9) {
-					console.log(fieldNames);
-				}
+				errorModal();
 			}
 		}
 	});
+}
+
+function errorModal() {
+	let code = firstError.code;
+	let errorMsg = JSON.stringify(firstError.message);
+	let row;
+	row = getRowNumb(row);
+	modal(`${code}`, `${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}`, `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`);
+	fixError(code);
+	if (fieldNames.length != 9) {
+		console.log(fieldNames);
+	}
 }
 
 function beginParsing() {
