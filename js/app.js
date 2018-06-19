@@ -40,11 +40,12 @@ function now() {
 	return typeof window.performance !== 'undefined' ? window.performance.now() : 0;
 }
 
-function modalDispose(moId, close) {
+function modalDispose(moId, close, func) {
 	$(`#${moId}${close}`).click(() => {
 		$(`#${moId}`).modal('hide');
-		$(`#${moId}`).on('hidden.bs.modal', e => {
+		$(`#${moId}`).on('hidden.bs.modal', () => {
 			$(`#${moId}`).remove();
+			if (func) func();
 		});
 	});
 }
@@ -79,31 +80,23 @@ function modal(moId, moBody, moFooter) {
 }
 
 function fixError(code) {
-	$(`#${code}Fix`).click(() => {
-		$(`#${code}`).modal('hide');
-		$(`#${code}`).on('hidden.bs.modal', () => {
-			$(`#${code}`).remove();
-			// getFieldNames();
-			for (let i = 0; i < fieldNames.length; i++) {
-				const e = fieldNames[i];
-				console.log(e);
-				if (e == '') {
-					code = 'emptyHeadersAlert';
-					let cancel = `<button type="button" class="btn btn-secondary" id="${code}Close3">Cancel</button>`;
-					modal(`${code}`, `Empty headers found. Would you like to remove them?`, cancel);
-					$(`#${code}`).on('shown.bs.modal', () => {
-						$(`#${code}Close2`).click(() => {
-							$(`#${code}`).on('hidden.bs.modal', () => {
-								fieldNames.pop(i);
-								$(`#${code}`).remove();
-								console.log(fieldNames);
-							});
-						});
-						modalDispose(code, 'Close3');
-					})
-				}
+	modalDispose(code, 'Fix', () => {
+		for (let i = 0; i < fieldNames.length; i++) {
+			const e = fieldNames[i];
+			console.log(e);
+			if (e == '') {
+				code = 'emptyHeadersAlert';
+				let cancel = `<button type="button" class="btn btn-secondary" id="${code}Close3">Cancel</button>`;
+				modal(`${code}`, `Empty headers found. Would you like to remove them?`, cancel);
+				$(`#${code}`).on('shown.bs.modal', () => {
+					modalDispose(code, 'Close2', () => {
+						fieldNames.pop(i);
+						console.log(fieldNames);
+					});
+					modalDispose(code, 'Close3');
+				});
 			}
-		});
+		}
 	});
 }
 
