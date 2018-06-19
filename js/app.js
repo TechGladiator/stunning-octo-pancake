@@ -40,11 +40,14 @@ function now() {
 	return typeof window.performance !== 'undefined' ? window.performance.now() : 0;
 }
 
-function modalDispose(moId, close) {
+function modalDispose(moId, close, func) {
 	$(`#${moId}${close}`).click(() => {
 		$(`#${moId}`).modal('hide');
 		$(`#${moId}`).on('hidden.bs.modal', e => {
 			$(`#${moId}`).remove();
+			if (func) {
+				func;
+			}
 		});
 	});
 }
@@ -79,14 +82,7 @@ function modal(moId, moBody, moFooter) {
 }
 
 function fixError(code) {
-	$(`#${code}Fix`).click(() => {
-		$(`#${code}`).modal('hide');
-		$(`#${code}`).on('hidden.bs.modal', () => {
-			$(`#${code}`).remove();
-			// getFieldNames();
-			fixColumns();
-		});
-	});
+	modalDispose(code, 'Fix', fixColumns());
 
 	function fixColumns() {
 		for (let i = 0; i < fieldNames.length; i++) {
