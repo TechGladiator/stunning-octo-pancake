@@ -40,14 +40,8 @@ function now() {
 	return typeof window.performance !== 'undefined' ? window.performance.now() : 0;
 }
 
-function modalDispose(moId) {
-	$(`#${moId}Close1`).click(() => {
-		$(`#${moId}`).modal('hide');
-		$(`#${moId}`).on('hidden.bs.modal', e => {
-			$(`#${moId}`).remove();
-		});
-	});
-	$(`#${moId}Close2`).click(() => {
+function modalDispose(moId, close) {
+	$(`#${moId}${close}`).click(() => {
 		$(`#${moId}`).modal('hide');
 		$(`#${moId}`).on('hidden.bs.modal', e => {
 			$(`#${moId}`).remove();
@@ -80,7 +74,8 @@ function modal(moId, moBody, moFooter) {
 	} else {
 		$('#modalFooter').html(okButton);
 	}
-	modalDispose(moId);
+	modalDispose(moId, 'Close1');
+	modalDispose(moId, 'Close2');
 }
 
 function fixError(code) {
