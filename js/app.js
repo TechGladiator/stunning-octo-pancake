@@ -40,14 +40,17 @@ function now() {
 	return typeof window.performance !== 'undefined' ? window.performance.now() : 0;
 }
 
-function modalDispose(moId, close, func) {
-	$(`#${moId}${close}`).click(() => {
+function modalDispose(moId) {
+	$(`#${moId}Close1`).click(() => {
 		$(`#${moId}`).modal('hide');
 		$(`#${moId}`).on('hidden.bs.modal', e => {
 			$(`#${moId}`).remove();
-			if (func) {
-				func;
-			}
+		});
+	});
+	$(`#${moId}Close2`).click(() => {
+		$(`#${moId}`).modal('hide');
+		$(`#${moId}`).on('hidden.bs.modal', e => {
+			$(`#${moId}`).remove();
 		});
 	});
 }
@@ -77,33 +80,42 @@ function modal(moId, moBody, moFooter) {
 	} else {
 		$('#modalFooter').html(okButton);
 	}
-	modalDispose(moId, 'Close1');
-	modalDispose(moId, 'Close2');
+	modalDispose(moId);
 }
 
 function fixError(code) {
-	modalDispose(code, 'Fix', fixColumns());
-
-	function fixColumns() {
-		for (let i = 0; i < fieldNames.length; i++) {
-			const e = fieldNames[i];
-			console.log(e);
-			if (e == '') {
-				code = 'emptyHeadersAlert';
-				let cancel = `<button type="button" class="btn btn-secondary" id="${code}Close3">Cancel</button>`;
-				modal(`${code}`, `Empty headers found. Would you like to remove them?`, cancel);
-				$(`#${code}Close2`).click(() => {
-					$(`#${code}`).on('hidden.bs.modal', () => {
-						fieldNames.pop(i);
-						$(`#${code}`).remove();
-						console.log(fieldNames);
-					});
-				});
-				modalDispose(code, 'Close3');
-				break;
+	$(`#${code}Fix`).click(() => {
+		$(`#${code}`).modal('hide');
+		$(`#${code}`).on('hidden.bs.modal', e => {
+			$(`#${code}`).remove();
+			// getFieldNames();
+			for (let i = 0; i < fieldNames.length; i++) {
+				const e = fieldNames[i];
+				console.log(e);
+				if (e == '') {
+					code = 'emptyHeadersAlert';
+					let cancel = `<button type="button" class="btn btn-secondary" id="${code}Close3">Cancel</button>`;
+					modal(`${code}`, `Empty headers found. Would you like to remove them?`, cancel);
+					$(`#${code}`).on('shown.bs.modal', f => {
+						$(`#${code}Close2`).click(() => {
+							$(`#${code}`).on('hidden.bs.modal', g => {
+								fieldNames.pop(i);
+								$(`#${code}`).remove();
+								console.log(fieldNames);
+							});
+						});
+						$(`#${code}Close3`).click(() => {
+							$(`#${code}`).modal('hide');
+							$(`#${code}`).on('hidden.bs.modal', e => {
+								$(`#${code}`).remove();
+								console.log(fieldNames);
+							});
+						});
+					})
+				}
 			}
-		}
-	}
+		});
+	});
 }
 
 function validateRowLength(fieldNames) {
@@ -371,11 +383,10 @@ function parseFile(config) {
 			if (firstError) {
 				let code = firstError.code;
 				let errorMsg = JSON.stringify(firstError.message);
-				let func = fixError(code);
 				let row;
 				row = getRowNumb(row);
 				modal(`${code}`, `${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}`, `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`);
-				modalDispose(code, 'Fix', func);
+				fixError(code);
 				if (fieldNames.length != 9) {
 					console.log(fieldNames);
 				}
