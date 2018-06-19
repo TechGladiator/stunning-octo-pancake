@@ -99,13 +99,7 @@ function fixError(code) {
 								console.log(fieldNames);
 							});
 						});
-						$(`#${code}Close3`).click(() => {
-							$(`#${code}`).modal('hide');
-							$(`#${code}`).on('hidden.bs.modal', e => {
-								$(`#${code}`).remove();
-								console.log(fieldNames);
-							});
-						});
+						modalDispose(code, 'Close3');
 					})
 				}
 			}
