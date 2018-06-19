@@ -85,18 +85,26 @@ function fixError(code) {
 			const e = fieldNames[i];
 			console.log(e);
 			if (e == '') {
-				code = 'emptyHeadersAlert';
-				let cancel = `<button type="button" class="btn btn-secondary" id="${code}Close3">Cancel</button>`;
-				modal(`${code}`, `Empty headers found. Would you like to remove them?`, cancel);
-				$(`#${code}`).on('shown.bs.modal', () => {
-					modalDispose(code, 'Close2', () => {
-						fieldNames.pop(i);
-						console.log(fieldNames);
-					});
-					modalDispose(code, 'Close3');
-				});
+				emptyHeaderAlert(i);
 			}
 		}
+	});
+}
+
+function emptyHeaderAlert(i) {
+	let code = 'emptyHeadersAlert';
+	let cancel = `<button type="button" class="btn btn-secondary" id="${code}Close3">Cancel</button>`;
+	modal(`${code}`, `Empty headers found. Would you like to remove them?`, cancel);
+	removeEmptyHeaders(code, i);
+}
+
+function removeEmptyHeaders(code, i) {
+	$(`#${code}`).on('shown.bs.modal', () => {
+		modalDispose(code, 'Close2', () => {
+			fieldNames.pop(i);
+			console.log(fieldNames);
+		});
+		modalDispose(code, 'Close3');
 	});
 }
 
