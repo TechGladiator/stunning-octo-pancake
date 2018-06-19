@@ -198,14 +198,18 @@ function getFieldNames() {
 	for (let i = 0; i < fieldNames.length; i++) {
 		validateFieldNames(fieldNames[i]);
 		if (!name) {
-			$('#jumboHeader').html('Edit CSV Data');
-			$('.wrapper').addClass('invisible');
-			let colId = i + 1;
-			columnHeads += `<th scope="col" class="table-danger" id="${colId}" contenteditable="true" onclick="editHeaderContent(${colId}, ${i})">${fieldNames[i]}</th>`;
+			editFieldNames(i);
 		} else {
 			columnHeads += `<th scope="col">${fieldNames[i]}</th>`;
 		}
 	}
+}
+
+function editFieldNames(i) {
+	$('#jumboHeader').html('Edit CSV Data');
+	$('.wrapper').addClass('invisible');
+	let colId = i + 1;
+	columnHeads += `<th scope="col" class="table-danger" id="${colId}" contenteditable="true" onclick="editHeaderContent(${colId}, ${i})">${fieldNames[i]}</th>`;
 }
 
 function editHeaderContent(colId, i) {
