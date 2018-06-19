@@ -386,7 +386,7 @@ function errorModal() {
 	row = getRowNumb(row);
 	modal(`${code}`, `${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}`, `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`);
 	fixError(code);
-	if (fieldNames.length != 9) {
+	if (fieldNames.length != names.length) {
 		console.log(fieldNames);
 	}
 }
