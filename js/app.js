@@ -81,7 +81,7 @@ function modal(moId, moBody, moFooter) {
 function fixError(code) {
 	$(`#${code}Fix`).click(() => {
 		$(`#${code}`).modal('hide');
-		$(`#${code}`).on('hidden.bs.modal', e => {
+		$(`#${code}`).on('hidden.bs.modal', () => {
 			$(`#${code}`).remove();
 			// getFieldNames();
 			for (let i = 0; i < fieldNames.length; i++) {
@@ -91,9 +91,9 @@ function fixError(code) {
 					code = 'emptyHeadersAlert';
 					let cancel = `<button type="button" class="btn btn-secondary" id="${code}Close3">Cancel</button>`;
 					modal(`${code}`, `Empty headers found. Would you like to remove them?`, cancel);
-					$(`#${code}`).on('shown.bs.modal', f => {
+					$(`#${code}`).on('shown.bs.modal', () => {
 						$(`#${code}Close2`).click(() => {
-							$(`#${code}`).on('hidden.bs.modal', g => {
+							$(`#${code}`).on('hidden.bs.modal', () => {
 								fieldNames.pop(i);
 								$(`#${code}`).remove();
 								console.log(fieldNames);
