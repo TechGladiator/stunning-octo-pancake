@@ -74,7 +74,8 @@ function modal(moId, moBody, moFooter) {
 	} else {
 		$('#modalFooter').html(okButton);
 	}
-	modalDispose(moId);
+	modalDispose(moId, 'Close1');
+	modalDispose(moId, 'Close2');
 }
 
 function fixError(code) {
@@ -98,13 +99,7 @@ function fixError(code) {
 								console.log(fieldNames);
 							});
 						});
-						$(`#${code}Close3`).click(() => {
-							$(`#${code}`).modal('hide');
-							$(`#${code}`).on('hidden.bs.modal', e => {
-								$(`#${code}`).remove();
-								console.log(fieldNames);
-							});
-						});
+						modalDispose(code, 'Close3');
 					})
 				}
 			}
