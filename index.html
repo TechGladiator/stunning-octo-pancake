@@ -17,35 +17,18 @@
 
 <body>
 
-  <!-- Modal -->
-  <div class="modal fade" id="errorAlert" tabindex="-1" role="dialog" aria-labelledby="errorAlertLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="errorAlertLabel">CSV File Error</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body" id="modalBody"></div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="container">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark w-75 m-auto">
       <p class="navbar-brand">Project: Batch CSV Import Process</p>
     </nav>
-
+    
     <div class="jumbotron w-75 mt-5 ml-auto mr-auto">
-
-      <h1 class="text-center mb-5">Upload CSV File</h1>
       
-      <div class="input-group w-75 mr-auto ml-auto mb-3">
+      <h1 class="text-center mb-5" id="jumboHeader">Upload CSV File</h1>
+      
+      <div class="wrapper">
+        <div class="input-group w-75 mr-auto ml-auto mb-3">
           <div class="custom-file">
             <input type="file" class="custom-file-input" id="inputGroupFile02">
             <label class="custom-file-label" for="inputGroupFile02">Drag &amp; Drop or click here to browse for your file</label>
@@ -54,7 +37,8 @@
             <span class="input-group-text">Upload</span>
           </div>
         </div>
-
+        
+      </div>
     </div>
 
     <div class="csv"></div>
