@@ -12,6 +12,7 @@ let fieldZip = true;
 let fileName;
 let firstError;
 let firstRun = true;
+let fullResults;
 let lengthHigh = false;
 let lengthLow = false;
 let name = false;
@@ -39,22 +40,75 @@ function now() {
 	return typeof window.performance !== 'undefined' ? window.performance.now() : 0;
 }
 
-function modal(moBody, moFooter) {
-	$('#errorAlert').modal('show');
+function modalDispose(moId, close, func) {
+	$(`#${moId}${close}`).click(() => {
+		$(`#${moId}`).modal('hide');
+		$(`#${moId}`).on('hidden.bs.modal', () => {
+			$(`#${moId}`).remove();
+			if (func) func();
+		});
+	});
+}
+
+function modal(moId, moBody, moFooter) {
+	$('body').append(`
+  <div class="modal fade" id="${moId}" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="${moId}Label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="${moId}Label">CSV File Error</h5>
+          <button type="button" class="close" id="${moId}Close1" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-footer" id="modalFooter"></div>
+      </div>
+    </div>
+	</div>
+	`);
+	$(`#${moId}`).modal('show');
 	$('#modalBody').html(`<h5 class="text-center">${moBody}</h5>`);
-	let okButton = `<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>`;
+	let okButton = `<button type="button" class="btn btn-primary" id="${moId}Close2">Ok</button>`;
 	if (moFooter) {
 		$('#modalFooter').html(`${moFooter}${okButton}`);
 	} else {
 		$('#modalFooter').html(okButton);
 	}
+	modalDispose(moId, 'Close1');
+	modalDispose(moId, 'Close2');
 }
 
-function fixError() {
-	$('#errorAlert').modal('hide');
-	getFieldNames();
-	getFieldData();
-	buildTable();
+function fixError(code) {
+	columnHeads = '';
+	modalDispose(code, 'Fix', () => {
+		for (let i = 0; i < fieldNames.length; i++) {
+			const e = fieldNames[i];
+			console.log(e);
+			if (e != '') {
+				editFieldNames(i);
+			} else {
+				emptyHeaderAlert(i);
+			}
+		}
+	});
+}
+
+function emptyHeaderAlert(i) {
+	let code = 'emptyHeadersAlert';
+	let cancel = `<button type="button" class="btn btn-secondary" id="${code}Close3">Cancel</button>`;
+	modal(`${code}`, `Empty headers found. Would you like to remove them?`, cancel);
+	removeEmptyHeaders(code, i);
+}
+
+function removeEmptyHeaders(code, i) {
+	$(`#${code}`).on('shown.bs.modal', () => {
+		modalDispose(code, 'Close2', () => {
+			fieldNames.pop(i);
+			console.log(fieldNames);
+		});
+		modalDispose(code, 'Close3');
+	});
 }
 
 function validateRowLength(fieldNames) {
@@ -78,7 +132,7 @@ function validateFieldNames(fieldName) {
 	}
 	if (!name) {
 		console.log(`${fieldName} is invalid`);
-		modal(`Header ${fieldName} is invalid`);
+		modal('errorAlert', `Header ${fieldName} is invalid`);
 	}
 }
 
@@ -95,7 +149,7 @@ function validateState(field) {
 	}
 	if (!fieldState && !undefined) {
 		console.log(`${field.State} is invalid`);
-		modal(`${field.State} is an invalid State abbreviation`);
+		modal('errorAlert', `${field.State} is an invalid State abbreviation`);
 	}
 }
 
@@ -105,7 +159,7 @@ function validateZip(field) {
 
 	if (field.Zip) {
 		if (field.Zip.length != 5) {
-			modal(`${field.Zip} is not a valid 5 digit Zip Code`);
+			modal('errorAlert', `${field.Zip} is not a valid 5 digit Zip Code`);
 			fieldZip = false;
 		}
 		for (let i = 0; i < field.Zip.length; i++) {
@@ -117,7 +171,7 @@ function validateZip(field) {
 	}
 	if (!fieldZip && !undefined) {
 		console.log(`${field.Zip} is invalid`);
-		modal(`${field.Zip} is not a valid 5 digit Zip Code`);
+		modal('errorAlert', `${field.Zip} is not a valid 5 digit Zip Code`);
 	}
 }
 
@@ -129,7 +183,7 @@ function validateDate(field) {
 		if (!field['Creation Date'].match(regEx)) { // Invalid format
 			fieldDate = false;
 			console.log(`${field['Creation Date']} is an invalid date format`);
-			modal(`${field['Creation Date']} is an invalid date format`);
+			modal('errorAlert', `${field['Creation Date']} is an invalid date format`);
 		}
 		
 		const d = new Date(field['Creation Date']);
@@ -137,7 +191,7 @@ function validateDate(field) {
 		if (!d.getTime() && d.getTime() !== 0 && fieldDate) { // Invalid date
 			fieldDate = false;
 			console.log(`${field['Creation Date']} is an invalid date`);
-			modal(`${field['Creation Date']} is an invalid date`);
+			modal('errorAlert', `${field['Creation Date']} is an invalid date`);
 		}
 	}
 }
@@ -147,14 +201,18 @@ function getFieldNames() {
 	for (let i = 0; i < fieldNames.length; i++) {
 		validateFieldNames(fieldNames[i]);
 		if (!name) {
-			$('#jumboHeader').html('Edit CSV Data');
-			$('.wrapper').addClass('invisible');
-			let colId = i + 1;
-			columnHeads += `<th scope="col" class="table-danger" id="${colId}" contenteditable="true" onclick="editHeaderContent(${colId}, ${i})">${fieldNames[i]}</th>`;
+			editFieldNames(i);
 		} else {
 			columnHeads += `<th scope="col">${fieldNames[i]}</th>`;
 		}
 	}
+}
+
+function editFieldNames(i) {
+	$('#jumboHeader').html('Edit CSV Data');
+	$('.wrapper').addClass('invisible');
+	let colId = i + 1;
+	columnHeads += `<th scope="col" class="table-danger" id="${colId}" contenteditable="true" onclick="editHeaderContent(${colId}, ${i})">${fieldNames[i]}</th>`;
 }
 
 function editHeaderContent(colId, i) {
@@ -253,21 +311,24 @@ function errorCap(results) {
 function completeFn(results) {
 	end = now();
 
-	fieldNames = results.meta.fields;
-	fieldData = results.data;
+	fullResults = results;
+	fieldNames = fullResults.meta.fields;
+	fieldData = fullResults.data;
 	
+	processResults();
+}
+
+function processResults() {
 	validateRowLength(fieldNames);
-	
-	errorCap(results);
-
+	errorCap(fullResults);
 	printStats('Parse complete');
-	console.log('    Results:', results);
-
+	console.log('    Results:', fullResults);
 	if (errorCount == 0) {
 		getFieldNames();
 		getFieldData();
 		buildTable();
-	} else {
+	}
+	else {
 		$('.csv').html('');
 	}
 }
@@ -319,16 +380,22 @@ function parseFile(config) {
 			end = now();
 			printStats("Done with all files");
 			if (firstError) {
-				let errorMsg = JSON.stringify(firstError.message);
-				let row;
-				row = getRowNumb(row);
-				modal(`${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}`, `<button type="button" class="btn btn-danger" onclick="fixError()">Fix</button>`);
-				if (fieldNames.length != 9) {
-					console.log(fieldNames);
-				}
+				errorModal();
 			}
 		}
 	});
+}
+
+function errorModal() {
+	let code = firstError.code;
+	let errorMsg = JSON.stringify(firstError.message);
+	let row;
+	row = getRowNumb(row);
+	modal(`${code}`, `${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}`, `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`);
+	fixError(code);
+	if (fieldNames.length != names.length) {
+		console.log(fieldNames);
+	}
 }
 
 function beginParsing() {
@@ -342,7 +409,7 @@ function beginParsing() {
 		else
 			firstRun = false;
 		if (!$('#inputGroupFile02')[0].files.length) {
-			modal('Please choose at least one file to parse');
+			modal('errorAlert', 'Please choose at least one file to parse');
 		}
 		parseFile(config);
 	});
