@@ -85,9 +85,8 @@ function fixError(code) {
 		for (let i = 0; i < fieldNames.length; i++) {
 			const e = fieldNames[i];
 			console.log(e);
-			if (e != '') {
-				editFieldNames(i);
-			} else {
+			hideFileBrowser();
+			if (e == '') {
 				emptyHeaderAlert(i);
 			}
 		}
@@ -209,10 +208,14 @@ function getFieldNames() {
 }
 
 function editFieldNames(i) {
-	$('#jumboHeader').html('Edit CSV Data');
-	$('.wrapper').addClass('invisible');
+	hideFileBrowser();
 	let colId = i + 1;
 	columnHeads += `<th scope="col" class="table-danger" id="${colId}" contenteditable="true" onclick="editHeaderContent(${colId}, ${i})">${fieldNames[i]}</th>`;
+}
+
+function hideFileBrowser() {
+	$('#jumboHeader').html('Edit CSV Data');
+	$('.wrapper').addClass('invisible');
 }
 
 function editHeaderContent(colId, i) {
