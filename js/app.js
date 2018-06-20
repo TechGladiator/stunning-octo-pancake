@@ -31,7 +31,12 @@ let start;
 $('#inputGroupFile02').on('change', function () {
 	fileName = $(this).val();
 	fileName = fileName.substring(fileName.lastIndexOf('\\') + 1);
-	$(this).next('.custom-file-label').addClass('selected').html(fileName);
+	if (fileName != '') {		
+		$(this).next('.custom-file-label').addClass('selected').html(fileName);
+	} else {
+		$(this).next('.custom-file-label').addClass('selected').html('Drag & Drop or click here to browse for your file');
+		$('.csv').html('');
+	}
 });
 
 function printStats(msg) {
@@ -211,10 +216,12 @@ function validateDate(field) {
 	}
 }
 
-function getFieldNames() {
+function getFieldNames(validate) {
 	columnHeads = '';
 	for (let i = 0; i < fieldNames.length; i++) {
-		validateFieldNames(fieldNames[i]);
+		if (validate) {
+			validateFieldNames(fieldNames[i]);
+		}
 		if (!name) {
 			editFieldNames(i);
 		} else {
@@ -283,7 +290,7 @@ function getFieldData() {
 
 function buttonGroupClicks(errors) {
 	$('#showData').click(() => {
-		getFieldNames();
+		getFieldNames(validate = true);
 		buildTable(errors);
 	});
 	$('#cancelCSV').click(() => {
@@ -377,7 +384,7 @@ function processResults() {
 	printStats('Parse complete');
 	console.log('    Results:', fullResults);
 	if (errorCount == 0) {
-		getFieldNames();
+		getFieldNames(validate = true);
 		getFieldData();
 		buildTable();
 	}
