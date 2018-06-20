@@ -241,6 +241,7 @@ function editHeaderContent(colId, i) {
 	if (fieldNames[i] == '') {
 		fieldNames.pop(i);
 		$('.csv').html('');
+		getFieldNames();
 		buildTable(true);
 	}
 	$(`#${colId}`).keydown((e) => {
