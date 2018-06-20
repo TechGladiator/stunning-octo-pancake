@@ -79,6 +79,13 @@ function modal(moId, moBody, moFooter) {
 	modalDispose(moId, 'Close2');
 }
 
+const buttonGroup = `
+	<div class="btn-group d-flex justify-content-center mb-3" role="group" aria-label="continue repair">
+		<button type="button" class="btn btn-secondary" id="showData">Show Data</button>
+		<button type="button" class="btn btn-secondary">Repair Next Error</button>
+		<button type="button" class="btn btn-secondary" id="cancelCSV">Cancel CSV Processing</button>
+	</div>
+`;
 function fixError(code) {
 	columnHeads = '';
 	modalDispose(code, 'Fix', () => {
@@ -86,18 +93,27 @@ function fixError(code) {
 			const e = fieldNames[i];
 			console.log(e);
 			hideFileBrowser();
-			$('.csv').html(`
-				<div class="btn-group d-flex justify-content-center" role="group" aria-label="continue repair">
-					<button type="button" class="btn btn-secondary">Show Data</button>
-					<button type="button" class="btn btn-secondary">Repair Next Error</button>
-					<button type="button" class="btn btn-secondary">Cancel CSV Processing</button>
-				</div>
-			`);
+			$('.csv').html(buttonGroup);
+			$('#showData').click(() => {
+				getFieldNames();
+				getFieldData();
+				buildTable();
+				$('.csv').prepend(buttonGroup);
+			});
+			$('#cancelCSV').click(() => {
+				showFileBrowser();
+			});
 			if (e == '') {
 				emptyHeaderAlert(i);
 			}
 		}
 	});
+}
+
+function showFileBrowser() {
+	$('#jumboHeader').html('Upload CSV Data');
+	$('.wrapper').removeClass('invisible');
+	$('.csv').html('');
 }
 
 function emptyHeaderAlert(i) {
