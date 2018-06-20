@@ -294,6 +294,7 @@ function buttonGroupClicks(errors) {
 		buildTable(errors);
 	});
 	$('#repairNext').click(() => {
+		processResults();
 		modal(errors, 'Under Construction')
 	});
 	$('#cancelCSV').click(() => {
