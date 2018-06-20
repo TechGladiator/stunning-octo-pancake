@@ -80,11 +80,14 @@ function modal(moId, moBody, moFooter) {
 }
 
 function fixError(code) {
+	columnHeads = '';
 	modalDispose(code, 'Fix', () => {
 		for (let i = 0; i < fieldNames.length; i++) {
 			const e = fieldNames[i];
 			console.log(e);
-			if (e == '') {
+			if (e != '') {
+				editFieldNames(i);
+			} else {
 				emptyHeaderAlert(i);
 			}
 		}
