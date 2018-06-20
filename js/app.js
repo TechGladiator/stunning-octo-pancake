@@ -295,7 +295,7 @@ function buttonGroupClicks(errors) {
 	});
 	$('#repairNext').click(() => {
 		processResults();
-		modal(errors, 'Under Construction')
+		modal(errors, 'Under Construction');
 	});
 	$('#cancelCSV').click(() => {
 		fullResults = {};
