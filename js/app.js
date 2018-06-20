@@ -1,4 +1,11 @@
 // global variables
+const buttonGroup = `
+	<div class="btn-group d-flex justify-content-center mb-3" role="group" aria-label="continue repair">
+		<button type="button" class="btn btn-secondary" id="showData">Show Data</button>
+		<button type="button" class="btn btn-secondary">Repair Next Error</button>
+		<button type="button" class="btn btn-secondary" id="cancelCSV">Cancel CSV Processing</button>
+	</div>
+`;
 let columnHeads = '';
 let end;
 let errorCount = 0;
@@ -79,15 +86,9 @@ function modal(moId, moBody, moFooter) {
 	modalDispose(moId, 'Close2');
 }
 
-const buttonGroup = `
-	<div class="btn-group d-flex justify-content-center mb-3" role="group" aria-label="continue repair">
-		<button type="button" class="btn btn-secondary" id="showData">Show Data</button>
-		<button type="button" class="btn btn-secondary">Repair Next Error</button>
-		<button type="button" class="btn btn-secondary" id="cancelCSV">Cancel CSV Processing</button>
-	</div>
-`;
 function fixError(code) {
 	columnHeads = '';
+	fields = '';
 	modalDispose(code, 'Fix', () => {
 		for (let i = 0; i < fieldNames.length; i++) {
 			const e = fieldNames[i];
@@ -96,7 +97,6 @@ function fixError(code) {
 			$('.csv').html(buttonGroup);
 			$('#showData').click(() => {
 				getFieldNames();
-				getFieldData();
 				buildTable();
 				$('.csv').prepend(buttonGroup);
 			});
