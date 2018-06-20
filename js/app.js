@@ -95,14 +95,7 @@ function fixError(code) {
 			const e = fieldNames[i];
 			console.log(e);
 			hideFileBrowser();
-			$('.csv').html(buttonGroup);
-			$('#showData').click(() => {
-				getFieldNames();
-				buildTable(errors);
-			});
-			$('#cancelCSV').click(() => {
-				showFileBrowser();
-			});
+			buildTable(errors);
 			if (e == '') {
 				emptyHeaderAlert(i);
 			}
@@ -283,6 +276,16 @@ function getFieldData() {
 	}
 }
 
+function buttonGroupClicks(errors) {
+	$('#showData').click(() => {
+		getFieldNames();
+		buildTable(errors);
+	});
+	$('#cancelCSV').click(() => {
+		showFileBrowser();
+	});
+}
+
 function addButtonGroup(errors) {
 	if (errors) {
 		return buttonGroup;
@@ -292,24 +295,31 @@ function addButtonGroup(errors) {
 }
 
 function buildTable(errors) {
+	let csvTable = '';
+	if (columnHeads != '') {
+		csvTable = `
+			<div class="card">
+				<div class="card-body">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th scope="col">#</th>
+								${columnHeads}
+							</tr>
+						</thead>
+						<tbody>
+							${fields}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		`;
+	}
 	$('.csv').html(`
 		${addButtonGroup(errors)}
-		<div class="card">
-			<div class="card-body">
-				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th scope="col">#</th>
-							${columnHeads}
-						</tr>
-					</thead>
-					<tbody>
-						${fields}
-					</tbody>
-				</table>
-			</div>
-		</div>
+		${csvTable}
 	`);
+	buttonGroupClicks(errors);
 }
 
 function errorCap(results) {
