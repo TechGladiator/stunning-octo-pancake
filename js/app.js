@@ -2,7 +2,7 @@
 const buttonGroup = `
 	<div class="btn-group d-flex justify-content-center mb-3" role="group" aria-label="continue repair">
 		<button type="button" class="btn btn-secondary" id="showData">Show Data</button>
-		<button type="button" class="btn btn-secondary">Repair Next Error</button>
+		<button type="button" class="btn btn-secondary" id="repairNext">Repair Next Error</button>
 		<button type="button" class="btn btn-secondary" id="cancelCSV">Cancel CSV Processing</button>
 	</div>
 `;
@@ -143,7 +143,7 @@ function validateRowLength(fieldNames) {
 	}
 }
 
-function validateFieldNames(fieldName) {
+function validateFieldNames(fieldName, validate) {
 	name = false;
 	for (let i = 0; i < names.length; i++) {
 		if (fieldName == names[i]) {
@@ -152,7 +152,9 @@ function validateFieldNames(fieldName) {
 	}
 	if (!name) {
 		console.log(`${fieldName} is invalid`);
-		modal('errorAlert', `Header ${fieldName} is invalid`);
+		if (validate) {
+			modal('errorAlert', `Header ${fieldName} is invalid`);
+		}
 	}
 }
 
@@ -219,9 +221,7 @@ function validateDate(field) {
 function getFieldNames(validate) {
 	columnHeads = '';
 	for (let i = 0; i < fieldNames.length; i++) {
-		if (validate) {
-			validateFieldNames(fieldNames[i]);
-		}
+		validateFieldNames(fieldNames[i], validate);
 		if (!name) {
 			editFieldNames(i);
 		} else {
@@ -290,9 +290,12 @@ function getFieldData() {
 
 function buttonGroupClicks(errors) {
 	$('#showData').click(() => {
-		getFieldNames(validate = true);
+		getFieldNames(validate = false);
 		buildTable(errors);
 	});
+	$('#repairNext').click(() => {
+		modal(errors, 'Under Construction')}
+	);
 	$('#cancelCSV').click(() => {
 		fullResults = {};
 		console.log(fullResults);
