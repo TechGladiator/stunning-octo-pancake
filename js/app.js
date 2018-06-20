@@ -31,7 +31,7 @@ let start;
 $('#inputGroupFile02').on('change', function () {
 	fileName = $(this).val();
 	fileName = fileName.substring(fileName.lastIndexOf('\\') + 1);
-	if (fileName != '') {		
+	if (fileName != '') {
 		$(this).next('.custom-file-label').addClass('selected').html(fileName);
 	} else {
 		$(this).next('.custom-file-label').addClass('selected').html('Drag & Drop or click here to browse for your file');
@@ -207,9 +207,9 @@ function validateDate(field) {
 			console.log(`${field['Creation Date']} is an invalid date format`);
 			modal('errorAlert', `${field['Creation Date']} is an invalid date format`);
 		}
-		
+
 		const d = new Date(field['Creation Date']);
-		
+
 		if (!d.getTime() && d.getTime() !== 0 && fieldDate) { // Invalid date
 			fieldDate = false;
 			console.log(`${field['Creation Date']} is an invalid date`);
@@ -294,8 +294,8 @@ function buttonGroupClicks(errors) {
 		buildTable(errors);
 	});
 	$('#repairNext').click(() => {
-		modal(errors, 'Under Construction')}
-	);
+		modal(errors, 'Under Construction')
+	});
 	$('#cancelCSV').click(() => {
 		fullResults = {};
 		console.log(fullResults);
@@ -349,8 +349,7 @@ function errorCap(results) {
 				if (lengthHigh) {
 					code = "TooManyFields";
 					codeMsg = "Too Many Fields: ";
-				}
-				else if (lengthLow) {
+				} else if (lengthLow) {
 					code = "TooFewFields";
 					codeMsg = "Too Few Fields: ";
 				}
@@ -377,7 +376,7 @@ function completeFn(results) {
 	fullResults = results;
 	fieldNames = fullResults.meta.fields;
 	fieldData = fullResults.data;
-	
+
 	processResults();
 }
 
@@ -390,8 +389,7 @@ function processResults() {
 		getFieldNames(validate = true);
 		getFieldData();
 		buildTable();
-	}
-	else {
+	} else {
 		$('.csv').html('');
 	}
 }
@@ -420,8 +418,7 @@ function buildConfig() {
 function getRowNumb(row) {
 	if (firstError.row != 0 || !lengthHigh && !lengthLow) {
 		row = JSON.stringify(firstError.row + 2);
-	}
-	else {
+	} else {
 		row = JSON.stringify(firstError.row + 1);
 	}
 	return row;
