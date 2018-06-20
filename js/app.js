@@ -294,8 +294,13 @@ function buttonGroupClicks(errors) {
 		buildTable(errors);
 	});
 	$('#repairNext').click(() => {
-		processResults();
+		// processResults();
 		modal(errors, 'Under Construction');
+		const config = buildConfig();
+		const csv = Papa.unparse(fullResults, config);
+		console.log(csv);
+		fullResults = Papa.parse(csv, config);
+		console.log(fullResults);
 	});
 	$('#cancelCSV').click(() => {
 		fullResults = {};
@@ -405,7 +410,7 @@ function buildConfig() {
 		delimiter: '',
 		header: true,
 		dynamicTyping: false,
-		skipEmptyLines: false,
+		skipEmptyLines: true,
 		preview: 0,
 		step: undefined,
 		encoding: '',
