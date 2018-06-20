@@ -247,7 +247,7 @@ function editHeaderContent(colId, i) {
 	$(`#${colId}`).keydown((e) => {
 		const code = e.which;
 		if (code == 13) e.preventDefault();
-		if (code == 32 || code == 13) {
+		if (code == 13) {
 			fieldNames[i] = $(`#${colId}`).html();
 			$('.csv').html('');
 			getFieldNames();
