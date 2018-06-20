@@ -86,6 +86,13 @@ function fixError(code) {
 			const e = fieldNames[i];
 			console.log(e);
 			hideFileBrowser();
+			$('.csv').html(`
+				<div class="btn-group d-flex justify-content-center" role="group" aria-label="continue repair">
+					<button type="button" class="btn btn-secondary">Show Data</button>
+					<button type="button" class="btn btn-secondary">Repair Next Error</button>
+					<button type="button" class="btn btn-secondary">Cancel CSV Processing</button>
+				</div>
+			`);
 			if (e == '') {
 				emptyHeaderAlert(i);
 			}
