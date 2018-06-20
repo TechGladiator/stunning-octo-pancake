@@ -241,13 +241,17 @@ function editHeaderContent(colId, i) {
 	if (fieldNames[i] == '') {
 		fieldNames.pop(i);
 		$('.csv').html('');
-		buildTable();
+		buildTable(true);
 	}
-	$(`#${colId}`).keyup(() => {
-		fieldNames[i] = $(`#${colId}`).html();
-		$('.csv').html('');
-		getFieldNames();
-		buildTable();
+	$(`#${colId}`).keydown((e) => {
+		const code = e.which;
+		if (code == 13) e.preventDefault();
+		if (code == 32 || code == 13) {
+			fieldNames[i] = $(`#${colId}`).html();
+			$('.csv').html('');
+			getFieldNames();
+			buildTable(true);
+		}
 	});
 }
 
@@ -282,6 +286,9 @@ function buttonGroupClicks(errors) {
 		buildTable(errors);
 	});
 	$('#cancelCSV').click(() => {
+		fullResults = {};
+		console.log(fullResults);
+		$('.modal').remove();
 		showFileBrowser();
 	});
 }
