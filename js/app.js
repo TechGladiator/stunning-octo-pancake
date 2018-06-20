@@ -89,6 +89,7 @@ function modal(moId, moBody, moFooter) {
 function fixError(code) {
 	columnHeads = '';
 	fields = '';
+	let errors = true;
 	modalDispose(code, 'Fix', () => {
 		for (let i = 0; i < fieldNames.length; i++) {
 			const e = fieldNames[i];
@@ -97,8 +98,7 @@ function fixError(code) {
 			$('.csv').html(buttonGroup);
 			$('#showData').click(() => {
 				getFieldNames();
-				buildTable();
-				$('.csv').prepend(buttonGroup);
+				buildTable(errors);
 			});
 			$('#cancelCSV').click(() => {
 				showFileBrowser();
@@ -283,8 +283,17 @@ function getFieldData() {
 	}
 }
 
-function buildTable() {
+function addButtonGroup(errors) {
+	if (errors) {
+		return buttonGroup;
+	} else {
+		return '';
+	}
+}
+
+function buildTable(errors) {
 	$('.csv').html(`
+		${addButtonGroup(errors)}
 		<div class="card">
 			<div class="card-body">
 				<table class="table table-bordered">
