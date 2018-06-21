@@ -296,11 +296,6 @@ function buttonGroupClicks(errors) {
 	$('#repairNext').click(() => {
 		// processResults();
 		modal(errors, 'Under Construction');
-		const config = buildConfig();
-		const csv = Papa.unparse(fullResults, config);
-		console.log(csv);
-		fullResults = Papa.parse(csv, config);
-		console.log(fullResults);
 	});
 	$('#cancelCSV').click(() => {
 		fullResults = {};
