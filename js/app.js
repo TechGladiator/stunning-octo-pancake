@@ -134,16 +134,15 @@ function removeEmptyHeaders(code, i) {
 
 function validateRowLength(fieldRow) {
 	let e;
-	let i;
 	let rowLength;
 	if (fieldRow == fieldNames) {
 		rowLength = 1;
 		e = fieldNames;
 	} else {
 		rowLength = fieldRow.length;
-		e = fieldRow[i];
+		e = fieldRow;
 	}
-	for (i = 0; i < rowLength; i++) {
+	for (let i = 0; i < rowLength; i++) {
 		console.log(e.length);
 		console.log(e);
 		console.log(names.length);
@@ -314,6 +313,7 @@ function buttonGroupClicks(errors) {
 	$('#repairNext').click(() => {
 		// processResults();
 		modal(errors, 'Under Construction');
+		console.log(fieldData.length);
 		validateRowLength(fieldData);
 	});
 	$('#cancelCSV').click(() => {
