@@ -131,14 +131,14 @@ function removeEmptyHeaders(code, i) {
 	});
 }
 
-function validateRowLength(fieldNames) {
-	console.log(fieldNames.length);
+function validateRowLength(fieldRow) {
+	console.log(fieldRow.length);
 	console.log(names.length);
 	lengthHigh = false;
 	lengthLow = false;
-	if (fieldNames.length > names.length) {
+	if (fieldRow.length > names.length) {
 		lengthHigh = true;
-	} else if (fieldNames.length < names.length) {
+	} else if (fieldRow.length < names.length) {
 		lengthLow = true;
 	}
 }
