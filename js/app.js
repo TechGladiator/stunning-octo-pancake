@@ -133,14 +133,27 @@ function removeEmptyHeaders(code, i) {
 }
 
 function validateRowLength(fieldRow) {
-	console.log(fieldRow.length);
-	console.log(names.length);
-	lengthHigh = false;
-	lengthLow = false;
-	if (fieldRow.length > names.length) {
-		lengthHigh = true;
-	} else if (fieldRow.length < names.length) {
-		lengthLow = true;
+	let rowLength;
+	if (fieldRow == fieldNames) {
+		rowLength = 1;
+	} else {
+		rowLength = fieldRow.length;
+	}
+	for (let i = 0; i < rowLength; i++) {
+		const e = fieldRow[i];
+		console.log(e.length);
+		console.log(names.length);
+		lengthHigh = false;
+		lengthLow = false;
+		if (e.length > names.length) {
+			lengthHigh = true;
+			console.log(`Row ${i} is too long.`);
+			break;
+		} else if (e.length < names.length) {
+			lengthLow = true;
+			console.log(`Row ${i} is too short.`);
+			break;
+		}
 	}
 }
 
@@ -297,6 +310,7 @@ function buttonGroupClicks(errors) {
 	$('#repairNext').click(() => {
 		// processResults();
 		modal(errors, 'Under Construction');
+		validateRowLength(fieldData);
 	});
 	$('#cancelCSV').click(() => {
 		fullResults = {};
