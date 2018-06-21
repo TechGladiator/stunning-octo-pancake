@@ -25,6 +25,8 @@ let lengthLow = false;
 let name = false;
 const names = ['Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date'];
 let rowCount = 0;
+let rowField;
+let rowId;
 let start;
 
 // replace input placeholder with file name
@@ -139,15 +141,7 @@ function validateRowLength(fieldRow) {
 		if (fieldRow == fieldNames) {
 			e = fieldNames;
 		} else {
-			e = [];
-			rowLength = fieldRow.length;
-			f = fieldRow[i];
-			for (const k in f) {
-				if (f.hasOwnProperty(k)) {
-					const g = f[k];
-					e.push(g);
-				}
-			}
+			e = Object.values(fieldRow[i]);
 		}
 		console.log(`Row ${i}: `, e);
 		console.log(`Row ${i} Length: `, e.length);
@@ -157,11 +151,22 @@ function validateRowLength(fieldRow) {
 		if (e.length > names.length) {
 			lengthHigh = true;
 			console.log(`Row ${i} is too long.`);
+			checkIfFieldNames(i);
 			break;
 		} else if (e.length < names.length) {
 			lengthLow = true;
 			console.log(`Row ${i} is too short.`);
+			checkIfFieldNames(i);
 			break;
+		}
+	}
+
+	function checkIfFieldNames(i) {
+		if (e != fieldNames) {
+			rowField = fieldData[i];
+			console.log('rowField = ', rowField);
+			rowId = i;
+			console.log('rowId = ', rowId);
 		}
 	}
 }
@@ -267,7 +272,7 @@ function hideFileBrowser() {
 function editHeaderContent(colId, i) {
 	console.log($(`#${colId}`).html());
 	console.log(i);
-	console.log(fieldNames);
+	console.log('Field Headers: ', fieldNames);
 	if (fieldNames[i] == '') {
 		fieldNames.pop(i);
 		$('.csv').html('');
@@ -324,6 +329,8 @@ function buttonGroupClicks(errors) {
 		console.log(`errorCount is now: ${errorCount}`);
 		console.log(`Number of Rows: ${fieldData.length}`);
 		validateRowLength(fieldData);
+		errorCap(fullResults, rowField, rowId);
+		printStats();
 	});
 	$('#cancelCSV').click(() => {
 		fullResults = {};
@@ -369,7 +376,7 @@ function buildTable(errors) {
 	buttonGroupClicks(errors);
 }
 
-function errorCap(results) {
+function errorCap(results, fieldRow, row) {
 	if (results && results.errors) {
 		if (results.errors) {
 			let code;
@@ -382,12 +389,16 @@ function errorCap(results) {
 					code = "TooFewFields";
 					codeMsg = "Too Few Fields: ";
 				}
-				errorCount = results.errors.length + 1;
+				if (!fieldRow) {
+					errorCount = results.errors.length + 1;
+					fieldRow = fieldNames;
+					console.log('fieldRow = fieldNames: ', fieldRow);
+				}
 				firstError = {
 					"type": "FieldMismatch",
 					"code": code,
-					"message": `${codeMsg}expected ${names.length} but parsed ${fieldNames.length}`,
-					"row": 0
+					"message": `${codeMsg}expected ${names.length} but parsed ${Object.values(fieldRow).length}`,
+					"row": row || 0
 				};
 			} else {
 				errorCount = results.errors.length;
