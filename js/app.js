@@ -322,19 +322,30 @@ function buttonGroupClicks(errors) {
 		buildTable(errors);
 	});
 	$('#repairNext').click(() => {
-		// processResults();
-		modal(errors, 'Under Construction');
+		// modal(errors, 'Under Construction');
 		console.log(`errorCount was: ${errorCount}`);
 		errorCount--;
 		console.log(`errorCount is now: ${errorCount}`);
 		console.log(`Number of Rows: ${fieldData.length}`);
+		/*
 		validateRowLength(fieldData);
 		errorCap(fullResults, rowField, rowId);
 		printStats();
+		console.log('    Results:', fullResults);
+		if (errorCount == 0) {
+			getFieldNames(validate = true);
+			getFieldData();
+			buildTable();
+		}
+		*/
+		processResults(fieldData, rowField, rowId);
+		if (firstError) {
+			errorModal();
+		}
 	});
 	$('#cancelCSV').click(() => {
 		fullResults = {};
-		console.log(fullResults);
+		console.log('    Results:', fullResults);
 		$('.modal').remove();
 		showFileBrowser();
 	});
@@ -420,17 +431,23 @@ function completeFn(results) {
 	processResults();
 }
 
-function processResults() {
-	validateRowLength(fieldNames);
-	errorCap(fullResults);
+function processResults(fieldData, rowField, rowId) {
+	let fieldType;
+	if (!fieldData) {
+		fieldType = fieldNames;
+		console.log('fieldType = ', fieldType);
+	} else {
+		fieldType = fieldData;
+		console.log('fieldType = ', fieldType);
+	}
+	validateRowLength(fieldType);
+	errorCap(fullResults, rowField, rowId);
 	printStats('Parse complete');
 	console.log('    Results:', fullResults);
 	if (errorCount == 0) {
 		getFieldNames(validate = true);
 		getFieldData();
 		buildTable();
-	} else {
-		$('.csv').html('');
 	}
 }
 
