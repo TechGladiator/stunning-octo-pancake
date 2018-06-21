@@ -99,7 +99,7 @@ function fixError(code) {
 	modalDispose(code, 'Fix', () => {
 		for (let i = 0; i < fieldNames.length; i++) {
 			const e = fieldNames[i];
-			console.log(`Header ${i}: ${e}`);
+			console.log(`Header ${i}: `, e);
 			hideFileBrowser();
 			buildTable(errors);
 			if (e == '') {
@@ -126,7 +126,7 @@ function removeEmptyHeaders(code, i) {
 	$(`#${code}`).on('shown.bs.modal', () => {
 		modalDispose(code, 'Close2', () => {
 			fieldNames.pop(i);
-			console.log(`Field Names: ${fieldNames}`);
+			console.log('Field Headers: ', fieldNames);
 		});
 		modalDispose(code, 'Close3');
 	});
@@ -140,12 +140,26 @@ function validateRowLength(fieldRow) {
 			// rowLength = 1;
 			e = fieldNames;
 		} else {
+			e = [];
+			console.log(`e = ${e}`);
 			rowLength = fieldRow.length;
-			e = JSON.stringify(fieldRow[i]);
+			console.log(`rowLength = ${rowLength};`);
+			f = fieldRow[i];
+			console.log(`f = ${f}[${i}];`);
+			for (const k in f) {
+				console.log(`for (const ${k} in ${f} {`);
+				if (f.hasOwnProperty(k)) {
+					console.log(`  if (${f}.hasOwnProperty(${k})) {`);
+					const g = f[k];
+					console.log(`    const ${g} = ${f}[${k}];`);
+					e.push(g);
+					console.log(`    ${e}.push(${g})`);
+				}
+			}
 		}
-		console.log(`Row ${i}:${e}`);
-		console.log(`Row ${i} Length: ${e.length}`);
-		console.log(`Expected Length: ${names.length}`);
+		console.log(`Row ${i}: `, e);
+		console.log(`Row ${i} Length: `, e.length);
+		console.log('Expected Length: ', names.length);
 		lengthHigh = false;
 		lengthLow = false;
 		if (e.length > names.length) {
@@ -168,9 +182,9 @@ function validateFieldNames(fieldName, validate) {
 		}
 	}
 	if (!name) {
-		console.log(`Header ${fieldName} is invalid`);
+		console.log(`Header "${fieldName}" is invalid`);
 		if (validate) {
-			modal('errorAlert', `Header ${fieldName} is invalid`);
+			modal('errorAlert', `Header "${fieldName}" is invalid`);
 		}
 	}
 }
@@ -477,7 +491,7 @@ function errorModal() {
 	modal(`${code}`, `${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}`, `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`);
 	fixError(code);
 	if (fieldNames.length != names.length) {
-		console.log(`Field Headers: ${fieldNames}`);
+		console.log('Field Headers: ', fieldNames);
 	}
 }
 
