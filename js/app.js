@@ -137,23 +137,15 @@ function validateRowLength(fieldRow) {
 	let rowLength = 1;
 	for (let i = 0; i < rowLength; i++) {
 		if (fieldRow == fieldNames) {
-			// rowLength = 1;
 			e = fieldNames;
 		} else {
 			e = [];
-			console.log(`e = ${e}`);
 			rowLength = fieldRow.length;
-			console.log(`rowLength = ${rowLength};`);
 			f = fieldRow[i];
-			console.log(`f = ${f}[${i}];`);
 			for (const k in f) {
-				console.log(`for (const ${k} in ${f} {`);
 				if (f.hasOwnProperty(k)) {
-					console.log(`  if (${f}.hasOwnProperty(${k})) {`);
 					const g = f[k];
-					console.log(`    const ${g} = ${f}[${k}];`);
 					e.push(g);
-					console.log(`    ${e}.push(${g})`);
 				}
 			}
 		}
