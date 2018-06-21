@@ -99,7 +99,7 @@ function fixError(code) {
 	modalDispose(code, 'Fix', () => {
 		for (let i = 0; i < fieldNames.length; i++) {
 			const e = fieldNames[i];
-			console.log(e);
+			console.log(`Header ${i}: ${e}`);
 			hideFileBrowser();
 			buildTable(errors);
 			if (e == '') {
@@ -126,7 +126,7 @@ function removeEmptyHeaders(code, i) {
 	$(`#${code}`).on('shown.bs.modal', () => {
 		modalDispose(code, 'Close2', () => {
 			fieldNames.pop(i);
-			console.log(fieldNames);
+			console.log(`Field Names: ${fieldNames}`);
 		});
 		modalDispose(code, 'Close3');
 	});
@@ -134,18 +134,18 @@ function removeEmptyHeaders(code, i) {
 
 function validateRowLength(fieldRow) {
 	let e;
-	let rowLength;
-	if (fieldRow == fieldNames) {
-		rowLength = 1;
-		e = fieldNames;
-	} else {
-		rowLength = fieldRow.length;
-		e = fieldRow;
-	}
+	let rowLength = 1;
 	for (let i = 0; i < rowLength; i++) {
-		console.log(e.length);
-		console.log(e);
-		console.log(names.length);
+		if (fieldRow == fieldNames) {
+			// rowLength = 1;
+			e = fieldNames;
+		} else {
+			rowLength = fieldRow.length;
+			e = JSON.stringify(fieldRow[i]);
+		}
+		console.log(`Row ${i}:${e}`);
+		console.log(`Row ${i} Length: ${e.length}`);
+		console.log(`Expected Length: ${names.length}`);
 		lengthHigh = false;
 		lengthLow = false;
 		if (e.length > names.length) {
@@ -168,7 +168,7 @@ function validateFieldNames(fieldName, validate) {
 		}
 	}
 	if (!name) {
-		console.log(`${fieldName} is invalid`);
+		console.log(`Header ${fieldName} is invalid`);
 		if (validate) {
 			modal('errorAlert', `Header ${fieldName} is invalid`);
 		}
@@ -313,7 +313,10 @@ function buttonGroupClicks(errors) {
 	$('#repairNext').click(() => {
 		// processResults();
 		modal(errors, 'Under Construction');
-		console.log(fieldData.length);
+		console.log(`errorCount was: ${errorCount}`);
+		errorCount--;
+		console.log(`errorCount is now: ${errorCount}`);
+		console.log(`Number of Rows: ${fieldData.length}`);
 		validateRowLength(fieldData);
 	});
 	$('#cancelCSV').click(() => {
@@ -474,7 +477,7 @@ function errorModal() {
 	modal(`${code}`, `${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}`, `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`);
 	fixError(code);
 	if (fieldNames.length != names.length) {
-		console.log(fieldNames);
+		console.log(`Field Headers: ${fieldNames}`);
 	}
 }
 
