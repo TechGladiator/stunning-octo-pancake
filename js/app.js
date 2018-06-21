@@ -57,7 +57,7 @@ function modalDispose(moId, close, func) {
 	$(`#${moId}${close}`).click(() => {
 		$(`#${moId}`).modal('hide');
 		$(`#${moId}`).on('hidden.bs.modal', () => {
-			$(`#${moId}`).remove();
+			$(`.modal`).remove();
 			if (func) func();
 		});
 	});
