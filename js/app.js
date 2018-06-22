@@ -94,12 +94,23 @@ function modal(moId, moBody, moFooter) {
 	modalDispose(moId, 'Close2');
 }
 
-function fixError(code) {
+function fixError(code, errorRow) {
 	columnHeads = '';
 	fields = '';
+	let er;
 	let errors = true;
+	if (errorRow) {
+		console.log('errorRow = ', errorRow);
+		console.log('rowField = ', rowField);
+		er = errorRow;
+	} else if (rowField != undefined) {
+		console.log('rowField = ', rowField);
+		er = rowField;
+	} else {
+		er = fieldNames;
+	}
 	modalDispose(code, 'Fix', () => {
-		for (let i = 0; i < fieldNames.length; i++) {
+		for (let i = 0; i < er.length; i++) {
 			const e = fieldNames[i];
 			console.log(`Header ${i}: `, e);
 			hideFileBrowser();
@@ -341,7 +352,7 @@ function buttonGroupClicks(errors) {
 		
 		// processResults(fieldData, rowField, rowId);
 		if (firstError) {
-			errorModal();
+			errorModal(rowField);
 		}
 	});
 	$('#cancelCSV').click(() => {
@@ -496,13 +507,13 @@ function parseFile(config) {
 	});
 }
 
-function errorModal() {
+function errorModal(errorRow) {
 	let code = firstError.code;
 	let errorMsg = JSON.stringify(firstError.message);
 	let row;
 	row = getRowNumb(row);
 	modal(`${code}`, `${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}`, `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`);
-	fixError(code);
+	fixError(code, errorRow);
 	if (fieldNames.length != names.length) {
 		console.log('Field Headers: ', fieldNames);
 	}
