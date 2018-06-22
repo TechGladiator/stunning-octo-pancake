@@ -94,25 +94,27 @@ function modal(moId, moBody, moFooter) {
 	modalDispose(moId, 'Close2');
 }
 
-function fixError(code, errorRow) {
+function fixError(code) {
 	columnHeads = '';
 	fields = '';
 	let er;
 	let errors = true;
-	if (errorRow) {
-		console.log('errorRow = ', errorRow);
-		console.log('rowField = ', rowField);
-		er = errorRow;
-	} else if (rowField != undefined) {
+	if (rowField != undefined) {
 		console.log('rowField = ', rowField);
 		er = rowField;
+		console.log('rowField.length = ', er.length);
+		if (rowField.length == undefined) {
+			er = Object.values(er);
+			console.log('er = Object.values(er); ', er, er.length);
+		}
 	} else {
 		er = fieldNames;
+		console.log('fieldNames.length = ', er.length);
 	}
 	modalDispose(code, 'Fix', () => {
 		for (let i = 0; i < er.length; i++) {
-			const e = fieldNames[i];
-			console.log(`Header ${i}: `, e);
+			const e = er[i];
+			console.log(`Field ${i}: `, e);
 			hideFileBrowser();
 			buildTable(errors);
 			if (e == '') {
@@ -507,13 +509,13 @@ function parseFile(config) {
 	});
 }
 
-function errorModal(errorRow) {
+function errorModal() {
 	let code = firstError.code;
 	let errorMsg = JSON.stringify(firstError.message);
 	let row;
 	row = getRowNumb(row);
 	modal(`${code}`, `${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}`, `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`);
-	fixError(code, errorRow);
+	fixError(code);
 	if (fieldNames.length != names.length) {
 		console.log('Field Headers: ', fieldNames);
 	}
