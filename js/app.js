@@ -214,7 +214,7 @@ function validateState(field, validate) {
 			}
 		}
 	}
-	if (!fieldState && !undefined) {
+	if (!fieldState && fieldState == undefined) {
 		console.log(`${field.State} is invalid`);
 		if (validate) {
 			modal('errorAlert', `${field.State} is an invalid State abbreviation`);
