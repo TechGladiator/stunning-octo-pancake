@@ -22,7 +22,7 @@ let firstRun = true;
 let fullResults;
 let lengthHigh = false;
 let lengthLow = false;
-let name = false;
+let name = true;
 const names = ['Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date'];
 let rowCount = 0;
 let rowField;
@@ -189,10 +189,13 @@ function validateRowLength(fieldRow) {
 }
 
 function validateFieldNames(fieldName, validate) {
-	name = false;
+	// name = true;
 	for (let i = 0; i < names.length; i++) {
 		if (fieldName == names[i]) {
 			name = true;
+			break;
+		} else {
+			name = false;
 		}
 	}
 	if (!name) {
@@ -275,6 +278,7 @@ function getFieldNames(validate) {
 		validateFieldNames(fieldNames[i], validate);
 		if (!name) {
 			editFieldNames(i);
+			break;
 		} else {
 			columnHeads += `<th scope="col">${fieldNames[i]}</th>`;
 		}
@@ -494,7 +498,7 @@ function buildConfig() {
 
 function getRowNumb(row) {
 	if (firstError.row != 0 || !lengthHigh && !lengthLow) {
-		row = JSON.stringify(firstError.row + 2);
+		row = JSON.stringify(firstError.row);
 	} else {
 		row = JSON.stringify(firstError.row + 1);
 	}
