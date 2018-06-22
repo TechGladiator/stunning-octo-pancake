@@ -454,19 +454,9 @@ function completeFn(results) {
 
 	fullResults = results;
 	fieldNames = fullResults.meta.fields;
-	if (fieldNames != names) {
-		modal('parseFailure', `Invalid header field. Please check your data and correct the header. You can use the sample provided as a guide.`);
-		console.log(names);
-		let csv = Papa.unparse([names]);
-		console.log(csv);
-		$('.csv').html(`
-											<div class="text-center w-75 m-auto"><h5>You can also copy and paste this as the first line of your csv file!</h5><span class="code border border-dark rounded p-1">${csv}</span><h5>Once you've fixed it, try uploading it again!</h5></div>
-										`);
-	} else {
-		fieldData = fullResults.data;
+	fieldData = fullResults.data;
 
-		processResults();
-	}
+	processResults();
 }
 
 function processResults() {
