@@ -142,6 +142,7 @@ function validateRowLength(fieldRow) {
 			e = fieldNames;
 		} else {
 			e = Object.values(fieldRow[i]);
+			rowLength = fieldRow.length;
 		}
 		console.log(`Row ${i}: `, e);
 		console.log(`Row ${i} Length: `, e.length);
@@ -327,7 +328,7 @@ function buttonGroupClicks(errors) {
 		errorCount--;
 		console.log(`errorCount is now: ${errorCount}`);
 		console.log(`Number of Rows: ${fieldData.length}`);
-		/*
+		
 		validateRowLength(fieldData);
 		errorCap(fullResults, rowField, rowId);
 		printStats();
@@ -337,8 +338,8 @@ function buttonGroupClicks(errors) {
 			getFieldData();
 			buildTable();
 		}
-		*/
-		processResults(fieldData, rowField, rowId);
+		
+		// processResults(fieldData, rowField, rowId);
 		if (firstError) {
 			errorModal();
 		}
@@ -431,17 +432,9 @@ function completeFn(results) {
 	processResults();
 }
 
-function processResults(fieldData, rowField, rowId) {
-	let fieldType;
-	if (!fieldData) {
-		fieldType = fieldNames;
-		console.log('fieldType = ', fieldType);
-	} else {
-		fieldType = fieldData;
-		console.log('fieldType = ', fieldType);
-	}
-	validateRowLength(fieldType);
-	errorCap(fullResults, rowField, rowId);
+function processResults() {
+	validateRowLength(fieldNames);
+	errorCap(fullResults);
 	printStats('Parse complete');
 	console.log('    Results:', fullResults);
 	if (errorCount == 0) {
