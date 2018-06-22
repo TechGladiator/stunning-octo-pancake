@@ -460,7 +460,7 @@ function completeFn(results) {
 		let csv = Papa.unparse([names]);
 		console.log(csv);
 		$('.csv').html(`
-											<div class="text-center">${csv}</div>
+											<div class="text-center code w-75 m-auto"><span class="border border-dark rounded p-1">${csv}</span></div>
 										`);
 	} else {
 		fieldData = fullResults.data;
