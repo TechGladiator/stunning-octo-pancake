@@ -463,6 +463,10 @@ function processResults() {
 		getFieldNames(validate = true);
 		getFieldData(validate = true);
 		buildTable();
+	} else {
+		getFieldNames();
+		getFieldData();
+		buildTable(errors = true);
 	}
 }
 
