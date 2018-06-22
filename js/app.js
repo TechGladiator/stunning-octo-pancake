@@ -118,7 +118,7 @@ function fixError(code) {
 			hideFileBrowser();
 			buildTable(errors);
 			if (e == '') {
-				emptyHeaderAlert(i);
+				emptyFieldAlert(er, i);
 			}
 		}
 	});
@@ -130,18 +130,20 @@ function showFileBrowser() {
 	$('.csv').html('');
 }
 
-function emptyHeaderAlert(i) {
-	let code = 'emptyHeadersAlert';
+function emptyFieldAlert(errorRow, i) {
+	let code = 'emptyFieldAlert';
 	let cancel = `<button type="button" class="btn btn-secondary" id="${code}Close3">Cancel</button>`;
-	modal(`${code}`, `Empty headers found. Would you like to remove them?`, cancel);
-	removeEmptyHeaders(code, i);
+	modal(`${code}`, `Empty fields found. Would you like to remove them?`, cancel);
+	removeEmptyFields(code, errorRow, i);
 }
 
-function removeEmptyHeaders(code, i) {
+function removeEmptyFields(code, errorRow, i) {
+	let row;
+	row = getRowNumb(row);
 	$(`#${code}`).on('shown.bs.modal', () => {
 		modalDispose(code, 'Close2', () => {
-			fieldNames.pop(i);
-			console.log('Field Headers: ', fieldNames);
+			errorRow.pop(i);
+			console.log(`Row ${row}: `, errorRow);
 		});
 		modalDispose(code, 'Close3');
 	});
@@ -200,7 +202,7 @@ function validateFieldNames(fieldName, validate) {
 	}
 }
 
-function validateState(field) {
+function validateState(field, validate) {
 	fieldState = false;
 	const states = ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY'];
 
@@ -213,11 +215,13 @@ function validateState(field) {
 	}
 	if (!fieldState && !undefined) {
 		console.log(`${field.State} is invalid`);
-		modal('errorAlert', `${field.State} is an invalid State abbreviation`);
+		if (validate) {
+			modal('errorAlert', `${field.State} is an invalid State abbreviation`);
+		}
 	}
 }
 
-function validateZip(field) {
+function validateZip(field, validate) {
 	fieldZip = true;
 	const digits = '0123456789';
 
@@ -235,11 +239,13 @@ function validateZip(field) {
 	}
 	if (!fieldZip && !undefined) {
 		console.log(`${field.Zip} is invalid`);
-		modal('errorAlert', `${field.Zip} is not a valid 5 digit Zip Code`);
+		if (validate) {
+			modal('errorAlert', `${field.Zip} is not a valid 5 digit Zip Code`);
+		}
 	}
 }
 
-function validateDate(field) {
+function validateDate(field, validate) {
 	fieldDate = true;
 	const regEx = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -255,7 +261,9 @@ function validateDate(field) {
 		if (!d.getTime() && d.getTime() !== 0 && fieldDate) { // Invalid date
 			fieldDate = false;
 			console.log(`${field['Creation Date']} is an invalid date`);
-			modal('errorAlert', `${field['Creation Date']} is an invalid date`);
+			if (validate) {
+				modal('errorAlert', `${field['Creation Date']} is an invalid date`);
+			}
 		}
 	}
 }
@@ -305,13 +313,13 @@ function editHeaderContent(colId, i) {
 	});
 }
 
-function getFieldData() {
+function getFieldData(validate) {
 	fields = '';
 	for (let i = 0; i < fieldData.length; i++) {
 		const e = fieldData[i];
-		validateState(e);
-		validateZip(e);
-		validateDate(e);
+		validateState(e, validate);
+		validateZip(e, validate);
+		validateDate(e, validate);
 		fields += `
 			<tr>
 				<th scope="row">${i + 1}</th>
@@ -332,7 +340,8 @@ function getFieldData() {
 
 function buttonGroupClicks(errors) {
 	$('#showData').click(() => {
-		getFieldNames(validate = false);
+		getFieldNames();
+		getFieldData();
 		buildTable(errors);
 	});
 	$('#repairNext').click(() => {
@@ -348,7 +357,7 @@ function buttonGroupClicks(errors) {
 		console.log('    Results:', fullResults);
 		if (errorCount == 0) {
 			getFieldNames(validate = true);
-			getFieldData();
+			getFieldData(validate = true);
 			buildTable();
 		}
 		
@@ -452,7 +461,7 @@ function processResults() {
 	console.log('    Results:', fullResults);
 	if (errorCount == 0) {
 		getFieldNames(validate = true);
-		getFieldData();
+		getFieldData(validate = true);
 		buildTable();
 	}
 }
