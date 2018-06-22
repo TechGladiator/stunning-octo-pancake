@@ -454,9 +454,19 @@ function completeFn(results) {
 
 	fullResults = results;
 	fieldNames = fullResults.meta.fields;
-	fieldData = fullResults.data;
+	if (fieldNames != names) {
+		modal('parseFailure', `Invalid header field. Please check your data and correct the header, using the table provided as a guide.`);
+		console.log(names);
+		let csv = Papa.unparse([names]);
+		console.log(csv);
+		$('.csv').html(`
+											<div class="text-center">${csv}</div>
+										`);
+	} else {
+		fieldData = fullResults.data;
 
-	processResults();
+		processResults();
+	}
 }
 
 function processResults() {
