@@ -11,6 +11,8 @@ parseFile();
 
 // Implement Bootstrap modal
 
+// let user correct column errors if possible
+
 // Application displays all successful records
 
 // Append the parsed and validated data to HTML document body as a table
