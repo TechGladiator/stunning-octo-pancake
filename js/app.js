@@ -66,7 +66,7 @@ $('#upload').click(function() {
       delimiter: "", // auto-detect
       header: $('#headerCheck').prop('checked'),
       dynamicTyping: false,
-      skipEmptyLines: false,
+      skipEmptyLines: true,
       preview: 0,
       step: undefined,
       encoding: "",
