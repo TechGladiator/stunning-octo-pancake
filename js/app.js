@@ -19,6 +19,11 @@ $('#inputGroupFile02').on('change', function () {
 	}
 });
 
+// track parsing time
+function now() {
+	return typeof window.performance !== 'undefined' ? window.performance.now() : 0;
+}
+
 // Enable application to parse file
 // use jquery to select files
 $('input[type=file]').parse({
