@@ -25,8 +25,10 @@ function printStats(msg) {
   console.log('       Time:', end - start || '(Unknown; your browser does not support the Performance API)', 'ms');
   console.log('  Row count:', rowCount);
   console.log('     Errors:', errorCount);
-  if (errorCount)
+  if (errorCount) {
     console.log('First error:', firstError);
+    modal(`${firstError.type}`, `First error: ${firstError.message}`);
+  }
 }
 
 // track parsing time
