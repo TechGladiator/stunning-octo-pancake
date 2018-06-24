@@ -1,4 +1,5 @@
 // global variables
+var names = ['Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date'];
 var rowCount = 0,
   errorCount = 0,
   fieldData, fieldErrors, fieldNames, firstError, fullResults;
