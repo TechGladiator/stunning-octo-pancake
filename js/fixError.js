@@ -20,6 +20,9 @@ function fixRow(code, close, row) {
       console.log('you clicked Edit Data');
       makeEditable();
     });
+    $('#repairNext').click(() => {
+      console.log('you clicked Repair Next Error');
+    });
     $('#cancelCSV').click(() => {
       console.log('you clicked Cancel CSV Processing');
     });
