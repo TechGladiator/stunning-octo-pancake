@@ -19,12 +19,12 @@ function buildTable(row, buttonGroup) {
                     <div class="card">
                       <div class="card-body">
                         <table class="table table-bordered">
-                          <thead>
+                          <thead id="headings">
                             <tr>
                               ${fn}
                             </tr>
                           </thead>
-                          <tbody>
+                          <tbody id="dataEntered">
                             ${fd}
                           </tbody>
                         </table>
