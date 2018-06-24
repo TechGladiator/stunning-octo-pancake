@@ -59,6 +59,20 @@ function completeFn(results) {
 
 // Enable application to parse file
 $('#upload').click(function () {
+  rowCount = 0;
+  errorCount = 0;
+  firstError = undefined;
+
+  if (!firstRun) {
+    console.log('--------------------------------------------------');
+  } else {
+    firstRun = false;
+  }
+
+  if (!$('#inputGroupFile02')[0].files.length) {
+    alert("Please choose at least one file to parse.");
+  }
+
   // use jquery to select files
   $('#inputGroupFile02').parse({
     config: {
