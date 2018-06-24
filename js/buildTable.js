@@ -1,4 +1,4 @@
-function buildTable(row) {
+function buildTable(row, buttonGroup) {
   console.log('Row: ', row);
   console.log(fieldData[row]);
   let fn = '';
@@ -15,6 +15,7 @@ function buildTable(row) {
     }
   }
   $('.csv').html(`
+                    ${buttonGroup}
                     <div class="card">
                       <div class="card-body">
                         <table class="table table-bordered">
