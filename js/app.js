@@ -27,6 +27,11 @@ function now() {
   return typeof window.performance !== 'undefined' ? window.performance.now() : 0;
 }
 
+function errorFn(err, file) {
+  end = now();
+  console.log('ERROR:', err, file);
+}
+
 // Enable application to parse file
 // use jquery to select files
 $('input[type=file]').parse({
@@ -42,7 +47,7 @@ $('input[type=file]').parse({
     worker: false,
     comments: false,
     complete: undefined,
-    error: undefined,
+    error: errorFn,
   },
   before: function (file) {
     // executed before parsing each file begins;
