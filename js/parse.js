@@ -61,54 +61,54 @@ function completeFn(results) {
 }
 
 // Enable application to parse file
-$('#upload').click(function () {
-  rowCount = 0;
-  errorCount = 0;
-  firstError = undefined;
-
-  if (!firstRun) {
-    console.log('--------------------------------------------------');
-  } else {
-    firstRun = false;
-  }
-
-  if (!$('#inputGroupFile02')[0].files.length) {
-    modal("noFileChosen", "Please choose at least one file to parse.");
-  }
-
-  // use jquery to select files
-  $('#inputGroupFile02').parse({
-    config: {
-      // base config to use for each file
-      delimiter: "",
-      header: $('#headerCheck').prop('checked'),
-      dynamicTyping: false,
-      skipEmptyLines: true,
-      preview: 0,
-      step: undefined,
-      encoding: "",
-      worker: false,
-      comments: false,
-      complete: completeFn,
-      error: errorFn,
-    },
-    before: function (file) {
-      // executed before parsing each file begins;
-      // what you return here controls the flow
-      start = now();
-      console.log('Parsing file...', file);
-    },
-    error: function (err, file) {
-      // executed if an error occurs while loading the file,
-      // or if before callback aborted for some reason
-      console.log('ERROR:', err, file);
-      firstError = firstError || err;
-      errorCount++;
-    },
-    complete: function () {
-      // executed after all files are complete
-      end = now();
-      printStats('Done with all files');
+function parseFile() {
+  $('#upload').click(function () {
+    rowCount = 0;
+    errorCount = 0;
+    firstError = undefined;
+    if (!firstRun) {
+      console.log('--------------------------------------------------');
     }
+    else {
+      firstRun = false;
+    }
+    if (!$('#inputGroupFile02')[0].files.length) {
+      modal("noFileChosen", "Please choose at least one file to parse.");
+    }
+    // use jquery to select files
+    $('#inputGroupFile02').parse({
+      config: {
+        // base config to use for each file
+        delimiter: "",
+        header: $('#headerCheck').prop('checked'),
+        dynamicTyping: false,
+        skipEmptyLines: true,
+        preview: 0,
+        step: undefined,
+        encoding: "",
+        worker: false,
+        comments: false,
+        complete: completeFn,
+        error: errorFn,
+      },
+      before: function (file) {
+        // executed before parsing each file begins;
+        // what you return here controls the flow
+        start = now();
+        console.log('Parsing file...', file);
+      },
+      error: function (err, file) {
+        // executed if an error occurs while loading the file,
+        // or if before callback aborted for some reason
+        console.log('ERROR:', err, file);
+        firstError = firstError || err;
+        errorCount++;
+      },
+      complete: function () {
+        // executed after all files are complete
+        end = now();
+        printStats('Done with all files');
+      }
+    });
   });
-});
+}
