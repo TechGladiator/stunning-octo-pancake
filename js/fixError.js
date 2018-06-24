@@ -8,9 +8,11 @@ function fixRow(code, close, row) {
       if (!editable[0].isContentEditable) {
         editable[0].contentEditable = 'true';
         editable[1].contentEditable = 'true';
+        $('#editData').html('Save Edits');
       } else {
         editable[0].contentEditable = 'false';
         editable[1].contentEditable = 'false';
+        $('#editData').html('Edit Data');
       }
     });
     $('#cancelCSV').click(() => {
