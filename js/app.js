@@ -23,7 +23,28 @@ $('#inputGroupFile02').on('change', function () {
 // use jquery to select files
 $('input[type=file]').parse({
 	config: {
-		// base config to use for each file
+    // base config to use for each file
+    delimiter: "",	// auto-detect
+    newline: "",	// auto-detect
+    quoteChar: '"',
+    escapeChar: '"',
+    header: false,
+    trimHeaders: false,
+    dynamicTyping: false,
+    preview: 0,
+    encoding: "",
+    worker: false,
+    comments: false,
+    step: undefined,
+    complete: undefined,
+    error: undefined,
+    download: false,
+    skipEmptyLines: false,
+    chunk: undefined,
+    fastMode: undefined,
+    beforeFirstChunk: undefined,
+    withCredentials: undefined,
+    transform: undefined
 	},
 	before: function(file, inputElem)
 	{
