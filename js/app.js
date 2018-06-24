@@ -44,11 +44,11 @@ $('input[type=file]').parse({
     complete: undefined,
     error: undefined,
   },
-  before: function (file, inputElem) {
+  before: function (file) {
     // executed before parsing each file begins;
     // what you return here controls the flow
   },
-  error: function (err, file, inputElem, reason) {
+  error: function (err, file) {
     // executed if an error occurs while loading the file,
     // or if before callback aborted for some reason
   },
