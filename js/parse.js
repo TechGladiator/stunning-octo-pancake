@@ -99,8 +99,8 @@ $('#upload').click(function () {
       // executed if an error occurs while loading the file,
       // or if before callback aborted for some reason
       console.log('ERROR:', err, file);
-      firstError = firstError || err,
-        errorCount++;
+      firstError = firstError || err;
+      errorCount++;
     },
     complete: function () {
       // executed after all files are complete
