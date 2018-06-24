@@ -13,18 +13,22 @@ function makeEditable() {
   }
 }
 
+function buttonGroupClicks() {
+  $('#editData').click(() => {
+    makeEditable();
+  });
+  $('#repairNext').click(() => {
+    console.log('you clicked Repair Next Error');
+  });
+  $('#cancelCSV').click(() => {
+    console.log('you clicked Cancel CSV Processing');
+  });
+}
+
+
 function fixRow(code, close, row) {
   $(`#${code}${close}`).click(() => {
     buildTable(row, buttonGroup);
-    $('#editData').click(() => {
-      console.log('you clicked Edit Data');
-      makeEditable();
-    });
-    $('#repairNext').click(() => {
-      console.log('you clicked Repair Next Error');
-    });
-    $('#cancelCSV').click(() => {
-      console.log('you clicked Cancel CSV Processing');
-    });
+    buttonGroupClicks();
   });
 }
