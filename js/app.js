@@ -1,12 +1,16 @@
-// Project Plan
-
 // Users navigate to web site and upload a CSV file
-
-	// Basic web page has been created and a file can be selected
-
-		// Enable drag & drop to add file
-
-			// Already enabled as part of Bootstrap file input field
+// replace input placeholder with file name
+$('#inputGroupFile02').on('change', function () {
+	fileName = $(this).val();
+	fileName = fileName.substring(fileName.lastIndexOf('\\') + 1);
+	if (fileName != '') {
+		$(this).next('.custom-file-label').addClass('selected').html(fileName);
+		$('.csv').html('');
+	} else {
+		$(this).next('.custom-file-label').addClass('selected').html('Drag & Drop or click here to browse for your file');
+		$('.csv').html('');
+	}
+});
 
 // Application first validates the number of columns in the CSV
 
