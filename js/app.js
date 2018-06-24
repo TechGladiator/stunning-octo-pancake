@@ -1,3 +1,10 @@
+// global variables
+var inputType = "string";
+var stepped = 0, rowCount = 0, errorCount = 0, firstError;
+var start, end;
+var firstRun = true;
+var maxUnparseLength = 10000;
+
 // Users navigate to web site and upload a CSV file
 // replace input placeholder with file name
 $('#inputGroupFile02').on('change', function () {
