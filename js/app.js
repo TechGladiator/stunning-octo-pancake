@@ -1,7 +1,10 @@
 // global variables
 var rowCount = 0,
   errorCount = 0,
-  firstError;
+  fieldData,
+  fieldNames,
+  firstError,
+  fullResults;
 var start, end;
 var firstRun = true;
 
@@ -49,6 +52,10 @@ function completeFn(results) {
       rowCount = results.data.length;
     }
   }
+
+  fullResults = results;
+  fieldNames = results.meta.fields;
+  fieldData = results.data;
 
   printStats('Parse complete');
   console.log('    Results:', results);
