@@ -19,13 +19,10 @@ $('#inputGroupFile02').on('change', function () {
 	}
 });
 
+// Enable application to parse file
+
+
 // Application first validates the number of columns in the CSV
-
-	// Enable application to parse file
-
-		// Implement using https://github.com/mholt/PapaParse
-
-		// Utilizing PapaParse, the page now parses the CSV file into JSON
 
 // Confirm correct number of columns are present based on header row
 
