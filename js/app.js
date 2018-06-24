@@ -22,6 +22,14 @@ $('#inputGroupFile02').on('change', function () {
   }
 });
 
+function printStats(msg) {
+	if (msg) console.log(msg);
+	console.log('       Time:', end - start || '(Unknown; your browser does not support the Performance API)', 'ms');
+	console.log('  Row count:', rowCount);
+	console.log('     Errors:', errorCount);
+	if (errorCount) console.log('First error:', firstError);
+}
+
 // track parsing time
 function now() {
   return typeof window.performance !== 'undefined' ? window.performance.now() : 0;
@@ -32,9 +40,26 @@ function errorFn(err, file) {
   console.log('ERROR:', err, file);
 }
 
+function completeFn(results) {
+  end = now();
+
+  if (results && results.errors) {
+    if (results.errors) {
+      errorCount = results.errors.length;
+      firstError = results.errors[0];
+    }
+    if (results.data && results.data.length > 0) {
+      rowCount = results.data.length;
+    }
+  }
+
+  printStats('Parse complete');
+  console.log('    Results:', results);
+}
+
 // Enable application to parse file
 // use jquery to select files
-$('input[type=file]').parse({
+$('#inputGroupFile02').parse({
   config: {
     // base config to use for each file
     delimiter: "", // auto-detect
@@ -46,7 +71,7 @@ $('input[type=file]').parse({
     encoding: "",
     worker: false,
     comments: false,
-    complete: undefined,
+    complete: completeFn,
     error: errorFn,
   },
   before: function (file) {
@@ -65,7 +90,7 @@ $('input[type=file]').parse({
   complete: function () {
     // executed after all files are complete
     end = now();
-    console.log('Done with all files');
+    printStats('Done with all files');
   }
 });
 
