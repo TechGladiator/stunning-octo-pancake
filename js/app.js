@@ -1,6 +1,5 @@
+// Enable application to parse file
 parseFile();
-
-// Application first validates the number of columns in the CSV
 
 // Confirm correct number of columns are present based on header row
 
