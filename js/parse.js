@@ -1,6 +1,6 @@
  // global variables
  const buttonGroup = `
-	<div class="btn-group d-flex justify-content-center mb-3" role="group" aria-label="continue repair">
+	<div class="btn-group d-flex justify-content-center mb-3" role="group" aria-label="button group">
 		<button type="button" class="btn btn-secondary" id="editData">Edit Data</button>
 		<button type="button" class="btn btn-secondary" id="cancelCSV">Cancel CSV Processing</button>
 	</div>
