@@ -47,13 +47,20 @@ $('input[type=file]').parse({
   before: function (file) {
     // executed before parsing each file begins;
     // what you return here controls the flow
+    start = now();
+    console.log('Parsing file...', file);
   },
   error: function (err, file) {
     // executed if an error occurs while loading the file,
     // or if before callback aborted for some reason
+    console.log('ERROR:', err, file);
+    firstError = firstError || err,
+    errorCount++;
   },
   complete: function () {
     // executed after all files are complete
+    end = now();
+    console.log('Done with all files');
   }
 });
 
