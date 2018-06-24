@@ -1,7 +1,7 @@
 // global variables
 var rowCount = 0,
   errorCount = 0,
-  fieldData, fieldNames, firstError, fullResults;
+  fieldData, fieldErrors, fieldNames, firstError, fullResults;
 var start, end;
 var firstRun = true;
 
@@ -43,20 +43,21 @@ function errorFn(err, file) {
 
 function completeFn(results) {
   end = now();
-  if (results && results.errors) {
-    if (results.errors) {
-      errorCount = results.errors.length;
-      firstError = results.errors[0];
+  fullResults = results;
+  fieldNames = fullResults.meta.fields;
+  fieldData = fullResults.data;
+  fieldErrors = fullResults.errors;
+  if (fullResults && fieldErrors) {
+    if (fieldErrors) {
+      errorCount = fieldErrors.length;
+      firstError = fieldErrors[0];
     }
-    if (results.data && results.data.length > 0) {
-      rowCount = results.data.length;
+    if (fieldData && fieldData.length > 0) {
+      rowCount = fieldData.length;
     }
   }
-  fullResults = results;
-  fieldNames = results.meta.fields;
-  fieldData = results.data;
   printStats('Parse complete');
-  console.log('    Results:', results);
+  console.log('    Results:', fullResults);
 }
 
 // Enable application to parse file
