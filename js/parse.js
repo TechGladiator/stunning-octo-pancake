@@ -1,6 +1,9 @@
 // global variables
 var names = ['Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date'];
-var rowCount = 0,
+var code,
+  message,
+  row,
+  rowCount = 0,
   errorCount = 0,
   fieldData, fieldErrors, fieldNames, firstError, fullResults;
 var start, end;
@@ -28,7 +31,12 @@ function printStats(msg) {
   console.log('     Errors:', errorCount);
   if (errorCount) {
     console.log('First error:', firstError);
-    modal(`${firstError.type}`, `First error: ${firstError.message}`);
+    code = firstError.code;
+    message = firstError.message;
+    row = firstError.row +2;
+    var fix = `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`;
+    modal(code, `${message} in "${fileName}", Row: ${row}`, fix);
+    modalDispose(code, 'Fix');
   }
 }
 
