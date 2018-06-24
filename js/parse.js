@@ -70,7 +70,7 @@ $('#upload').click(function () {
   }
 
   if (!$('#inputGroupFile02')[0].files.length) {
-    alert("Please choose at least one file to parse.");
+    modal("noFileChosen", "Please choose at least one file to parse.");
   }
 
   // use jquery to select files
