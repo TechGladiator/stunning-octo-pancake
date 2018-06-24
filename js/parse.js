@@ -38,10 +38,10 @@
      console.log('First error:', firstError);
      code = firstError.code;
      message = firstError.message;
-     row = firstError.row +2;
+     row = firstError.row;
      const fix = `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`;
-     modal(code, `${message} in "${fileName}", Row: ${row}`, fix);
-     modalDispose(code, 'Fix');
+     modal(code, `${message} in "${fileName}", Row: ${row + 2}`, fix);
+     modalDispose(code, 'Fix', fixRow(code, 'Fix', row));
    }
  }
 
