@@ -104,7 +104,6 @@ function removeFirstErrorMessage(row) {
 
 function fixRow(code, close, row) {
   $(`#${code}${close}`).click(() => {
-    hideFileBrowser();
     removeEmptyField(row);
     removeFirstErrorMessage(row);
     buildTable(row);
