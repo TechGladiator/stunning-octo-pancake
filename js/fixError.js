@@ -45,7 +45,6 @@ function buttonGroupClicks(row) {
     updateFields(row);
   });
   $('#repairNext').click(() => {
-    console.log('you clicked Repair Next Error');
     printStats();
   });
   $('#cancelCSV').click(() => {
@@ -59,6 +58,7 @@ function buttonGroupClicks(row) {
 }
 
 function removeEmptyField(row) {
+  let i = 0;
   for (const k in fieldData[row]) {
     if (fieldData[row].hasOwnProperty(k)) {
       console.log(`${k} : ${fieldData[row][k]}`);
@@ -66,6 +66,11 @@ function removeEmptyField(row) {
         console.log('k != \'Address 2\'');
         console.log('delete');
         delete fieldData[row][k];
+      }
+      if (Object.values(fieldData[row]).length < fieldNames.length) {
+        console.log('fieldData is less then fieldNames');
+        fieldData[row][`filler${i}`] = '';
+        i++;
       }
     }
   }
