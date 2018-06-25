@@ -14,6 +14,9 @@ function buildTable(row) {
   }
 
   if (errorCount) {
+    fd += `
+            <th scope="row">${r + 1}</th>
+          `;
     for (const k in fieldData[row]) {
       if (fieldData[row].hasOwnProperty(k)) {
         const e = fieldData[row][k];
