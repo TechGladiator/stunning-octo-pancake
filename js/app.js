@@ -22,9 +22,11 @@ let firstRun = true;
 let fullResults;
 let lengthHigh = false;
 let lengthLow = false;
-let name = false;
+let name = true;
 const names = ['Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date'];
 let rowCount = 0;
+let rowField;
+let rowId;
 let start;
 
 // replace input placeholder with file name
@@ -33,6 +35,7 @@ $('#inputGroupFile02').on('change', function () {
 	fileName = fileName.substring(fileName.lastIndexOf('\\') + 1);
 	if (fileName != '') {
 		$(this).next('.custom-file-label').addClass('selected').html(fileName);
+		$('.csv').html('');
 	} else {
 		$(this).next('.custom-file-label').addClass('selected').html('Drag & Drop or click here to browse for your file');
 		$('.csv').html('');
@@ -56,7 +59,8 @@ function modalDispose(moId, close, func) {
 	$(`#${moId}${close}`).click(() => {
 		$(`#${moId}`).modal('hide');
 		$(`#${moId}`).on('hidden.bs.modal', () => {
-			$(`#${moId}`).remove();
+			$('.modal').remove();
+			$('.modal-backdrop').remove();
 			if (func) func();
 		});
 	});
@@ -94,15 +98,28 @@ function modal(moId, moBody, moFooter) {
 function fixError(code) {
 	columnHeads = '';
 	fields = '';
+	let er;
 	let errors = true;
+	if (rowField != undefined) {
+		console.log('rowField = ', rowField);
+		er = rowField;
+		console.log('rowField.length = ', er.length);
+		if (rowField.length == undefined) {
+			er = Object.values(er);
+			console.log('er = Object.values(er); ', er, er.length);
+		}
+	} else {
+		er = fieldNames;
+		console.log('fieldNames.length = ', er.length);
+	}
 	modalDispose(code, 'Fix', () => {
-		for (let i = 0; i < fieldNames.length; i++) {
-			const e = fieldNames[i];
-			console.log(e);
+		for (let i = 0; i < er.length; i++) {
+			const e = er[i];
+			console.log(`Field ${i}: `, e);
 			hideFileBrowser();
 			buildTable(errors);
 			if (e == '') {
-				emptyHeaderAlert(i);
+				emptyFieldAlert(er, i);
 			}
 		}
 	});
@@ -114,51 +131,82 @@ function showFileBrowser() {
 	$('.csv').html('');
 }
 
-function emptyHeaderAlert(i) {
-	let code = 'emptyHeadersAlert';
+function emptyFieldAlert(errorRow, i) {
+	let code = 'emptyFieldAlert';
 	let cancel = `<button type="button" class="btn btn-secondary" id="${code}Close3">Cancel</button>`;
-	modal(`${code}`, `Empty headers found. Would you like to remove them?`, cancel);
-	removeEmptyHeaders(code, i);
+	modal(`${code}`, `Empty fields found. Would you like to remove them?`, cancel);
+	removeEmptyFields(code, errorRow, i);
 }
 
-function removeEmptyHeaders(code, i) {
+function removeEmptyFields(code, errorRow, i) {
+	let row;
+	row = getRowNumb(row);
 	$(`#${code}`).on('shown.bs.modal', () => {
 		modalDispose(code, 'Close2', () => {
-			fieldNames.pop(i);
-			console.log(fieldNames);
+			errorRow.pop(i);
+			console.log(`Row ${row}: `, errorRow);
 		});
 		modalDispose(code, 'Close3');
 	});
 }
 
-function validateRowLength(fieldNames) {
-	console.log(fieldNames.length);
-	console.log(names.length);
-	lengthHigh = false;
-	lengthLow = false;
-	if (fieldNames.length > names.length) {
-		lengthHigh = true;
-	} else if (fieldNames.length < names.length) {
-		lengthLow = true;
+function validateRowLength(fieldRow) {
+	let e;
+	let rowLength = 1;
+	for (let i = 0; i < rowLength; i++) {
+		if (fieldRow == fieldNames) {
+			e = fieldNames;
+		} else {
+			e = Object.values(fieldRow[i]);
+			rowLength = fieldRow.length;
+		}
+		console.log(`Row ${i}: `, e);
+		console.log(`Row ${i} Length: `, e.length);
+		console.log('Expected Length: ', names.length);
+		lengthHigh = false;
+		lengthLow = false;
+		if (e.length > names.length) {
+			lengthHigh = true;
+			console.log(`Row ${i} is too long.`);
+			checkIfFieldNames(i);
+			break;
+		} else if (e.length < names.length) {
+			lengthLow = true;
+			console.log(`Row ${i} is too short.`);
+			checkIfFieldNames(i);
+			break;
+		}
+	}
+
+	function checkIfFieldNames(i) {
+		if (e != fieldNames) {
+			rowField = fieldData[i];
+			console.log('rowField = ', rowField);
+			rowId = i;
+			console.log('rowId = ', rowId);
+		}
 	}
 }
 
 function validateFieldNames(fieldName, validate) {
-	name = false;
+	// name = true;
 	for (let i = 0; i < names.length; i++) {
 		if (fieldName == names[i]) {
 			name = true;
+			break;
+		} else {
+			name = false;
 		}
 	}
 	if (!name) {
-		console.log(`${fieldName} is invalid`);
+		console.log(`Header "${fieldName}" is invalid`);
 		if (validate) {
-			modal('errorAlert', `Header ${fieldName} is invalid`);
+			modal('errorAlert', `Header "${fieldName}" is invalid`);
 		}
 	}
 }
 
-function validateState(field) {
+function validateState(field, validate) {
 	fieldState = false;
 	const states = ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY'];
 
@@ -169,13 +217,15 @@ function validateState(field) {
 			}
 		}
 	}
-	if (!fieldState && !undefined) {
+	if (!fieldState && fieldState == undefined) {
 		console.log(`${field.State} is invalid`);
-		modal('errorAlert', `${field.State} is an invalid State abbreviation`);
+		if (validate) {
+			modal('errorAlert', `${field.State} is an invalid State abbreviation`);
+		}
 	}
 }
 
-function validateZip(field) {
+function validateZip(field, validate) {
 	fieldZip = true;
 	const digits = '0123456789';
 
@@ -193,11 +243,13 @@ function validateZip(field) {
 	}
 	if (!fieldZip && !undefined) {
 		console.log(`${field.Zip} is invalid`);
-		modal('errorAlert', `${field.Zip} is not a valid 5 digit Zip Code`);
+		if (validate) {
+			modal('errorAlert', `${field.Zip} is not a valid 5 digit Zip Code`);
+		}
 	}
 }
 
-function validateDate(field) {
+function validateDate(field, validate) {
 	fieldDate = true;
 	const regEx = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -213,7 +265,9 @@ function validateDate(field) {
 		if (!d.getTime() && d.getTime() !== 0 && fieldDate) { // Invalid date
 			fieldDate = false;
 			console.log(`${field['Creation Date']} is an invalid date`);
-			modal('errorAlert', `${field['Creation Date']} is an invalid date`);
+			if (validate) {
+				modal('errorAlert', `${field['Creation Date']} is an invalid date`);
+			}
 		}
 	}
 }
@@ -224,6 +278,7 @@ function getFieldNames(validate) {
 		validateFieldNames(fieldNames[i], validate);
 		if (!name) {
 			editFieldNames(i);
+			break;
 		} else {
 			columnHeads += `<th scope="col">${fieldNames[i]}</th>`;
 		}
@@ -244,7 +299,7 @@ function hideFileBrowser() {
 function editHeaderContent(colId, i) {
 	console.log($(`#${colId}`).html());
 	console.log(i);
-	console.log(fieldNames);
+	console.log('Field Headers: ', fieldNames);
 	if (fieldNames[i] == '') {
 		fieldNames.pop(i);
 		$('.csv').html('');
@@ -263,13 +318,13 @@ function editHeaderContent(colId, i) {
 	});
 }
 
-function getFieldData() {
+function getFieldData(validate) {
 	fields = '';
 	for (let i = 0; i < fieldData.length; i++) {
 		const e = fieldData[i];
-		validateState(e);
-		validateZip(e);
-		validateDate(e);
+		validateState(e, validate);
+		validateZip(e, validate);
+		validateDate(e, validate);
 		fields += `
 			<tr>
 				<th scope="row">${i + 1}</th>
@@ -290,21 +345,35 @@ function getFieldData() {
 
 function buttonGroupClicks(errors) {
 	$('#showData').click(() => {
-		getFieldNames(validate = false);
+		getFieldNames();
+		getFieldData();
 		buildTable(errors);
 	});
 	$('#repairNext').click(() => {
-		// processResults();
-		modal(errors, 'Under Construction');
-		const config = buildConfig();
-		const csv = Papa.unparse(fullResults, config);
-		console.log(csv);
-		fullResults = Papa.parse(csv, config);
-		console.log(fullResults);
+		// modal(errors, 'Under Construction');
+		console.log(`errorCount was: ${errorCount}`);
+		errorCount--;
+		console.log(`errorCount is now: ${errorCount}`);
+		console.log(`Number of Rows: ${fieldData.length}`);
+		
+		validateRowLength(fieldData);
+		errorCap(fullResults, rowField, rowId);
+		printStats();
+		console.log('    Results:', fullResults);
+		if (errorCount == 0) {
+			getFieldNames(validate = true);
+			getFieldData(validate = true);
+			buildTable();
+		}
+		
+		// processResults(fieldData, rowField, rowId);
+		if (firstError) {
+			errorModal(rowField);
+		}
 	});
 	$('#cancelCSV').click(() => {
 		fullResults = {};
-		console.log(fullResults);
+		console.log('    Results:', fullResults);
 		$('.modal').remove();
 		showFileBrowser();
 	});
@@ -346,7 +415,7 @@ function buildTable(errors) {
 	buttonGroupClicks(errors);
 }
 
-function errorCap(results) {
+function errorCap(results, fieldRow, row) {
 	if (results && results.errors) {
 		if (results.errors) {
 			let code;
@@ -359,12 +428,16 @@ function errorCap(results) {
 					code = "TooFewFields";
 					codeMsg = "Too Few Fields: ";
 				}
-				errorCount = results.errors.length + 1;
+				if (!fieldRow) {
+					errorCount = results.errors.length + 1;
+					fieldRow = fieldNames;
+					console.log('fieldRow = fieldNames: ', fieldRow);
+				}
 				firstError = {
 					"type": "FieldMismatch",
 					"code": code,
-					"message": `${codeMsg}expected ${names.length} but parsed ${fieldNames.length}`,
-					"row": 0
+					"message": `${codeMsg}expected ${names.length} but parsed ${Object.values(fieldRow).length}`,
+					"row": row || 0
 				};
 			} else {
 				errorCount = results.errors.length;
@@ -393,10 +466,12 @@ function processResults() {
 	console.log('    Results:', fullResults);
 	if (errorCount == 0) {
 		getFieldNames(validate = true);
-		getFieldData();
+		getFieldData(validate = true);
 		buildTable();
 	} else {
-		$('.csv').html('');
+		getFieldNames();
+		getFieldData();
+		buildTable(errors = true);
 	}
 }
 
@@ -423,7 +498,7 @@ function buildConfig() {
 
 function getRowNumb(row) {
 	if (firstError.row != 0 || !lengthHigh && !lengthLow) {
-		row = JSON.stringify(firstError.row + 2);
+		row = JSON.stringify(firstError.row);
 	} else {
 		row = JSON.stringify(firstError.row + 1);
 	}
@@ -460,7 +535,7 @@ function errorModal() {
 	modal(`${code}`, `${errorMsg.replace(/['"]+/g, '')}: ${fileName}, Row: ${row}`, `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`);
 	fixError(code);
 	if (fieldNames.length != names.length) {
-		console.log(fieldNames);
+		console.log('Field Headers: ', fieldNames);
 	}
 }
 
