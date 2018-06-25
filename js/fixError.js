@@ -97,7 +97,7 @@ function fixRow(code, close, row) {
     hideFileBrowser();
     removeEmptyField(row);
     removeFirstErrorMessage(row);
-    buildTable(row, buttonGroup);
+    buildTable(row);
     buttonGroupClicks(row);
   });
 }

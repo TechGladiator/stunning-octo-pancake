@@ -1,4 +1,4 @@
-function buildTable(row, buttonGroup) {
+function buildTable(row) {
   console.log('Row: ', row);
   console.log(fieldData[row]);
   let fn = '';
