@@ -1,0 +1,15 @@
+/* cursor pointer when hover over file picker */
+.custom-file-input,
+.input-group-append {
+  cursor: pointer;
+}
+
+/* apply Source Code Pro Font to editable fields */
+[contenteditable="true"] {
+  font-family: 'Source Code Pro', monospace;
+}
+
+[contenteditable="true"] th,
+[contenteditable="true"] td {
+  box-shadow: inset 0px 0px 0px 2px black;
+}
