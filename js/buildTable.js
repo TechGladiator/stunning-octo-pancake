@@ -34,6 +34,7 @@ function buildTable(row) {
     fieldData.forEach(e => {
       validateState(e);
       validateZip(e);
+      validateDate(e);
       fd += `
             <tr>
               <th scope="row">${r + 1}</th>
@@ -41,7 +42,7 @@ function buildTable(row) {
       for (const k in e) {
         if (e.hasOwnProperty(k)) {
           const f = e[k];
-          if (f == e.State && !fieldState || f == e.Zip && !fieldZip) {
+          if (f == e.State && !fieldState || f == e.Zip && !fieldZip || f == e['Creation Date'] && !fieldDate) {
             fd += `<td class="table-danger" id="field${j}">${f}</td>`
           } else {
             fd += `<td id="field${j}">${f}</td>`

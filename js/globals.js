@@ -14,6 +14,7 @@ let row;
 let rowCount = 0;
 let errorCount = 0;
 let fieldData;
+let fieldDate = true;
 let fieldErrors;
 let fieldNames;
 let fieldState = true;

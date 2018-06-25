@@ -49,3 +49,22 @@ function validateZip(row) {
 		console.log(`${row.Zip} is invalid`);
 	}
 }
+
+function validateDate(row) {
+	fieldDate = true;
+	const regEx = /^\d{4}-\d{2}-\d{2}$/;
+
+	if (row['Creation Date']) {
+		if (!row['Creation Date'].match(regEx)) { // Invalid format
+			fieldDate = false;
+			console.log(`${row['Creation Date']} is an invalid date format`);
+		}
+
+		const d = new Date(row['Creation Date']);
+
+		if (!d.getTime() && d.getTime() !== 0 && fieldDate) { // Invalid date
+			fieldDate = false;
+			console.log(`${row['Creation Date']} is an invalid date`);
+		}
+	}
+}
