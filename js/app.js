@@ -1,8 +1,6 @@
 // Enable application to parse file
 parseFile();
 
-// Validate data type formats in each record
-
 // Flag records that do not meet data type formats
 
 // Implement JavaScript methods for data validation
