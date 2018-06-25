@@ -8,7 +8,12 @@ function buildTable(row) {
   if ($('#headerCheck').prop('checked')) {
     fn += `<th scope="col">#</th>`;
     fieldNames.forEach(e => {
-      fn += `<th id="header${i}">${e}</th>`;
+      validateFieldNames(e);
+      if (name) {
+        fn += `<th id="header${i}">${e}</th>`;
+      } else {
+        fn += `<th class="table-danger" id="header${i}">${e}</th>`;
+      }
       i++;
     });
   }
