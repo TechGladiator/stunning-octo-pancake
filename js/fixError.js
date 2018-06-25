@@ -30,19 +30,32 @@ function updateFields(row) {
   }
 }
 
-function hideFileBrowser() {
-  $('#jumboHeader').html('Edit CSV Data');
-	$('.wrapper').addClass('invisible');
+function toggleFileBrowser() {
+  if (fileBrowser) {
+    $('#jumboHeader').html('Edit CSV Data');
+    $('.wrapper').addClass('invisible');
+    fileBrowser = false;
+  } else {
+    $('#jumboHeader').html('Upload CSV Data');
+    $('.wrapper').removeClass('invisible');
+    fileBrowser = true;
+  }
 }
 
-function showFileBrowser() {
-  $('#jumboHeader').html('Upload CSV Data');
-	$('.wrapper').removeClass('invisible');
+function cancelCSV() {
+  fileBrowser = false;
+  toggleFileBrowser();
+  fullResults = {};
+  fieldNames = {};
+  fieldData = {};
+  fieldErrors = {};
+  console.log('    Results:', fullResults);
 	$('.csv').html('');
 }
 
 function buttonGroupClicks(row) {
   $('#editData').click(() => {
+    toggleFileBrowser();
     makeEditable();
     updateFields(row);
   });
@@ -53,12 +66,7 @@ function buttonGroupClicks(row) {
     }
   });
   $('#cancelCSV').click(() => {
-    fullResults = {};
-    fieldNames = {};
-    fieldData = {};
-    fieldErrors = {};
-    console.log('    Results:', fullResults);
-    showFileBrowser();
+    cancelCSV();
   });
 }
 
