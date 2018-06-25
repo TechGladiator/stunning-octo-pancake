@@ -28,6 +28,17 @@ function updateFields(row) {
   }
 }
 
+function hideFileBrowser() {
+  $('#jumboHeader').html('Edit CSV Data');
+	$('.wrapper').addClass('invisible');
+}
+
+function showFileBrowser() {
+  $('#jumboHeader').html('Upload CSV Data');
+	$('.wrapper').removeClass('invisible');
+	$('.csv').html('');
+}
+
 function buttonGroupClicks(row) {
   $('#editData').click(() => {
     makeEditable();
@@ -37,7 +48,12 @@ function buttonGroupClicks(row) {
     console.log('you clicked Repair Next Error');
   });
   $('#cancelCSV').click(() => {
-    console.log('you clicked Cancel CSV Processing');
+    fullResults = {};
+    fieldNames = {};
+    fieldData = {};
+    fieldErrors = {};
+    console.log('    Results:', fullResults);
+    showFileBrowser();
   });
 }
 
@@ -69,6 +85,7 @@ function removeFirstErrorMessage(row) {
 
 function fixRow(code, close, row) {
   $(`#${code}${close}`).click(() => {
+    hideFileBrowser();
     removeEmptyField(row);
     removeFirstErrorMessage(row);
     buildTable(row, buttonGroup);
