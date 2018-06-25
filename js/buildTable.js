@@ -32,6 +32,7 @@ function buildTable(row) {
     }
   } else {
     fieldData.forEach(e => {
+      validateState(e);
       fd += `
             <tr>
               <th scope="row">${r + 1}</th>
@@ -39,7 +40,11 @@ function buildTable(row) {
       for (const k in e) {
         if (e.hasOwnProperty(k)) {
           const f = e[k];
-          fd += `<td id="field${j}">${f}</td>`
+          if (f == e.State && !fieldState) {
+            fd += `<td class="table-danger" id="field${j}">${f}</td>`
+          } else {
+            fd += `<td id="field${j}">${f}</td>`
+          }
           j++;
         }
       }

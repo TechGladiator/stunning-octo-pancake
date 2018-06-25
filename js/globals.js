@@ -16,6 +16,7 @@ let errorCount = 0;
 let fieldData;
 let fieldErrors;
 let fieldNames;
+let fieldState = true;
 let firstError;
 let fullResults;
 let start;
