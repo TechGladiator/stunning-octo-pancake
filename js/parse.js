@@ -49,6 +49,8 @@
      const fix = `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`;
      modal(code, `${message} in "${fileName}", Row: ${row + 2}`, fix);
      modalDispose(code, 'Fix', fixRow(code, 'Fix', row));
+   } else {
+     buildTable();
    }
  }
 
