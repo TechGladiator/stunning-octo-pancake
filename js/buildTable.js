@@ -1,6 +1,4 @@
 function buildTable(row) {
-  console.log('Row: ', row);
-  console.log(fieldData[row]);
   let fn = '';
   let fd = '';
   let i = 0;
@@ -8,7 +6,6 @@ function buildTable(row) {
   
   if ($('#headerCheck').prop('checked')) {
     fieldNames.forEach(e => {
-      console.log(e);
       fn += `<th id="header${i}">${e}</th>`;
       i++;
     });
@@ -29,7 +26,6 @@ function buildTable(row) {
       for (const k in e) {
         if (e.hasOwnProperty(k)) {
           const f = e[k];
-          console.log('f = ', f);
           fd += `<td id="field${j}">${f}</td>`
           j++;
         }
