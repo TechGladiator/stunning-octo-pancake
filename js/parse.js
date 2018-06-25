@@ -51,6 +51,7 @@
      modalDispose(code, 'Fix', fixRow(code, 'Fix', row));
    } else {
      buildTable();
+     buttonGroupClicks();
    }
  }
 
