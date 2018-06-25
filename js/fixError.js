@@ -16,6 +16,10 @@ function makeEditable() {
 function buttonGroupClicks() {
   $('#editData').click(() => {
     makeEditable();
+    for (let i = 0; i < fieldNames.length; i++) {
+      fieldNames[i] = $(`#header${i}`).html();
+      console.log(fieldNames[i]);
+    }
   });
   $('#repairNext').click(() => {
     console.log('you clicked Repair Next Error');
