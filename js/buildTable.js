@@ -3,15 +3,19 @@ function buildTable(row, buttonGroup) {
   console.log(fieldData[row]);
   let fn = '';
   let fd = '';
+  let i = 0;
+  let j = 0;
   fieldNames.forEach(e => {
     console.log(e);
-    fn += `<th>${e}</th>`;
+    fn += `<th id="header${i}">${e}</th>`;
+    i++;
   });
   for (const k in fieldData[row]) {
     if (fieldData[row].hasOwnProperty(k)) {
       const e = fieldData[row][k];
       console.log(e);
-      fd += `<td>${e}</td>`;
+      fd += `<td id="field${j}">${e}</td>`;
+      j++;
     }
   }
   $('.csv').html(`
