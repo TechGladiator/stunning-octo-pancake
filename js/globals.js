@@ -9,6 +9,7 @@ const buttonGroup = `
 const names = ['Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date'];
 let code;
 let message;
+let name = true;
 let row;
 let rowCount = 0;
 let errorCount = 0;
