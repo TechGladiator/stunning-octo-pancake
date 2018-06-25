@@ -46,6 +46,7 @@ function buttonGroupClicks(row) {
   });
   $('#repairNext').click(() => {
     console.log('you clicked Repair Next Error');
+    printStats();
   });
   $('#cancelCSV').click(() => {
     fullResults = {};
