@@ -47,7 +47,7 @@ function buttonGroupClicks(row) {
   $('#repairNext').click(() => {
     printStats();
     if (firstError == undefined) {
-      $('#repairNext').remove();
+      modal('noErrors', 'All rows have the correct number of fields');
     }
   });
   $('#cancelCSV').click(() => {
