@@ -46,6 +46,9 @@ function buttonGroupClicks(row) {
   });
   $('#repairNext').click(() => {
     printStats();
+    if (firstError == undefined) {
+      $('#repairNext').remove();
+    }
   });
   $('#cancelCSV').click(() => {
     fullResults = {};
