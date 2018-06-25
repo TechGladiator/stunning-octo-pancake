@@ -30,3 +30,22 @@ function validateState(row) {
 		console.log(`${row.State} is invalid`);
 	}
 }
+
+function validateZip(row) {
+  fieldZip = true;
+	const digits = '0123456789';
+	if (row.Zip) {
+		if (row.Zip.length != 5) {
+			fieldZip = false;
+		}
+		for (let i = 0; i < row.Zip.length; i++) {
+			temp = `${row.Zip.substring(i, i+1)}`;
+			if (digits.indexOf(temp) == '-1') {
+				fieldZip = false;
+			}
+		}
+	}
+	if (!fieldZip) {
+		console.log(`${row.Zip} is invalid`);
+	}
+}

@@ -17,6 +17,7 @@ let fieldData;
 let fieldErrors;
 let fieldNames;
 let fieldState = true;
+let fieldZip = true;
 let firstError;
 let fullResults;
 let start;
