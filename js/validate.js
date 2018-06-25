@@ -10,7 +10,6 @@ function validateFieldNames(fieldName) {
 	}
 	if (!name) {
 		console.log(`Header "${fieldName}" is invalid`);
-    modal('errorAlert', `Header "${fieldName}" is invalid`);
 	}
 }
 
