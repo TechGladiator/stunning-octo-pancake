@@ -14,9 +14,11 @@ function makeEditable() {
 }
 
 function updateFields(row) {
-  for (let i = 0; i < fieldNames.length; i++) {
-    fieldNames[i] = $(`#header${i}`).html();
-    console.log(fieldNames[i]);
+  if ($('#headerCheck').prop('checked')) {
+    for (let i = 0; i < fieldNames.length; i++) {
+      fieldNames[i] = $(`#header${i}`).html();
+      console.log(fieldNames[i]);
+    }
   }
   let j = 0;
   for (const k in fieldData[row]) {

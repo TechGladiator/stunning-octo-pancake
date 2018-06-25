@@ -75,6 +75,7 @@
      }
      if (!$('#inputGroupFile02')[0].files.length) {
        modal("noFileChosen", "Please choose at least one file to parse.");
+       return;
      }
      // use jquery to select files
      $('#inputGroupFile02').parse({

@@ -5,11 +5,14 @@ function buildTable(row) {
   let fd = '';
   let i = 0;
   let j = 0;
-  fieldNames.forEach(e => {
-    console.log(e);
-    fn += `<th id="header${i}">${e}</th>`;
-    i++;
-  });
+  
+  if ($('#headerCheck').prop('checked')) {
+    fieldNames.forEach(e => {
+      console.log(e);
+      fn += `<th id="header${i}">${e}</th>`;
+      i++;
+    });
+  }
 
   if (errorCount) {
     for (const k in fieldData[row]) {
