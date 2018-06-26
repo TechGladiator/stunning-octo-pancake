@@ -24,7 +24,6 @@ function updateFields(row) {
     for (const k in fieldData[row]) {
       if (fieldData[row].hasOwnProperty(k)) {
         fieldData[row][k] = $(`#row${row}Field${j}`).html();
-        console.log('Update Successful');
         j++;
       }
     }
@@ -35,10 +34,7 @@ function updateFields(row) {
       let j = 0;
       for (let k in e) {
         if (e.hasOwnProperty(k)) {
-          console.log(`e[k] = ${e[k]} or `, e[k]);
-          console.log(`fieldData${[i]}.${k} was = ${e[k]}`);
           e[k] = $(`#row${i}Field${j}`).html();
-          console.log(`fieldData${[i]}.${k} is now = ${e[k]}`);
         }
         j++;
       }
