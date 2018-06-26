@@ -93,8 +93,8 @@ function removeEmptyField(row) {
   for (const k in fieldData[row]) {
     if (fieldData[row].hasOwnProperty(k)) {
       if (k != 'Address 2' && fieldData[row][k] == '') {
-        console.log('k != \'Address 2\'');
-        console.log('delete');
+        console.log(`${k} != 'Address 2'`);
+        console.log('deleted empty field: ', k);
         delete fieldData[row][k];
       }
       if (Object.values(fieldData[row]).length < fieldNames.length) {
