@@ -23,14 +23,29 @@ function updateFields(row) {
   if (row != undefined) {
     for (const k in fieldData[row]) {
       if (fieldData[row].hasOwnProperty(k)) {
-        fieldData[row][k] = $(`#field${j}`).html();
+        fieldData[row][k] = $(`#row${row}Field${j}`).html();
         console.log('Update Successful');
         j++;
       }
     }
   } else {
     console.log('update something');
+    let i = 0;
+    fieldData.forEach(e => {
+      let j = 0;
+      for (let k in e) {
+        if (e.hasOwnProperty(k)) {
+          console.log(`e[k] = ${e[k]} or `, e[k]);
+          console.log(`fieldData${[i]}.${k} was = ${e[k]}`);
+          e[k] = $(`#row${i}Field${j}`).html();
+          console.log(`fieldData${[i]}.${k} is now = ${e[k]}`);
+        }
+        j++;
+      }
+      i++;
+    });
   }
+  console.log('    Updated Data: ', fieldData);
 }
 
 function toggleFileBrowser() {
