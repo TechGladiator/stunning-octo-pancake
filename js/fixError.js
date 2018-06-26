@@ -30,6 +30,7 @@ function updateFields(row) {
     for (const k in fieldData[row]) {
       if (fieldData[row].hasOwnProperty(k)) {
         fieldData[row][k] = $(`#row${row}Field${j}`).html();
+        validateField(fieldData[row], k, row, j);
         j++;
       }
     }
@@ -38,9 +39,10 @@ function updateFields(row) {
     let i = 0;
     fieldData.forEach(e => {
       let j = 0;
-      for (let k in e) {
+      for (const k in e) {
         if (e.hasOwnProperty(k)) {
           e[k] = $(`#row${i}Field${j}`).html();
+          validateField(e, k, i, j);
         }
         j++;
       }
