@@ -17,6 +17,12 @@ function updateFields(row) {
   if ($('#headerCheck').prop('checked')) {
     for (let i = 0; i < fieldNames.length; i++) {
       fieldNames[i] = $(`#header${i}`).html();
+      validateFieldNames(fieldNames[i]);
+      if (name) {
+        $(`#header${i}`).removeClass('table-danger');
+      } else {
+        $(`#header${i}`).addClass('table-danger');
+      }
     }
   }
   let j = 0;
