@@ -26,6 +26,9 @@ function buildTable(row) {
       if (fieldData[row].hasOwnProperty(k)) {
         const e = fieldData[row][k];
         console.log(e);
+        validateState(e);
+        validateZip(e);
+        validateDate(e);
         fd += `<td id="field${j}">${e}</td>`;
         j++;
       }
