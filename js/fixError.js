@@ -17,14 +17,12 @@ function updateFields(row) {
   if ($('#headerCheck').prop('checked')) {
     for (let i = 0; i < fieldNames.length; i++) {
       fieldNames[i] = $(`#header${i}`).html();
-      console.log(fieldNames[i]);
     }
   }
   let j = 0;
   for (const k in fieldData[row]) {
     if (fieldData[row].hasOwnProperty(k)) {
       fieldData[row][k] = $(`#field${j}`).html();
-      console.log(fieldData[row][k]);
       j++;
     }
   }
@@ -74,7 +72,6 @@ function removeEmptyField(row) {
   let i = 0;
   for (const k in fieldData[row]) {
     if (fieldData[row].hasOwnProperty(k)) {
-      console.log(`${k} : ${fieldData[row][k]}`);
       if (k != 'Address 2' && fieldData[row][k] == '') {
         console.log('k != \'Address 2\'');
         console.log('delete');

@@ -25,7 +25,6 @@ function buildTable(row) {
     for (const k in fieldData[row]) {
       if (fieldData[row].hasOwnProperty(k)) {
         const e = fieldData[row][k];
-        console.log(e);
         validateState(e);
         validateZip(e);
         validateDate(e);
