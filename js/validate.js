@@ -68,3 +68,15 @@ function validateDate(row) {
 		}
 	}
 }
+
+function validateField(e, k, i, j) {
+  validateState(e[k]);
+  validateZip(e[k]);
+  validateDate(e[k]);
+  if (e[k] == e.State && !fieldState || e[k] == e.Zip && !fieldZip || e[k] == e['Creation Date'] && !fieldDate) {
+    $(`#row${i}Field${j}`).addClass('table-danger');
+  }
+  else {
+    $(`#row${i}Field${j}`).removeClass('table-danger');
+  }
+}
