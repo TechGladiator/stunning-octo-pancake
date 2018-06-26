@@ -1,11 +1,9 @@
 function buildTable(row) {
   let fn = '';
   let fd = '';
-  let i = 0;
-  let j = 0;
-  let r = 0;
   
   if ($('#headerCheck').prop('checked')) {
+    let i = 0;
     fn += `<th scope="col">#</th>`;
     fieldNames.forEach(e => {
       validateFieldNames(e);
@@ -19,8 +17,9 @@ function buildTable(row) {
   }
 
   if (errorCount) {
+    let j = 0;
     fd += `
-            <th scope="row">${r + 1}</th>
+            <th scope="row">${row + 1}</th>
           `;
     for (const k in fieldData[row]) {
       if (fieldData[row].hasOwnProperty(k)) {
@@ -28,26 +27,28 @@ function buildTable(row) {
         validateState(e);
         validateZip(e);
         validateDate(e);
-        fd += `<td id="field${j}">${e}</td>`;
+        fd += `<td id="row${row}Field${j}">${e}</td>`;
         j++;
       }
     }
   } else {
+    let r = 0;
     fieldData.forEach(e => {
+      let j = 0;
       validateState(e);
       validateZip(e);
       validateDate(e);
       fd += `
             <tr>
-              <th scope="row">${r + 1}</th>
+              <th scope="row" id="row${r}">${r + 1}</th>
             `;
       for (const k in e) {
         if (e.hasOwnProperty(k)) {
           const f = e[k];
           if (f == e.State && !fieldState || f == e.Zip && !fieldZip || f == e['Creation Date'] && !fieldDate) {
-            fd += `<td class="table-danger" id="field${j}">${f}</td>`
+            fd += `<td class="table-danger" id="row${r}Field${j}">${f}</td>`
           } else {
-            fd += `<td id="field${j}">${f}</td>`
+            fd += `<td id="row${r}Field${j}">${f}</td>`
           }
           j++;
         }
