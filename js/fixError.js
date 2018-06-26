@@ -20,11 +20,16 @@ function updateFields(row) {
     }
   }
   let j = 0;
-  for (const k in fieldData[row]) {
-    if (fieldData[row].hasOwnProperty(k)) {
-      fieldData[row][k] = $(`#field${j}`).html();
-      j++;
+  if (row != undefined) {
+    for (const k in fieldData[row]) {
+      if (fieldData[row].hasOwnProperty(k)) {
+        fieldData[row][k] = $(`#field${j}`).html();
+        console.log('Update Successful');
+        j++;
+      }
     }
+  } else {
+    console.log('update something');
   }
 }
 
