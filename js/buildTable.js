@@ -85,7 +85,6 @@ function buildTable(row) {
                   `);
 
   $('#editData').click(() => {
-    toggleFileBrowser();
     toggleEditable();
     updateFields(row);
   });

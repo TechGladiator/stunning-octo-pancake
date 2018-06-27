@@ -49,21 +49,7 @@ function updateFields(row) {
   console.log('    Updated Data: ', fieldData);
 }
 
-function toggleFileBrowser() {
-  if (fileBrowser) {
-    $('#jumboHeader').html('Edit CSV Data');
-    $('.wrapper').addClass('invisible');
-    fileBrowser = false;
-  } else {
-    $('#jumboHeader').html('Upload CSV Data');
-    $('.wrapper').removeClass('invisible');
-    fileBrowser = true;
-  }
-}
-
 function cancelCSV() {
-  fileBrowser = false;
-  toggleFileBrowser();
   fullResults = {};
   fieldNames = {};
   fieldData = {};

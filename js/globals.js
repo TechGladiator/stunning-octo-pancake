@@ -17,5 +17,4 @@ let firstError;
 let fullResults;
 let start;
 let end;
-let fileBrowser = true;
 let firstRun = true;
