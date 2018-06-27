@@ -56,6 +56,16 @@ function parseFile() {
   $('.wrapper').html(`${wrapper}`);
   $('.csv').html('');
 
+  $('#headerCheck').click(() => {
+    if ($('#headerCheck').prop('checked')) {
+      headerCheck = true;
+      console.log('check box is checked = ', headerCheck);
+    } else {
+      headerCheck = false;
+      console.log('check box is checked = ', headerCheck);
+    }
+  });
+
   // replace input placeholder with file name
   $('#inputGroupFile02').on('change', function () {
     fileName = $(this).val();
@@ -121,7 +131,7 @@ function parseFile() {
 }
 
 function updateFields(row) {
-  if ($('#headerCheck').prop('checked')) {
+  if (headerCheck) {
     for (let i = 0; i < fieldNames.length; i++) {
       fieldNames[i] = $(`#header${i}`).html();
       validateFieldNames(fieldNames[i]);

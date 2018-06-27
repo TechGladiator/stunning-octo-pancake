@@ -2,7 +2,7 @@ function buildTable(row) {
   let fn = '';
   let fd = '';
   
-  if ($('#headerCheck').prop('checked')) {
+  if (headerCheck) {
     let i = 0;
     fn += `<th scope="col">#</th>`;
     fieldNames.forEach(e => {
