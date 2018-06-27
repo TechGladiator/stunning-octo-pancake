@@ -75,4 +75,19 @@ function buildTable(row) {
                       </div>
                     </div>
                   `);
+
+  $('#editData').click(() => {
+    toggleFileBrowser();
+    toggleEditable();
+    updateFields(row);
+  });
+  $('#repairNext').click(() => {
+    printStats();
+    if (firstError == undefined) {
+      modal('noErrors', 'All rows have the correct number of fields');
+    }
+  });
+  $('#cancelCSV').click(() => {
+    cancelCSV();
+  });
 }
