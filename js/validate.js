@@ -27,7 +27,7 @@ function validateState(row) {
 		}
 	}
 	if (!fieldState) {
-		console.log(`${row.State} is invalid`);
+		console.log(`${row.State} is an invalid State abbreviation`);
 	}
 }
 
