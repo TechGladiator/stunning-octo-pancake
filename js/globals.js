@@ -8,6 +8,7 @@ const buttonGroup = `
 `;
 const names = ['Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date'];
 let code;
+let editable;
 let message;
 let name = true;
 let row;
