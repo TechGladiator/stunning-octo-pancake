@@ -6,6 +6,7 @@ const buttonGroup = `
 		<button type="button" class="btn btn-secondary" id="cancelCSV">Cancel CSV Processing</button>
 	</div>
 `;
+const editable = $('#csvTable');
 const names = ['Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date'];
 let code;
 let message;

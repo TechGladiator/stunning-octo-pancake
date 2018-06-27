@@ -1,5 +1,4 @@
 function makeEditable() {
-  const editable = $('#csvTable');
   if (!editable[0].isContentEditable) {
     editable[0].contentEditable = 'true';
     $('#editData').html('Save Edits');
