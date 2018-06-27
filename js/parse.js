@@ -6,6 +6,11 @@ function printStats(msg) {
   console.log('       Time:', end - start || '(Unknown; your browser does not support the Performance API)', 'ms');
   console.log('  Row count:', rowCount);
   console.log('     Errors:', errorCount);
+  if (fieldNames.length != names.length) {
+    console.log('header length is wrong');
+    buildTable();
+    return;
+  }
   if (errorCount) {
     console.log('First error:', firstError);
     code = firstError.code;
