@@ -8,7 +8,8 @@ function printStats(msg) {
   console.log('     Errors:', errorCount);
   if (fieldNames.length != names.length) {
     console.log('header length is wrong');
-    buildTable();
+    let headerLengthWrong = true;
+    buildTable(row, headerLengthWrong);
     return;
   }
   if (errorCount) {

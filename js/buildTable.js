@@ -1,4 +1,4 @@
-function buildTable(row) {
+function buildTable(row, headerLength) {
   let fn = '';
   let fd = '';
   
@@ -56,6 +56,10 @@ function buildTable(row) {
       fd += `</tr>`
       r++;
     });
+  }
+
+  if (headerLength) {
+    fd = '';
   }
 
   $('#jumboHeader').removeClass('mb-5');
