@@ -1,4 +1,4 @@
-function makeEditable() {
+function toggleEditable() {
   editable = $('#csvTable');
   if (!editable[0].isContentEditable) {
     editable[0].contentEditable = 'true';
@@ -75,7 +75,7 @@ function cancelCSV() {
 function buttonGroupClicks(row) {
   $('#editData').click(() => {
     toggleFileBrowser();
-    makeEditable();
+    toggleEditable();
     updateFields(row);
   });
   $('#repairNext').click(() => {
