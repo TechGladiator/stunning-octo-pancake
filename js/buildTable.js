@@ -62,13 +62,13 @@ function buildTable(row) {
                     ${buttonGroup}
                     <div class="card">
                       <div class="card-body">
-                        <table class="table table-bordered">
-                          <thead id="headings">
+                        <table id="csvTable" class="table table-bordered">
+                          <thead>
                             <tr>
                               ${fn}
                             </tr>
                           </thead>
-                          <tbody id="dataEntered">
+                          <tbody>
                             ${fd}
                           </tbody>
                         </table>
