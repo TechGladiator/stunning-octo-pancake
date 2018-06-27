@@ -89,6 +89,7 @@ function buildTable(row) {
     updateFields(row);
   });
   $('#repairNext').click(() => {
+    updateFields(row);
     printStats();
     if (firstError == undefined) {
       modal('noErrors', 'All rows have the correct number of fields');
