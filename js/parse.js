@@ -12,7 +12,7 @@ function printStats(msg) {
     message = firstError.message;
     row = firstError.row;
     const fix = `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`;
-    modal(code, `${message} in "${fileName}", Row: ${row + 2}`, fix);
+    modal(code, `${message} in "${fileName}", Row: ${row + 1}`, fix);
     modalDispose(code, 'Fix', fixRow(code, 'Fix', row));
   } else {
     buildTable();
