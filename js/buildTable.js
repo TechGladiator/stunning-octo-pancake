@@ -58,6 +58,10 @@ function buildTable(row) {
     });
   }
 
+  $('#jumboHeader').removeClass('mb-5');
+  $('#jumboHeader').html('Edit CSV Data');
+  $('.wrapper').html('');
+
   $('.csv').html(`
                     <div class="btn-group d-flex justify-content-center mb-3" role="group" aria-label="button group">
                       <button type="button" class="btn btn-secondary" id="editData">Edit Data</button>
