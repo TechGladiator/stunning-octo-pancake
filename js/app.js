@@ -1,4 +1,4 @@
-// Enable application to parse file
+// Enable uploading and parsing of csv file
 parseFile();
 
 // Flag records that do not meet data type formats

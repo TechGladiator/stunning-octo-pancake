@@ -10,57 +10,6 @@ function toggleEditable() {
   }
 }
 
-function updateFields(row) {
-  if ($('#headerCheck').prop('checked')) {
-    for (let i = 0; i < fieldNames.length; i++) {
-      fieldNames[i] = $(`#header${i}`).html();
-      validateFieldNames(fieldNames[i]);
-      if (name) {
-        $(`#header${i}`).removeClass('table-danger');
-      } else {
-        $(`#header${i}`).addClass('table-danger');
-      }
-    }
-  }
-  let j = 0;
-  if (row != undefined) {
-    for (const k in fieldData[row]) {
-      if (fieldData[row].hasOwnProperty(k)) {
-        fieldData[row][k] = $(`#row${row}Field${j}`).html();
-        validateField(fieldData[row], k, row, j);
-        j++;
-      }
-    }
-  } else {
-    console.log('update something');
-    let i = 0;
-    fieldData.forEach(e => {
-      let j = 0;
-      for (const k in e) {
-        if (e.hasOwnProperty(k)) {
-          e[k] = $(`#row${i}Field${j}`).html();
-          validateField(e, k, i, j);
-        }
-        j++;
-      }
-      i++;
-    });
-  }
-  console.log('    Updated Data: ', fieldData);
-}
-
-function cancelCSV() {
-  fullResults = {};
-  fieldNames = {};
-  fieldData = {};
-  fieldErrors = {};
-  console.log('    Results:', fullResults);
-  $('#jumboHeader').addClass('mb-5');
-  $('#jumboHeader').html('Edit CSV Data');
-  $('.wrapper').html(`${wrapper}`);
-	$('.csv').html('');
-}
-
 function removeEmptyField(row) {
   let i = 0;
   for (const k in fieldData[row]) {
