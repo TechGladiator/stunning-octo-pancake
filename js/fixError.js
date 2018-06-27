@@ -72,23 +72,6 @@ function cancelCSV() {
 	$('.csv').html('');
 }
 
-function buttonGroupClicks(row) {
-  $('#editData').click(() => {
-    toggleFileBrowser();
-    toggleEditable();
-    updateFields(row);
-  });
-  $('#repairNext').click(() => {
-    printStats();
-    if (firstError == undefined) {
-      modal('noErrors', 'All rows have the correct number of fields');
-    }
-  });
-  $('#cancelCSV').click(() => {
-    cancelCSV();
-  });
-}
-
 function removeEmptyField(row) {
   let i = 0;
   for (const k in fieldData[row]) {
@@ -125,6 +108,5 @@ function fixRow(code, close, row) {
     removeEmptyField(row);
     removeFirstErrorMessage(row);
     buildTable(row);
-    buttonGroupClicks(row);
   });
 }
