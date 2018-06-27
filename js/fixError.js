@@ -55,6 +55,9 @@ function cancelCSV() {
   fieldData = {};
   fieldErrors = {};
   console.log('    Results:', fullResults);
+  $('#jumboHeader').addClass('mb-5');
+  $('#jumboHeader').html('Edit CSV Data');
+  $('.wrapper').html(`${wrapper}`);
 	$('.csv').html('');
 }
 
