@@ -10,6 +10,17 @@ function toggleEditable() {
   }
 }
 
+function removeEmptyHeader() {
+  console.log(fieldNames);
+  for (let i = 0; i < fieldNames.length; i++) {
+    const e = fieldNames[i];
+    if (e == '') {
+      fieldNames.splice(i, 1);
+    }
+  }
+  console.log(fieldNames);
+}
+
 function removeEmptyField(row) {
   let i = 0;
   for (const k in fieldData[row]) {

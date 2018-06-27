@@ -1,4 +1,4 @@
-function buildTable(row, headerLength) {
+function buildTable(row, headerLengthWrong) {
   let fn = '';
   let fd = '';
   
@@ -58,7 +58,7 @@ function buildTable(row, headerLength) {
     });
   }
 
-  if (headerLength) {
+  if (headerLengthWrong) {
     fd = '';
   }
 
@@ -93,6 +93,9 @@ function buildTable(row, headerLength) {
     updateFields(row);
   });
   $('#repairNext').click(() => {
+    if (headerLengthWrong) {
+      removeEmptyHeader();
+    }
     updateFields(row);
     printStats();
     if (firstError == undefined) {
