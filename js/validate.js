@@ -27,7 +27,7 @@ function validateState(row) {
 		}
 	}
 	if (!fieldState) {
-		console.log(`${row.State} is invalid`);
+		console.log(`${row.State} is an invalid State abbreviation`);
 	}
 }
 
@@ -70,9 +70,9 @@ function validateDate(row) {
 }
 
 function validateField(e, k, i, j) {
-  validateState(e[k]);
-  validateZip(e[k]);
-  validateDate(e[k]);
+  validateState(e);
+  validateZip(e);
+  validateDate(e);
   if (e[k] == e.State && !fieldState || e[k] == e.Zip && !fieldZip || e[k] == e['Creation Date'] && !fieldDate) {
     $(`#row${i}Field${j}`).addClass('table-danger');
   } else {

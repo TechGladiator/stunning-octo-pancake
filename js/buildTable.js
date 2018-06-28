@@ -58,21 +58,43 @@ function buildTable(row) {
     });
   }
 
+  $('#jumboHeader').removeClass('mb-5');
+  $('#jumboHeader').html('Edit CSV Data');
+  $('.wrapper').html('');
+
   $('.csv').html(`
-                    ${buttonGroup}
+                    <div class="btn-group d-flex justify-content-center mb-3" role="group" aria-label="button group">
+                      <button type="button" class="btn btn-secondary" id="editData">Edit Data</button>
+                      <button type="button" class="btn btn-secondary" id="repairNext">Repair Next Error</button>
+                      <button type="button" class="btn btn-secondary" id="cancelCSV">Cancel CSV Processing</button>
+                    </div>
                     <div class="card">
                       <div class="card-body">
-                        <table class="table table-bordered">
-                          <thead id="headings">
+                        <table id="csvTable" class="table table-bordered">
+                          <thead>
                             <tr>
                               ${fn}
                             </tr>
                           </thead>
-                          <tbody id="dataEntered">
+                          <tbody>
                             ${fd}
                           </tbody>
                         </table>
                       </div>
                     </div>
                   `);
+
+  $('#editData').click(() => {
+    toggleEditable();
+    updateFields(row);
+  });
+  $('#repairNext').click(() => {
+    printStats();
+    if (firstError == undefined) {
+      modal('noErrors', 'All rows have the correct number of fields');
+    }
+  });
+  $('#cancelCSV').click(() => {
+    cancelCSV();
+  });
 }
