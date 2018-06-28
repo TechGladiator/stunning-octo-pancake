@@ -136,7 +136,7 @@ function parseFile() {
   });
 }
 
-function updateFields(row) {
+function updateFields(row, headerLengthWrong) {
   if (headerCheck) {
     for (let i = 0; i < fieldNames.length; i++) {
       fieldNames[i] = $(`#header${i}`).html();
@@ -148,6 +148,9 @@ function updateFields(row) {
       }
     }
   }
+  if (headerLengthWrong) {
+    return;
+  }
   let j = 0;
   if (row != undefined) {
     for (const k in fieldData[row]) {
@@ -158,7 +161,6 @@ function updateFields(row) {
       }
     }
   } else {
-    console.log('update something');
     let i = 0;
     fieldData.forEach(e => {
       let j = 0;

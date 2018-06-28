@@ -96,7 +96,7 @@ function buildTable(row, headerLengthWrong) {
     if (headerLengthWrong) {
       removeEmptyHeader();
     }
-    updateFields(row);
+    updateFields(row, headerLengthWrong);
     printStats();
     if (firstError == undefined) {
       modal('noErrors', 'All rows have the correct number of fields');
