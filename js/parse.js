@@ -1,6 +1,7 @@
 // Users navigate to web site and upload a CSV file
 
 function printStats(msg) {
+  const fix = `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`;
   if (msg) {
     console.log(msg);
     console.log('       Time:', end - start || '(Unknown; your browser does not support the Performance API)', 'ms');
@@ -9,6 +10,15 @@ function printStats(msg) {
   }
   if (fieldNames && fieldNames.length != names.length) {
     console.log('header length is wrong');
+    let codeWord;
+    if (fieldNames.length < names.length) {
+      codeWord = 'Few';
+    } else {
+      codeWord = 'Many';
+    }
+    code = `Too${codeWord}Fields`;
+    message = `Too ${codeWord.toLowerCase()} fields: expected ${names.length} fields but parsed ${fieldNames.length}`;
+    modal(code, `${message} in "${fileName}", Row: 0`, fix);
     let headerLengthWrong = true;
     buildTable(row, headerLengthWrong);
     return;
@@ -18,7 +28,6 @@ function printStats(msg) {
     code = firstError.code;
     message = firstError.message;
     row = firstError.row;
-    const fix = `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`;
     modal(code, `${message} in "${fileName}", Row: ${row + 1}`, fix);
     modalDispose(code, 'Fix', fixRow(code, 'Fix', row));
   } else {
@@ -104,7 +113,7 @@ function parseFile() {
       config: {
         // base config to use for each file
         delimiter: "",
-        header: $('#headerCheck').prop('checked'),
+        header: headerCheck,
         dynamicTyping: false,
         skipEmptyLines: true,
         preview: 0,
@@ -144,8 +153,7 @@ function getFieldNames(fn) {
       validateFieldNames(e);
       if (name) {
         fn += `<th id="header${i}">${e}</th>`;
-      }
-      else {
+      } else {
         fn += `<th class="table-danger" id="header${i}">${e}</th>`;
       }
       i++;
