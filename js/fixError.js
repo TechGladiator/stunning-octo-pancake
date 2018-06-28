@@ -10,6 +10,23 @@ function toggleEditable() {
   }
 }
 
+function removeEmptyHeader(fn) {
+  fn = '';
+  console.log(fieldNames);
+  for (let i = 0; i < fieldNames.length; i++) {
+    const e = fieldNames[i];
+    if (e == '') {
+      console.log(`fieldNames[${i}] was : `, fieldNames[i]);
+      console.log(`fieldNames.splice(${i}, 1): `, fieldNames.splice(i, 1));
+      console.log(`fieldNames[${i}] is now : `, fieldNames[i]);
+      console.log(`fieldNames: `, fieldNames);
+    }
+  }
+  fn = getFieldNames(fn);
+  $('.headerRow').html(fn);
+  console.log(fieldNames);
+}
+
 function removeEmptyField(row) {
   let i = 0;
   for (const k in fieldData[row]) {

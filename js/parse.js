@@ -1,18 +1,25 @@
 // Users navigate to web site and upload a CSV file
 
 function printStats(msg) {
-  if (msg)
+  if (msg) {
     console.log(msg);
-  console.log('       Time:', end - start || '(Unknown; your browser does not support the Performance API)', 'ms');
-  console.log('  Row count:', rowCount);
-  console.log('     Errors:', errorCount);
+    console.log('       Time:', end - start || '(Unknown; your browser does not support the Performance API)', 'ms');
+    console.log('  Row count:', rowCount);
+    console.log('     Errors:', errorCount);
+  }
+  if (fieldNames.length != names.length) {
+    console.log('header length is wrong');
+    let headerLengthWrong = true;
+    buildTable(row, headerLengthWrong);
+    return;
+  }
   if (errorCount) {
     console.log('First error:', firstError);
     code = firstError.code;
     message = firstError.message;
     row = firstError.row;
     const fix = `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`;
-    modal(code, `${message} in "${fileName}", Row: ${row + 2}`, fix);
+    modal(code, `${message} in "${fileName}", Row: ${row + 1}`, fix);
     modalDispose(code, 'Fix', fixRow(code, 'Fix', row));
   } else {
     buildTable();
@@ -55,6 +62,16 @@ function parseFile() {
   $('#jumboHeader').html('Edit CSV Data');
   $('.wrapper').html(`${wrapper}`);
   $('.csv').html('');
+
+  $('#headerCheck').click(() => {
+    if ($('#headerCheck').prop('checked')) {
+      headerCheck = true;
+      console.log('check box is checked = ', headerCheck);
+    } else {
+      headerCheck = false;
+      console.log('check box is checked = ', headerCheck);
+    }
+  });
 
   // replace input placeholder with file name
   $('#inputGroupFile02').on('change', function () {
@@ -120,8 +137,26 @@ function parseFile() {
   });
 }
 
-function updateFields(row) {
-  if ($('#headerCheck').prop('checked')) {
+function getFieldNames(fn) {
+  if (headerCheck) {
+    let i = 0;
+    fn += `<th scope="col">#</th>`;
+    fieldNames.forEach(e => {
+      validateFieldNames(e);
+      if (name) {
+        fn += `<th id="header${i}">${e}</th>`;
+      }
+      else {
+        fn += `<th class="table-danger" id="header${i}">${e}</th>`;
+      }
+      i++;
+    });
+  }
+  return fn;
+}
+
+function updateFields(row, headerLengthWrong) {
+  if (headerCheck) {
     for (let i = 0; i < fieldNames.length; i++) {
       fieldNames[i] = $(`#header${i}`).html();
       validateFieldNames(fieldNames[i]);
@@ -131,6 +166,9 @@ function updateFields(row) {
         $(`#header${i}`).addClass('table-danger');
       }
     }
+  }
+  if (headerLengthWrong) {
+    return;
   }
   let j = 0;
   if (row != undefined) {
@@ -142,7 +180,6 @@ function updateFields(row) {
       }
     }
   } else {
-    console.log('update something');
     let i = 0;
     fieldData.forEach(e => {
       let j = 0;

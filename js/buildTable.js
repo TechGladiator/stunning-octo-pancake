@@ -1,20 +1,8 @@
-function buildTable(row) {
+function buildTable(row, headerLengthWrong) {
   let fn = '';
   let fd = '';
   
-  if ($('#headerCheck').prop('checked')) {
-    let i = 0;
-    fn += `<th scope="col">#</th>`;
-    fieldNames.forEach(e => {
-      validateFieldNames(e);
-      if (name) {
-        fn += `<th id="header${i}">${e}</th>`;
-      } else {
-        fn += `<th class="table-danger" id="header${i}">${e}</th>`;
-      }
-      i++;
-    });
-  }
+  fn = getFieldNames(fn);
 
   if (errorCount) {
     let j = 0;
@@ -58,6 +46,10 @@ function buildTable(row) {
     });
   }
 
+  if (headerLengthWrong) {
+    fd = '';
+  }
+
   $('#jumboHeader').removeClass('mb-5');
   $('#jumboHeader').html('Edit CSV Data');
   $('.wrapper').html('');
@@ -72,7 +64,7 @@ function buildTable(row) {
                       <div class="card-body">
                         <table id="csvTable" class="table table-bordered">
                           <thead>
-                            <tr>
+                            <tr class="headerRow">
                               ${fn}
                             </tr>
                           </thead>
@@ -89,6 +81,10 @@ function buildTable(row) {
     updateFields(row);
   });
   $('#repairNext').click(() => {
+    if (headerLengthWrong) {
+      removeEmptyHeader(fn);
+    }
+    updateFields(row, headerLengthWrong);
     printStats();
     if (firstError == undefined) {
       modal('noErrors', 'All rows have the correct number of fields');
