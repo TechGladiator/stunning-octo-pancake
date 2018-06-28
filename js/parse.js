@@ -7,7 +7,7 @@ function printStats(msg) {
     console.log('  Row count:', rowCount);
     console.log('     Errors:', errorCount);
   }
-  if (fieldNames.length != names.length) {
+  if (fieldNames && fieldNames.length != names.length) {
     console.log('header length is wrong');
     let headerLengthWrong = true;
     buildTable(row, headerLengthWrong);
