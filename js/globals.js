@@ -9,12 +9,16 @@ const buttonGroup = `
 const names = ['Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date'];
 let code;
 let message;
+let name = true;
 let row;
 let rowCount = 0;
 let errorCount = 0;
 let fieldData;
+let fieldDate = true;
 let fieldErrors;
 let fieldNames;
+let fieldState = true;
+let fieldZip = true;
 let firstError;
 let fullResults;
 let start;

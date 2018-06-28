@@ -3,15 +3,25 @@ function buildTable(row) {
   let fd = '';
   let i = 0;
   let j = 0;
+  let r = 0;
   
   if ($('#headerCheck').prop('checked')) {
+    fn += `<th scope="col">#</th>`;
     fieldNames.forEach(e => {
-      fn += `<th id="header${i}">${e}</th>`;
+      validateFieldNames(e);
+      if (name) {
+        fn += `<th id="header${i}">${e}</th>`;
+      } else {
+        fn += `<th class="table-danger" id="header${i}">${e}</th>`;
+      }
       i++;
     });
   }
 
   if (errorCount) {
+    fd += `
+            <th scope="row">${r + 1}</th>
+          `;
     for (const k in fieldData[row]) {
       if (fieldData[row].hasOwnProperty(k)) {
         const e = fieldData[row][k];
@@ -22,15 +32,26 @@ function buildTable(row) {
     }
   } else {
     fieldData.forEach(e => {
-      fd += `<tr>`;
+      validateState(e);
+      validateZip(e);
+      validateDate(e);
+      fd += `
+            <tr>
+              <th scope="row">${r + 1}</th>
+            `;
       for (const k in e) {
         if (e.hasOwnProperty(k)) {
           const f = e[k];
-          fd += `<td id="field${j}">${f}</td>`
+          if (f == e.State && !fieldState || f == e.Zip && !fieldZip || f == e['Creation Date'] && !fieldDate) {
+            fd += `<td class="table-danger" id="field${j}">${f}</td>`
+          } else {
+            fd += `<td id="field${j}">${f}</td>`
+          }
           j++;
         }
       }
       fd += `</tr>`
+      r++;
     });
   }
 
