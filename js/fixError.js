@@ -14,9 +14,11 @@ function makeEditable() {
 }
 
 function updateFields(row) {
-  for (let i = 0; i < fieldNames.length; i++) {
-    fieldNames[i] = $(`#header${i}`).html();
-    console.log(fieldNames[i]);
+  if ($('#headerCheck').prop('checked')) {
+    for (let i = 0; i < fieldNames.length; i++) {
+      fieldNames[i] = $(`#header${i}`).html();
+      console.log(fieldNames[i]);
+    }
   }
   let j = 0;
   for (const k in fieldData[row]) {
@@ -28,35 +30,43 @@ function updateFields(row) {
   }
 }
 
-function hideFileBrowser() {
-  $('#jumboHeader').html('Edit CSV Data');
-	$('.wrapper').addClass('invisible');
+function toggleFileBrowser() {
+  if (fileBrowser) {
+    $('#jumboHeader').html('Edit CSV Data');
+    $('.wrapper').addClass('invisible');
+    fileBrowser = false;
+  } else {
+    $('#jumboHeader').html('Upload CSV Data');
+    $('.wrapper').removeClass('invisible');
+    fileBrowser = true;
+  }
 }
 
-function showFileBrowser() {
-  $('#jumboHeader').html('Upload CSV Data');
-	$('.wrapper').removeClass('invisible');
+function cancelCSV() {
+  fileBrowser = false;
+  toggleFileBrowser();
+  fullResults = {};
+  fieldNames = {};
+  fieldData = {};
+  fieldErrors = {};
+  console.log('    Results:', fullResults);
 	$('.csv').html('');
 }
 
 function buttonGroupClicks(row) {
   $('#editData').click(() => {
+    toggleFileBrowser();
     makeEditable();
     updateFields(row);
   });
   $('#repairNext').click(() => {
     printStats();
     if (firstError == undefined) {
-      $('#repairNext').remove();
+      modal('noErrors', 'All rows have the correct number of fields');
     }
   });
   $('#cancelCSV').click(() => {
-    fullResults = {};
-    fieldNames = {};
-    fieldData = {};
-    fieldErrors = {};
-    console.log('    Results:', fullResults);
-    showFileBrowser();
+    cancelCSV();
   });
 }
 
@@ -94,10 +104,9 @@ function removeFirstErrorMessage(row) {
 
 function fixRow(code, close, row) {
   $(`#${code}${close}`).click(() => {
-    hideFileBrowser();
     removeEmptyField(row);
     removeFirstErrorMessage(row);
-    buildTable(row, buttonGroup);
+    buildTable(row);
     buttonGroupClicks(row);
   });
 }

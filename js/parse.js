@@ -1,26 +1,3 @@
- // global variables
- const buttonGroup = `
-	<div class="btn-group d-flex justify-content-center mb-3" role="group" aria-label="button group">
-		<button type="button" class="btn btn-secondary" id="editData">Edit Data</button>
-		<button type="button" class="btn btn-secondary" id="repairNext">Repair Next Error</button>
-		<button type="button" class="btn btn-secondary" id="cancelCSV">Cancel CSV Processing</button>
-	</div>
-`;
- const names = ['Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date'];
- let code;
- let message;
- let row;
- let rowCount = 0;
- let errorCount = 0;
- let fieldData;
- let fieldErrors;
- let fieldNames;
- let firstError;
- let fullResults;
- let start;
- let end;
- let firstRun = true;
-
  // Users navigate to web site and upload a CSV file
  // replace input placeholder with file name
  $('#inputGroupFile02').on('change', function () {
@@ -49,6 +26,9 @@
      const fix = `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`;
      modal(code, `${message} in "${fileName}", Row: ${row + 2}`, fix);
      modalDispose(code, 'Fix', fixRow(code, 'Fix', row));
+   } else {
+     buildTable();
+     buttonGroupClicks();
    }
  }
 
@@ -95,6 +75,7 @@
      }
      if (!$('#inputGroupFile02')[0].files.length) {
        modal("noFileChosen", "Please choose at least one file to parse.");
+       return;
      }
      // use jquery to select files
      $('#inputGroupFile02').parse({

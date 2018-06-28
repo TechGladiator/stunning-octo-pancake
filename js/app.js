@@ -1,22 +1,6 @@
 // Enable application to parse file
 parseFile();
 
-// Confirm correct number of columns are present based on header row
-
-// Prompt user with missing columns
-
-// Require all columns to be present
-
-// Use an alert modal to prompt user to correct
-
-// Implement Bootstrap modal
-
-// let user correct column errors if possible
-
-// Application displays all successful records
-
-// Append the parsed and validated data to HTML document body as a table
-
 // Validate data type formats in each record
 
 // Flag records that do not meet data type formats
@@ -40,6 +24,10 @@ parseFile();
 // Highlight records with issues and establish a repair-next button that jumps to each record with an issue 
 
 // Clear records that have been corrected as user goes
+
+// Application displays all successful records
+
+// Append the parsed and validated data to HTML document body as a table
 
 // Once all records are cleaned or removed, user is presented with an option to name and save the data set
 
