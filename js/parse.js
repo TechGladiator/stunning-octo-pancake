@@ -131,7 +131,6 @@ function parseFile() {
       complete() {
         // executed after all files are complete
         end = now();
-        printStats('Done with all files');
       }
     });
   });
