@@ -59,7 +59,7 @@ function completeFn(results) {
 function parseFile() {
 
   $('#jumboHeader').addClass('mb-5');
-  $('#jumboHeader').html('Edit CSV Data');
+  $('#jumboHeader').html('Upload CSV File');
   $('.wrapper').html(`${wrapper}`);
   $('.csv').html('');
 
