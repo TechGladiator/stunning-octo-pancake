@@ -1,11 +1,12 @@
 // Users navigate to web site and upload a CSV file
 
 function printStats(msg) {
-  if (msg)
+  if (msg) {
     console.log(msg);
-  console.log('       Time:', end - start || '(Unknown; your browser does not support the Performance API)', 'ms');
-  console.log('  Row count:', rowCount);
-  console.log('     Errors:', errorCount);
+    console.log('       Time:', end - start || '(Unknown; your browser does not support the Performance API)', 'ms');
+    console.log('  Row count:', rowCount);
+    console.log('     Errors:', errorCount);
+  }
   if (fieldNames.length != names.length) {
     console.log('header length is wrong');
     let headerLengthWrong = true;
@@ -134,6 +135,24 @@ function parseFile() {
       }
     });
   });
+}
+
+function getFieldNames(fn) {
+  if (headerCheck) {
+    let i = 0;
+    fn += `<th scope="col">#</th>`;
+    fieldNames.forEach(e => {
+      validateFieldNames(e);
+      if (name) {
+        fn += `<th id="header${i}">${e}</th>`;
+      }
+      else {
+        fn += `<th class="table-danger" id="header${i}">${e}</th>`;
+      }
+      i++;
+    });
+  }
+  return fn;
 }
 
 function updateFields(row, headerLengthWrong) {

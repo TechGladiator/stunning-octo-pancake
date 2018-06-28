@@ -2,19 +2,7 @@ function buildTable(row, headerLengthWrong) {
   let fn = '';
   let fd = '';
   
-  if (headerCheck) {
-    let i = 0;
-    fn += `<th scope="col">#</th>`;
-    fieldNames.forEach(e => {
-      validateFieldNames(e);
-      if (name) {
-        fn += `<th id="header${i}">${e}</th>`;
-      } else {
-        fn += `<th class="table-danger" id="header${i}">${e}</th>`;
-      }
-      i++;
-    });
-  }
+  fn = getFieldNames(fn);
 
   if (errorCount) {
     let j = 0;
@@ -76,7 +64,7 @@ function buildTable(row, headerLengthWrong) {
                       <div class="card-body">
                         <table id="csvTable" class="table table-bordered">
                           <thead>
-                            <tr>
+                            <tr class="headerRow">
                               ${fn}
                             </tr>
                           </thead>
@@ -94,7 +82,7 @@ function buildTable(row, headerLengthWrong) {
   });
   $('#repairNext').click(() => {
     if (headerLengthWrong) {
-      removeEmptyHeader();
+      removeEmptyHeader(fn);
     }
     updateFields(row, headerLengthWrong);
     printStats();
