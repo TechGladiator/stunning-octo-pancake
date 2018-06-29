@@ -78,7 +78,7 @@ function buildTable(row, headerLengthWrong) {
 
   $('#editData').click(() => {
     toggleEditable();
-    updateFields(row);
+    updateFields(row, headerLengthWrong);
   });
   $('#repairNext').click(() => {
     if (headerLengthWrong) {
