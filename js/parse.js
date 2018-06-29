@@ -1,8 +1,7 @@
-function fixButton(code) {
-  return `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`;
-}
+// Users navigate to web site and upload a CSV file
 
 function printStats(msg) {
+  const fix = `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`;
   if (msg) {
     console.log(msg);
     console.log('       Time:', end - start || '(Unknown; your browser does not support the Performance API)', 'ms');
@@ -19,10 +18,9 @@ function printStats(msg) {
     }
     code = `Too${codeWord}Fields`;
     message = `Too ${codeWord.toLowerCase()} fields: expected ${names.length} fields but parsed ${fieldNames.length}`;
-    fix = fixButton(code);
-    fn = getFieldNames(fn);
     modal(code, `${message} in "${fileName}", Row: 0`, fix);
-    modalDispose(code, 'Fix', testParse());
+    let headerLengthWrong = true;
+    buildTable(row, headerLengthWrong);
     return;
   }
   if (errorCount) {
@@ -30,39 +28,10 @@ function printStats(msg) {
     code = firstError.code;
     message = firstError.message;
     row = firstError.row;
-    fix = fixButton(code);
     modal(code, `${message} in "${fileName}", Row: ${row + 1}`, fix);
     modalDispose(code, 'Fix', fixRow(code, 'Fix', row));
   } else {
     buildTable();
-  }
-
-  function testParse() {
-    debugger;
-    removeEmptyHeader(fn);
-    let csv = Papa.unparse(fullResults, {
-      quotes: true,
-      quoteChar: '"',
-      escapeChar: '"',
-      delimiter: ",",
-      header: true,
-      newline: `\r\n`
-    });
-    Papa.parse(csv, {
-      config: {
-        delimiter: "",
-        header: true,
-        dynamicTyping: false,
-        skipEmptyLines: true,
-        preview: 0,
-        step: undefined,
-        encoding: "",
-        worker: false,
-        comments: false,
-        complete: completeFn,
-        error: errorFn
-      },
-    });
   }
 }
 
@@ -153,7 +122,7 @@ function parseFile() {
         worker: false,
         comments: false,
         complete: completeFn,
-        error: errorFn
+        error: errorFn,
       },
       before(file) {
         // executed before parsing each file begins;

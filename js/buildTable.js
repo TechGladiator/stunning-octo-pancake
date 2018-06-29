@@ -1,5 +1,5 @@
 function buildTable(row, headerLengthWrong) {
-  fn = '';
+  let fn = '';
   let fd = '';
   
   fn = getFieldNames(fn);
