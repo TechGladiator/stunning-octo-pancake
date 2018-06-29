@@ -27,6 +27,8 @@ let fieldState = true;
 let fieldZip = true;
 let firstError;
 let firstRun = true;
+let fix = '';
+let fn = '';
 let fullResults;
 let headerCheck = true;
 let message;
