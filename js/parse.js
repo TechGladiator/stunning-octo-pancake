@@ -19,33 +19,10 @@ function printStats(msg) {
     }
     code = `Too${codeWord}Fields`;
     message = `Too ${codeWord.toLowerCase()} fields: expected ${names.length} fields but parsed ${fieldNames.length}`;
-    let headerLengthWrong = true;
     fix = fixButton(code);
     fn = getFieldNames(fn);
     modal(code, `${message} in "${fileName}", Row: 0`, fix);
-    modalDispose(code, 'Fix', () => {
-      removeEmptyHeader(fn);
-      let csv = Papa.unparse(fullResults, {
-        quotes: false,
-        quoteChar: '"',
-        escapeChar: '"',
-        delimiter: ",",
-        header: true,
-        newline: `
-        `
-      });
-      $('.csv').html(`<button type="button" class="btn btn-primary" id="csvSubmitButton">Submit</button><div class="card"><div class="card-body" id="editCSV">${csv}</div></div>`);
-      editable = $('#editCSV');
-      editable[0].contentEditable = 'true';
-      $('#csvSubmitButton').click(() => {
-        csv = $('#editCSV').html();
-        rowCount = 0;
-        errorCount = 0;
-        firstError = undefined;
-        $('.csv').html(JSON.stringify(fullResults = Papa.parse(csv, {header: true})));
-        console.log('    Results: ', fullResults);
-      });
-    });
+    modalDispose(code, 'Fix', testParse());
     return;
   }
   if (errorCount) {
@@ -58,6 +35,34 @@ function printStats(msg) {
     modalDispose(code, 'Fix', fixRow(code, 'Fix', row));
   } else {
     buildTable();
+  }
+
+  function testParse() {
+    debugger;
+    removeEmptyHeader(fn);
+    let csv = Papa.unparse(fullResults, {
+      quotes: true,
+      quoteChar: '"',
+      escapeChar: '"',
+      delimiter: ",",
+      header: true,
+      newline: `\r\n`
+    });
+    Papa.parse(csv, {
+      config: {
+        delimiter: "",
+        header: true,
+        dynamicTyping: false,
+        skipEmptyLines: true,
+        preview: 0,
+        step: undefined,
+        encoding: "",
+        worker: false,
+        comments: false,
+        complete: completeFn,
+        error: errorFn
+      },
+    });
   }
 }
 
@@ -148,7 +153,7 @@ function parseFile() {
         worker: false,
         comments: false,
         complete: completeFn,
-        error: errorFn,
+        error: errorFn
       },
       before(file) {
         // executed before parsing each file begins;
