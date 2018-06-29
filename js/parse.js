@@ -1,7 +1,8 @@
-// Users navigate to web site and upload a CSV file
+function fixButton(code) {
+  return `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`;
+}
 
 function printStats(msg) {
-  const fix = `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`;
   if (msg) {
     console.log(msg);
     console.log('       Time:', end - start || '(Unknown; your browser does not support the Performance API)', 'ms');
@@ -18,9 +19,41 @@ function printStats(msg) {
     }
     code = `Too${codeWord}Fields`;
     message = `Too ${codeWord.toLowerCase()} fields: expected ${names.length} fields but parsed ${fieldNames.length}`;
-    modal(code, `${message} in "${fileName}", Row: 0`, fix);
     let headerLengthWrong = true;
-    buildTable(row, headerLengthWrong);
+    fix = fixButton(code);
+    // fn = getFieldNames(fn);
+    modal(code, `${message} in "${fileName}", Row: 0. Header errors must be corrected before further processing.`, fix);
+    modalDispose(code, 'Fix');
+    $(`#${code}Fix`).click(() => {
+      console.log('clicked');
+      removeEmptyHeader(fn);
+      let csv = Papa.unparse(fullResults, {
+        quotes: false,
+        quoteChar: '"',
+        escapeChar: '"',
+        delimiter: ",",
+        header: true,
+        newline: `\r\n`
+      });
+      console.log(csv);
+      let newResults = Papa.parse(csv, {
+        config: {
+          delimiter: "",
+          header: true,
+          dynamicTyping: false,
+          skipEmptyLines: true,
+          preview: 0,
+          step: undefined,
+          encoding: "",
+          worker: false,
+          comments: false,
+          complete: completeFn,
+          error: errorFn
+        }
+      });
+      console.log('    Results: ', newResults);
+    });
+    // buildTable(row, headerLengthWrong);
     return;
   }
   if (errorCount) {
@@ -122,7 +155,7 @@ function parseFile() {
         worker: false,
         comments: false,
         complete: completeFn,
-        error: errorFn,
+        error: errorFn
       },
       before(file) {
         // executed before parsing each file begins;
