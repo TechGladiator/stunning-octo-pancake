@@ -19,8 +19,6 @@ function printStats(msg) {
     code = `Too${codeWord}Fields`;
     message = `Too ${codeWord.toLowerCase()} fields: expected ${names.length} fields but parsed ${fieldNames.length}`;
     modal(code, `${message} in "${fileName}", Row: 0`, fix);
-    let headerLengthWrong = true;
-    buildTable(row, headerLengthWrong);
     return;
   }
   if (errorCount) {

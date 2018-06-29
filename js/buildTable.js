@@ -1,4 +1,4 @@
-function buildTable(row, headerLengthWrong) {
+function buildTable(row) {
   let fn = '';
   let fd = '';
   
@@ -46,10 +46,6 @@ function buildTable(row, headerLengthWrong) {
     });
   }
 
-  if (headerLengthWrong) {
-    fd = '';
-  }
-
   $('#jumboHeader').removeClass('mb-5');
   $('#jumboHeader').html('Edit CSV Data');
   $('.wrapper').html('');
@@ -78,14 +74,10 @@ function buildTable(row, headerLengthWrong) {
 
   $('#editData').click(() => {
     toggleEditable();
-    updateFields(row, headerLengthWrong);
+    updateFields(row);
   });
   $('#repairNext').click(() => {
-    if (headerLengthWrong) {
-      removeEmptyHeader(fn, headerLengthWrong);
-      buildTable(row, headerLengthWrong);
-    }
-    updateFields(row, headerLengthWrong);
+    updateFields(row);
     printStats();
     if (firstError == undefined) {
       modal('noErrors', 'All rows have the correct number of fields');
