@@ -1,7 +1,10 @@
-// Users navigate to web site and upload a CSV file
+function fixButton(code, buttonName) {
+  return `<button type="button" class="btn btn-danger" id="${code}${buttonName}">${buttonName}</button>`;
+}
 
 function printStats(msg) {
-  const fix = `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`;
+  let buttonName;
+  let fix;
   if (msg) {
     console.log(msg);
     console.log('       Time:', end - start || '(Unknown; your browser does not support the Performance API)', 'ms');
@@ -23,20 +26,33 @@ function printStats(msg) {
   }
   for (let i = 0; i < fieldNames.length; i++) {
     const e = fieldNames[i];
-    validateFieldNames(e);
+    validateFieldNames(fieldNames[i]);
     if (!name) {
-      console.log(e, ' is invalid');
-      buildTable(row = 'header');
+      console.log(fieldNames[i], ' is invalid');
+      // buildTable(row = 'header');
+      buttonName = 'Cancel';
+      code = 'invalidHeader';
+      fix = fixButton(code, buttonName);
+      modal(code, `${fieldNames[i]} is an invalid header name. Replace with correct header: ${names[i]}?`, fix);
+      modalDispose(code, buttonName);
+      $(`#${code}Close2`).click(() => {
+        console.log('Field Name was: ', fieldNames[i]);
+        fieldNames[i] = names[i];
+        console.log('Field Name is now: ', fieldNames[i]);
+      });
+      console.log('return');
       return;
     }
   }
   if (errorCount) {
     console.log('First error:', firstError);
+    buttonName = 'Fix';
     code = firstError.code;
+    fix = fixButton(code, buttonName);
     message = firstError.message;
     row = firstError.row;
     modal(code, `${message} in "${fileName}", Row: ${row + 1}`, fix);
-    modalDispose(code, 'Fix', fixRow(code, 'Fix', row));
+    modalDispose(code, buttonName, fixRow(code, buttonName, row));
   } else {
     buildTable();
   }
