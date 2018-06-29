@@ -31,59 +31,20 @@ function printStats(msg) {
         escapeChar: '"',
         delimiter: ",",
         header: true,
-        newline: ""
+        newline: `
+        `
       });
       $('.csv').html(`<button type="button" class="btn btn-primary" id="csvSubmitButton">Submit</button><div class="card"><div class="card-body" id="editCSV">${csv}</div></div>`);
       editable = $('#editCSV');
       editable[0].contentEditable = 'true';
       $('#csvSubmitButton').click(() => {
         csv = $('#editCSV').html();
-        $('.csv').html('');
         rowCount = 0;
         errorCount = 0;
         firstError = undefined;
-        if (!firstRun) {
-          console.log('--------------------------------------------------');
-        } else {
-          firstRun = false;
-        }
-        // use jquery to select files
-        $(csv).parse({
-          config: {
-            // base config to use for each file
-            delimiter: "",
-            header: headerCheck,
-            dynamicTyping: false,
-            skipEmptyLines: true,
-            preview: 0,
-            step: undefined,
-            encoding: "",
-            worker: false,
-            comments: false,
-            complete: completeFn,
-            error: errorFn,
-          },
-          before(file) {
-            // executed before parsing each file begins;
-            // what you return here controls the flow
-            start = now();
-            console.log('Parsing file...', file);
-          },
-          error(err, file) {
-            // executed if an error occurs while loading the file,
-            // or if before callback aborted for some reason
-            console.log('ERROR:', err, file);
-            firstError = firstError || err;
-            errorCount++;
-          },
-          complete() {
-            // executed after all files are complete
-            end = now();
-          }
-        });
+        $('.csv').html(JSON.stringify(fullResults = Papa.parse(csv, {header: true})));
+        console.log('    Results: ', fullResults);
       });
-      // debugger;
-      // buildTable(row, headerLengthWrong);
     });
     return;
   }
