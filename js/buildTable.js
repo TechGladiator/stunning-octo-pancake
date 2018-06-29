@@ -46,6 +46,10 @@ function buildTable(row) {
     });
   }
 
+  if (row == 'header') {
+    fd = '';
+  }
+
   $('#jumboHeader').removeClass('mb-5');
   $('#jumboHeader').html('Edit CSV Data');
   $('.wrapper').html('');

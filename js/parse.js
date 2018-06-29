@@ -21,6 +21,15 @@ function printStats(msg) {
     modal(code, `${message} in "${fileName}", Row: 0. Header length errors must be corrected within file before further processing to prevent data loss.`);
     return;
   }
+  for (let i = 0; i < fieldNames.length; i++) {
+    const e = fieldNames[i];
+    validateFieldNames(e);
+    if (!name) {
+      console.log(e, ' is invalid');
+      buildTable(row = 'header');
+      return;
+    }
+  }
   if (errorCount) {
     console.log('First error:', firstError);
     code = firstError.code;
