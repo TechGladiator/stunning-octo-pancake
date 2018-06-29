@@ -25,6 +25,9 @@ function removeEmptyHeader(fn) {
   fn = getFieldNames(fn);
   $('.headerRow').html(fn);
   console.log(fieldNames);
+  if (fieldNames.length == names.length) {
+    headerLengthWrong = false;
+  }
 }
 
 function removeEmptyField(row) {

@@ -82,7 +82,8 @@ function buildTable(row, headerLengthWrong) {
   });
   $('#repairNext').click(() => {
     if (headerLengthWrong) {
-      removeEmptyHeader(fn);
+      removeEmptyHeader(fn, headerLengthWrong);
+      buildTable(row, headerLengthWrong);
     }
     updateFields(row, headerLengthWrong);
     printStats();
