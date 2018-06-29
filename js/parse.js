@@ -19,41 +19,10 @@ function printStats(msg) {
     }
     code = `Too${codeWord}Fields`;
     message = `Too ${codeWord.toLowerCase()} fields: expected ${names.length} fields but parsed ${fieldNames.length}`;
-    let headerLengthWrong = true;
     fix = fixButton(code);
-    // fn = getFieldNames(fn);
-    modal(code, `${message} in "${fileName}", Row: 0. Header errors must be corrected before further processing.`, fix);
-    modalDispose(code, 'Fix');
-    $(`#${code}Fix`).click(() => {
-      console.log('clicked');
-      removeEmptyHeader(fn);
-      let csv = Papa.unparse(fullResults, {
-        quotes: false,
-        quoteChar: '"',
-        escapeChar: '"',
-        delimiter: ",",
-        header: true,
-        newline: `\r\n`
-      });
-      console.log(csv);
-      let newResults = Papa.parse(csv, {
-        config: {
-          delimiter: "",
-          header: true,
-          dynamicTyping: false,
-          skipEmptyLines: true,
-          preview: 0,
-          step: undefined,
-          encoding: "",
-          worker: false,
-          comments: false,
-          complete: completeFn,
-          error: errorFn
-        }
-      });
-      console.log('    Results: ', newResults);
-    });
-    // buildTable(row, headerLengthWrong);
+    fn = getFieldNames(fn);
+    modal(code, `${message} in "${fileName}", Row: 0`, fix);
+    modalDispose(code, 'Fix', testParse());
     return;
   }
   if (errorCount) {
@@ -61,10 +30,39 @@ function printStats(msg) {
     code = firstError.code;
     message = firstError.message;
     row = firstError.row;
+    fix = fixButton(code);
     modal(code, `${message} in "${fileName}", Row: ${row + 1}`, fix);
     modalDispose(code, 'Fix', fixRow(code, 'Fix', row));
   } else {
     buildTable();
+  }
+
+  function testParse() {
+    debugger;
+    removeEmptyHeader(fn);
+    let csv = Papa.unparse(fullResults, {
+      quotes: true,
+      quoteChar: '"',
+      escapeChar: '"',
+      delimiter: ",",
+      header: true,
+      newline: `\r\n`
+    });
+    Papa.parse(csv, {
+      config: {
+        delimiter: "",
+        header: true,
+        dynamicTyping: false,
+        skipEmptyLines: true,
+        preview: 0,
+        step: undefined,
+        encoding: "",
+        worker: false,
+        comments: false,
+        complete: completeFn,
+        error: errorFn
+      },
+    });
   }
 }
 
