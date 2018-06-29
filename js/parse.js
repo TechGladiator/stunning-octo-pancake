@@ -18,7 +18,7 @@ function printStats(msg) {
     }
     code = `Too${codeWord}Fields`;
     message = `Too ${codeWord.toLowerCase()} fields: expected ${names.length} fields but parsed ${fieldNames.length}`;
-    modal(code, `${message} in "${fileName}", Row: 0`, fix);
+    modal(code, `${message} in "${fileName}", Row: 0. Header length errors must be corrected within file before further processing to prevent data loss.`);
     return;
   }
   if (errorCount) {
@@ -160,7 +160,7 @@ function getFieldNames(fn) {
   return fn;
 }
 
-function updateFields(row, headerLengthWrong) {
+function updateFields(row) {
   if (headerCheck) {
     for (let i = 0; i < fieldNames.length; i++) {
       fieldNames[i] = $(`#header${i}`).html();
@@ -171,9 +171,6 @@ function updateFields(row, headerLengthWrong) {
         $(`#header${i}`).addClass('table-danger');
       }
     }
-  }
-  if (headerLengthWrong) {
-    return;
   }
   let j = 0;
   if (row != undefined) {
