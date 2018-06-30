@@ -1,26 +1,76 @@
-// Users navigate to web site and upload a CSV file
+function fixButton(code, buttonName) {
+  return `<button type="button" class="btn btn-danger" id="${code}${buttonName}">${buttonName}</button>`;
+}
 
 function printStats(msg) {
+  let buttonName;
+  let fix;
   if (msg) {
     console.log(msg);
     console.log('       Time:', end - start || '(Unknown; your browser does not support the Performance API)', 'ms');
     console.log('  Row count:', rowCount);
     console.log('     Errors:', errorCount);
   }
-  if (fieldNames.length != names.length) {
+  if (fieldNames && fieldNames.length != names.length) {
     console.log('header length is wrong');
-    let headerLengthWrong = true;
-    buildTable(row, headerLengthWrong);
+    let codeWord;
+    if (fieldNames.length < names.length) {
+      codeWord = 'Few';
+    } else {
+      codeWord = 'Many';
+    }
+    code = `Too${codeWord}Fields`;
+    message = `Too ${codeWord.toLowerCase()} fields: expected ${names.length} fields but parsed ${fieldNames.length}`;
+    modal(code, `${message} in "${fileName}", Row: 0. Header length errors must be corrected within file before further processing to prevent data loss.`);
     return;
+  }
+  for (let i = 0; i < fieldNames.length; i++) {
+    validateFieldNames(fieldNames[i]);
+    if (!name) {
+      console.log(fieldNames[i], ' is invalid');
+      buttonName = 'Cancel';
+      code = 'invalidHeader';
+      fix = fixButton(code, buttonName);
+      modal(code, `${fieldNames[i]} is an invalid header name. Replace with correct header: ${names[i]}?`, fix);
+      modalDispose(code, buttonName);
+      $(`#${code}Close2`).click(() => {
+        $(`#${code}`).on('hidden.bs.modal', () => {
+          let oldKey = fieldNames[i];
+          fieldNames[i] = names[i];
+          let newKey = fieldNames[i];
+          console.log('Field Name was: ', oldKey);
+          console.log('Field Name is now: ', newKey);
+          fieldData.forEach((e) => {
+            for (const k in e) {
+              if (k == oldKey) {
+                e[newKey] = e[oldKey];
+                delete e[oldKey];
+              } else if (k == 'Address 2') {
+                e['Address2'] = e['Address 2'];
+                delete e['Address 2'];
+                e['Address 2'] = e['Address2'];
+                delete e['Address2'];
+              } else if (k == '__parsed_extra') {
+                e['parsed_extra'] = e['__parsed_extra'];
+                delete e['__parsed_extra'];
+              }
+            }
+          });
+          printStats('Key updated');
+        });
+      });
+      return;
+    }
   }
   if (errorCount) {
     console.log('First error:', firstError);
+    buttonName = 'Fix';
     code = firstError.code;
+    fix = fixButton(code, buttonName);
     message = firstError.message;
     row = firstError.row;
-    const fix = `<button type="button" class="btn btn-danger" id="${code}Fix">Fix</button>`;
     modal(code, `${message} in "${fileName}", Row: ${row + 1}`, fix);
-    modalDispose(code, 'Fix', fixRow(code, 'Fix', row));
+    modalDispose(code, buttonName, fixRow(code, buttonName, row));
   } else {
     buildTable();
   }
@@ -59,7 +109,7 @@ function completeFn(results) {
 function parseFile() {
 
   $('#jumboHeader').addClass('mb-5');
-  $('#jumboHeader').html('Edit CSV Data');
+  $('#jumboHeader').html('Upload CSV File');
   $('.wrapper').html(`${wrapper}`);
   $('.csv').html('');
 
@@ -104,7 +154,7 @@ function parseFile() {
       config: {
         // base config to use for each file
         delimiter: "",
-        header: $('#headerCheck').prop('checked'),
+        header: headerCheck,
         dynamicTyping: false,
         skipEmptyLines: true,
         preview: 0,
@@ -131,7 +181,6 @@ function parseFile() {
       complete() {
         // executed after all files are complete
         end = now();
-        printStats('Done with all files');
       }
     });
   });
@@ -145,8 +194,7 @@ function getFieldNames(fn) {
       validateFieldNames(e);
       if (name) {
         fn += `<th id="header${i}">${e}</th>`;
-      }
-      else {
+      } else {
         fn += `<th class="table-danger" id="header${i}">${e}</th>`;
       }
       i++;
@@ -155,7 +203,7 @@ function getFieldNames(fn) {
   return fn;
 }
 
-function updateFields(row, headerLengthWrong) {
+function updateFields(row) {
   if (headerCheck) {
     for (let i = 0; i < fieldNames.length; i++) {
       fieldNames[i] = $(`#header${i}`).html();
@@ -166,9 +214,6 @@ function updateFields(row, headerLengthWrong) {
         $(`#header${i}`).addClass('table-danger');
       }
     }
-  }
-  if (headerLengthWrong) {
-    return;
   }
   let j = 0;
   if (row != undefined) {

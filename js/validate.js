@@ -8,9 +8,6 @@ function validateFieldNames(fieldName) {
 			name = false;
 		}
 	}
-	if (!name) {
-		console.log(`Header "${fieldName}" is invalid`);
-	}
 }
 
 // Validate data type formats in each record

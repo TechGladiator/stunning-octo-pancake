@@ -1,4 +1,4 @@
-function buildTable(row, headerLengthWrong) {
+function buildTable(row) {
   let fn = '';
   let fd = '';
   
@@ -46,7 +46,7 @@ function buildTable(row, headerLengthWrong) {
     });
   }
 
-  if (headerLengthWrong) {
+  if (row == 'header') {
     fd = '';
   }
 
@@ -81,10 +81,7 @@ function buildTable(row, headerLengthWrong) {
     updateFields(row);
   });
   $('#repairNext').click(() => {
-    if (headerLengthWrong) {
-      removeEmptyHeader(fn);
-    }
-    updateFields(row, headerLengthWrong);
+    updateFields(row);
     printStats();
     if (firstError == undefined) {
       modal('noErrors', 'All rows have the correct number of fields');
