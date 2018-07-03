@@ -19,25 +19,21 @@
 
     function initialize() {
       geocoder = new google.maps.Geocoder();
-      console.log('geocoder = ', geocoder);
       var latlng = new google.maps.LatLng(38.931948, -77.052443);
-      console.log('latlng = ', latlng);
       var mapOptions = {
         zoom: 16,
         center: latlng
       }
       map = new google.maps.Map(document.getElementById('map'), mapOptions);
-      console.log('map = ', map);
     }
 
     function codeAddress() {
       var address = document.getElementById('address').value;
-      console.log('address = ', address);
       geocoder.geocode({
         'address': address
       }, function (results, status) {
         if (status == 'OK') {
-          console.log('    Results:', results[0].geometry.viewport.b.b + ', ' + results[0].geometry.viewport.f.f);
+          console.log('    Latitude and Longitude:', results[0].geometry.viewport.f.f + ', ' + results[0].geometry.viewport.b.b);
           map.setCenter(results[0].geometry.location);
           var marker = new google.maps.Marker({
             map: map,
