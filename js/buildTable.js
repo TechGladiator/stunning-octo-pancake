@@ -57,6 +57,7 @@ function buildTable(row) {
   $('.csv').html(`
                     <div class="btn-group d-flex justify-content-center mb-3" role="group" aria-label="button group">
                       <button type="button" class="btn btn-secondary" id="editData">Edit Data</button>
+                      <button type="button" class="btn btn-secondary" id="mapData">Map Imported Data</button>
                       <button type="button" class="btn btn-secondary" id="repairNext">Repair Next Error</button>
                       <button type="button" class="btn btn-secondary" id="cancelCSV">Cancel CSV Processing</button>
                     </div>
