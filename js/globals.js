@@ -1,5 +1,5 @@
 // global variables
-const names = ['Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date'];
+const names = ['Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date', 'LAT', 'LONG'];
 const wrapper = `
 <div class="input-group mr-auto ml-auto mb-3">
 	<div class="custom-file">
