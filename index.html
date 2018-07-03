@@ -28,24 +28,9 @@
     
     <div class="jumbotron w-75 mt-5 ml-auto mr-auto">
       
-      <h1 class="text-center mb-5" id="jumboHeader">Upload CSV File</h1>
+      <h1 class="text-center" id="jumboHeader"></h1>
       
-      <div class="wrapper">
-        <div class="input-group mr-auto ml-auto mb-3">
-          <div class="custom-file">
-            <input type="file" class="custom-file-input" id="inputGroupFile02">
-            <label class="custom-file-label" for="inputGroupFile02">Drag &amp; Drop or click here to browse for your file</label>
-          </div>
-          <div class="input-group-append" id="upload">
-            <span class="input-group-text">Upload</span>
-          </div>
-        </div>
-        <div class="text-center">
-          <input type="checkbox" id="headerCheck" aria-label="Checkbox if header is included">
-          <label for="headerCheck">Check here if a header is included as the first line of the file</label>
-        </div>
-        
-      </div>
+      <div class="wrapper"></div>
     </div>
 
     <div class="csv"></div>
@@ -64,10 +49,12 @@
   <script src="js/vendor/papaparse.min.js"></script>
 
   <!-- custom scripts -->
+  <script src="js/globals.js"></script>
   <script src="js/modal.js"></script>
   <script src="js/fixError.js"></script>
   <script src="js/parse.js"></script>
   <script src="js/buildTable.js"></script>
+  <script src="js/validate.js"></script>
   <script src="js/app.js"></script>
 </body>
 
