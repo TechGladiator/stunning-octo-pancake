@@ -119,8 +119,8 @@ function buildTable(row) {
     updateFields(row);
   });
   $('#mapData').click(() => {
-    console.log(addressList);
-    codeAddress(fullAddress);
+    console.log(addressList[0]);
+    codeAddress(addressList[0]);
   });
   $('#repairNext').click(() => {
     updateFields(row);
