@@ -11,10 +11,9 @@ function initialize() {
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
 }
 
-function codeAddress() {
-  const address = document.getElementById('address').value;
+function codeAddress(fullAddress) {
   geocoder.geocode({
-    'address': address
+    'address': fullAddress
   }, (results, status) => {
     if (status == 'OK') {
       console.log('    Latitude and Longitude:', `${results[0].geometry.viewport.f.f}, ${results[0].geometry.viewport.b.b}`);
