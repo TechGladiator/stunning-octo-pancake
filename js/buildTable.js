@@ -36,7 +36,31 @@ function buildTable(row) {
           if (f == e.State && !fieldState || f == e.Zip && !fieldZip || f == e['Creation Date'] && !fieldDate) {
             fd += `<td class="table-danger" id="row${r}Field${j}">${f}</td>`
           } else {
-            fd += `<td id="row${r}Field${j}">${f}</td>`
+            let fieldType;
+            switch (f) {
+              case e.Name:
+                fieldType = 'Name';
+                fd += `<td id="row${r}Field${j}${fieldType}">${f}</td>`
+                break;
+              case e.Address:
+                fieldType = 'Address';
+                fd += `<td id="row${r}Field${j}${fieldType}">${f}</td>`
+                break;
+              case e.City:
+                fieldType = 'City';
+                fd += `<td id="row${r}Field${j}${fieldType}">${f}</td>`
+                break;
+              case e.State:
+                fieldType = 'State';
+                fd += `<td id="row${r}Field${j}${fieldType}">${f}</td>`
+                break;
+              case e.Zip:
+                fieldType = 'Zip';
+                fd += `<td id="row${r}Field${j}${fieldType}">${f}</td>`
+                break;
+              default:
+                fd += `<td id="row${r}Field${j}">${f}</td>`
+            }
           }
           j++;
         }
