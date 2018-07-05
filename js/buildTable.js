@@ -81,6 +81,9 @@ function buildTable(row) {
     toggleEditable();
     updateFields(row);
   });
+  $('#mapData').click(() => {
+    console.log('not yet implemented');
+  });
   $('#repairNext').click(() => {
     updateFields(row);
     printStats();
