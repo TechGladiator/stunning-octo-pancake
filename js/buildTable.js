@@ -1,6 +1,7 @@
 function buildTable(row) {
   let fn = '';
   let fd = '';
+  let fullAddress = '';
   
   fn = getFieldNames(fn);
 
@@ -38,26 +39,37 @@ function buildTable(row) {
           } else {
             let fieldType;
             switch (f) {
-              case e.Name:
-                fieldType = 'Name';
-                fd += `<td id="row${r}Field${j}${fieldType}">${f}</td>`
-                break;
               case e.Address:
                 fieldType = 'Address';
                 fd += `<td id="row${r}Field${j}${fieldType}">${f}</td>`
+                fullAddress += ` ${f}`;
                 break;
               case e.City:
                 fieldType = 'City';
                 fd += `<td id="row${r}Field${j}${fieldType}">${f}</td>`
+                fullAddress += ` ${f}`;
                 break;
               case e.State:
                 fieldType = 'State';
                 fd += `<td id="row${r}Field${j}${fieldType}">${f}</td>`
+                fullAddress += ` ${f}`;
                 break;
               case e.Zip:
                 fieldType = 'Zip';
                 fd += `<td id="row${r}Field${j}${fieldType}">${f}</td>`
+                fullAddress += ` ${f}
+                `;
                 break;
+              case e.Name:
+                objEntry = Object.entries(e)[j][0];
+                if (objEntry != 'Property Owner') {
+                  // continue;
+                  fieldType = 'Name';
+                  fd += `<td id="row${r}Field${j}${fieldType}">${f}</td>`
+                  fullAddress += `
+                  ${f}`;
+                  break;
+                }
               default:
                 fd += `<td id="row${r}Field${j}">${f}</td>`
             }
@@ -106,7 +118,7 @@ function buildTable(row) {
     updateFields(row);
   });
   $('#mapData').click(() => {
-    console.log('not yet implemented');
+    console.log(fullAddress);
   });
   $('#repairNext').click(() => {
     updateFields(row);
