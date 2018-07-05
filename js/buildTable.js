@@ -2,6 +2,7 @@ function buildTable(row) {
   let fn = '';
   let fd = '';
   let fullAddress = '';
+  let addressList = [];
   
   fn = getFieldNames(fn);
 
@@ -57,8 +58,7 @@ function buildTable(row) {
               case e.Zip:
                 fieldType = 'Zip';
                 fd += `<td id="row${r}Field${j}${fieldType}">${f}</td>`
-                fullAddress += ` ${f}
-                `;
+                fullAddress += ` ${f}`;
                 break;
               case e.Name:
                 objEntry = Object.entries(e)[j][0];
@@ -66,8 +66,7 @@ function buildTable(row) {
                   // continue;
                   fieldType = 'Name';
                   fd += `<td id="row${r}Field${j}${fieldType}">${f}</td>`
-                  fullAddress += `
-                  ${f}`;
+                  fullAddress += `${f}`;
                   break;
                 }
               default:
@@ -77,6 +76,8 @@ function buildTable(row) {
           j++;
         }
       }
+      addressList.push(fullAddress);
+      fullAddress = '';
       fd += `</tr>`
       r++;
     });
@@ -118,7 +119,7 @@ function buildTable(row) {
     updateFields(row);
   });
   $('#mapData').click(() => {
-    console.log(fullAddress);
+    console.log(addressList);
     codeAddress(fullAddress);
   });
   $('#repairNext').click(() => {
