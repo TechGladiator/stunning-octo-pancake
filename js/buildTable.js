@@ -8,6 +8,11 @@ function buildTable(row) {
   
   fn = getFieldNames(fn);
 
+  function addressFields(r, j, fieldType, f) {
+    fd += `<td id="row${r}Field${j}${names[fieldType]}">${f}</td>`
+    fullAddress += ` ${f}`;
+  }
+
   if (errorCount) {
     let j = 0;
     fd += `
@@ -40,35 +45,23 @@ function buildTable(row) {
           if (f == e.State && !fieldState || f == e.Zip && !fieldZip || f == e['Creation Date'] && !fieldDate) {
             fd += `<td class="table-danger" id="row${r}Field${j}">${f}</td>`
           } else {
-            let fieldType;
             switch (f) {
               case e.Address:
-                fieldType = 'Address';
-                fd += `<td id="row${r}Field${j}${fieldType}">${f}</td>`
-                fullAddress += ` ${f}`;
+                addressFields(r, j, 1, f);
                 break;
               case e.City:
-                fieldType = 'City';
-                fd += `<td id="row${r}Field${j}${fieldType}">${f}</td>`
-                fullAddress += ` ${f}`;
+                addressFields(r, j, 3, f);
                 break;
               case e.State:
-                fieldType = 'State';
-                fd += `<td id="row${r}Field${j}${fieldType}">${f}</td>`
-                fullAddress += ` ${f}`;
+                addressFields(r, j, 4, f);
                 break;
               case e.Zip:
-                fieldType = 'Zip';
-                fd += `<td id="row${r}Field${j}${fieldType}">${f}</td>`
-                fullAddress += ` ${f}`;
+                addressFields(r, j, 5, f);
                 break;
               case e.Name:
                 objEntry = Object.entries(e)[j][0];
                 if (objEntry != 'Property Owner') {
-                  // continue;
-                  fieldType = 'Name';
-                  fd += `<td id="row${r}Field${j}${fieldType}">${f}</td>`
-                  fullAddress += `${f}`;
+                  addressFields(r, j, 0, f);
                   break;
                 }
               default:
