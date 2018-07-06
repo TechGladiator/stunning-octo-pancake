@@ -247,5 +247,8 @@ function cancelCSV() {
   fieldData = {};
   fieldErrors = {};
   console.log('    Results:', fullResults);
+  $('#map').html('');
+  $('#map').removeAttr('style');
+  $('.csv').removeClass('p-5');
   parseFile();
 }
