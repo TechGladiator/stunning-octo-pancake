@@ -121,6 +121,7 @@ function buildTable(row) {
     updateFields(row);
   });
   $('#mapData').click(() => {
+    initialize();
     for (let i = 0; i < 10; i++) {
       console.log(addressList[i]);
       codeAddress(addressList[i]);
