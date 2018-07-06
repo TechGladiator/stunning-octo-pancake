@@ -32,3 +32,20 @@ function codeAddress(fullAddress) {
     }
   });
 }
+
+function geoIterate(fullAddress) {
+  let counter = fullAddress.length;
+  let i = 0;
+  let intervalId;
+  function start() {
+    if (counter == 0) {
+      clearInterval(intervalId);
+    } else {
+      codeAddress(fullAddress[i]);
+      console.log(fullAddress[i]);
+    }
+    counter--;
+    i++;
+  }
+  intervalId = setInterval(start, 1000);
+}
