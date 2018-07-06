@@ -28,7 +28,7 @@ function codeAddress(fullAddress) {
         position: results[0].geometry.location
       });
     } else {
-      modal(status, `Geocode was not successful for the following reason: ${status}`);
+      modal(status, `Geocode was not successful for the following reason: ${status}: ${fullAddress}`);
     }
   });
 }
