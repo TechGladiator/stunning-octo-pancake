@@ -2,6 +2,11 @@ let geocoder;
 let map;
 
 function initialize() {
+  $('#map').css({
+    'width': '61.6%',
+    'height': '400px',
+    'margin': 'auto'
+  });
   geocoder = new google.maps.Geocoder();
   const latlng = new google.maps.LatLng(38.928610, -98.579458);
   const mapOptions = {
