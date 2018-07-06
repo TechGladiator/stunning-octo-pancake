@@ -3,9 +3,9 @@ let map;
 
 function initialize() {
   geocoder = new google.maps.Geocoder();
-  const latlng = new google.maps.LatLng(38.931948, -77.052443);
+  const latlng = new google.maps.LatLng(38.928610, -98.579458);
   const mapOptions = {
-    zoom: 5,
+    zoom: 4,
     center: latlng
   };
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
