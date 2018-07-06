@@ -5,7 +5,7 @@ function initialize() {
   geocoder = new google.maps.Geocoder();
   const latlng = new google.maps.LatLng(38.931948, -77.052443);
   const mapOptions = {
-    zoom: 16,
+    zoom: 5,
     center: latlng
   };
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
@@ -23,7 +23,7 @@ function codeAddress(fullAddress) {
         position: results[0].geometry.location
       });
     } else {
-      alert(`Geocode was not successful for the following reason: ${status}`);
+      modal(status, `Geocode was not successful for the following reason: ${status}`);
     }
   });
 }
