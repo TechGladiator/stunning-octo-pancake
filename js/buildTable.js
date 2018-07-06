@@ -3,6 +3,8 @@ function buildTable(row) {
   let fd = '';
   let fullAddress = '';
   let addressList = [];
+
+  $('.csv').addClass('p-5');
   
   fn = getFieldNames(fn);
 
