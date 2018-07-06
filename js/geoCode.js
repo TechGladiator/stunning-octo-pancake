@@ -47,5 +47,5 @@ function geoIterate(fullAddress) {
     counter--;
     i++;
   }
-  intervalId = setInterval(start, 1000);
+  intervalId = setInterval(start, 500);
 }
