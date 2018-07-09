@@ -3,7 +3,7 @@ let map;
 
 function initialize() {
   $('#map').css({
-    'width': '62.5%',
+    'width': '43.75%',
     'height': '400px',
     'margin': 'auto'
   });
