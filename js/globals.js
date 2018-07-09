@@ -29,6 +29,8 @@ let firstError;
 let firstRun = true;
 let fullResults;
 let headerCheck = true;
+let latitude;
+let longitude;
 let message;
 let name = true;
 let row;
