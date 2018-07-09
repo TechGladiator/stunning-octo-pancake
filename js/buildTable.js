@@ -9,8 +9,12 @@ function buildTable(row) {
   fn = getFieldNames(fn);
 
   function addressFields(r, j, fieldType, f) {
-    fd += `<td id="row${r}Field${j}${names[fieldType]}">${f}</td>`
-    fullAddress += ` ${f}`;
+    if (f == '') {
+      fd += `<td id="row${r}Field${j}"></td>`
+    } else {
+      fd += `<td id="row${r}Field${j}${names[fieldType]}">${f}</td>`
+      fullAddress += ` ${f}`;
+    }
   }
 
   if (errorCount) {
@@ -47,13 +51,8 @@ function buildTable(row) {
           } else {
             switch (f) {
               case e.Address:
-                if (f == '') {
-                  fd += `<td id="row${r}Field${j}"></td>`
-                  break;
-                } else {
-                  addressFields(r, j, 1, f);
-                  break;
-                }
+                addressFields(r, j, 1, f);
+                break;
               case e.City:
                 addressFields(r, j, 3, f);
                 break;
