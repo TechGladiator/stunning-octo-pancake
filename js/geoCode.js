@@ -16,7 +16,7 @@ function initialize() {
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
 }
 
-function codeAddress(fullAddress) {
+function codeAddress(fullAddress, fieldData) {
   geocoder.geocode({
     'address': fullAddress
   }, (results, status) => {
@@ -24,6 +24,8 @@ function codeAddress(fullAddress) {
       latitude = results[0].geometry.viewport.f.f;
       longitude = results[0].geometry.viewport.b.b;
       console.log('    Latitude and Longitude:', `${latitude}, ${longitude}`);
+      fieldData.Latitude = latitude;
+      fieldData.Longitude = longitude;
       map.setCenter(results[0].geometry.location);
       const marker = new google.maps.Marker({
         map,
@@ -43,11 +45,21 @@ function geoIterate(fullAddress) {
     if (counter == 0) {
       clearInterval(intervalId);
     } else {
-      codeAddress(fullAddress[i]);
+      codeAddress(fullAddress[i], fieldData[i]);
       console.log(fullAddress[i]);
+      console.log(fieldData[i]);
     }
     counter--;
     i++;
+    buildTable();
   }
   intervalId = setInterval(start, 500);
+  showLatLong();
+}
+
+function showLatLong() {
+  names.push('Latitude', 'Longitude');
+  fieldNames.push('Latitude', 'Longitude');
+  console.log(fieldNames);
+  console.log(fieldData);
 }
