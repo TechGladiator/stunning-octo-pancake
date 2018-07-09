@@ -230,7 +230,7 @@ function updateFields(row) {
       let j = 0;
       for (const k in e) {
         if (e.hasOwnProperty(k)) {
-          e[k] = $(`#row${i}Field${j}`).html();
+          e[k] = $(`#row${i}Field${j}`).html() || $(`#row${i}Field${j}${names[j]}`).html() || "";
           validateField(e, k, i, j);
         }
         j++;
