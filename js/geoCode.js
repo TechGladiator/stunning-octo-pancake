@@ -16,7 +16,7 @@ function initialize() {
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
 }
 
-function codeAddress(fullAddress, fieldData) {
+function codeAddress(fullAddress, fieldData, intervalId) {
   geocoder.geocode({
     'address': fullAddress
   }, (results, status) => {
@@ -33,6 +33,7 @@ function codeAddress(fullAddress, fieldData) {
       });
     } else {
       modal(status, `Geocode was not successful for the following reason: ${status}: ${fullAddress}`);
+      clearInterval(intervalId);
     }
   });
 }
@@ -45,7 +46,7 @@ function geoIterate(fullAddress) {
     if (counter == 0) {
       clearInterval(intervalId);
     } else {
-      codeAddress(fullAddress[i], fieldData[i]);
+      codeAddress(fullAddress[i], fieldData[i], intervalId);
       console.log(fullAddress[i]);
       console.log(fieldData[i]);
     }
