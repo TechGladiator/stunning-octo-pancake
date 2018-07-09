@@ -250,5 +250,6 @@ function cancelCSV() {
   $('#map').html('');
   $('#map').removeAttr('style');
   $('.csv').removeClass('p-5');
+  geoClear();
   parseFile();
 }

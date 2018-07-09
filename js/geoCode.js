@@ -63,3 +63,10 @@ function showLatLong() {
   console.log(fieldNames);
   console.log(fieldData);
 }
+
+function geoClear() {
+  while (names.length > 9) {
+    names.pop();
+  }
+  console.log(names);
+}
