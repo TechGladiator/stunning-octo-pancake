@@ -47,8 +47,13 @@ function buildTable(row) {
           } else {
             switch (f) {
               case e.Address:
-                addressFields(r, j, 1, f);
-                break;
+                if (f == '') {
+                  fd += `<td id="row${r}Field${j}"></td>`
+                  break;
+                } else {
+                  addressFields(r, j, 1, f);
+                  break;
+                }
               case e.City:
                 addressFields(r, j, 3, f);
                 break;
