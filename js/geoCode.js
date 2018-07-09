@@ -58,8 +58,10 @@ function geoIterate(fullAddress) {
 }
 
 function showLatLong() {
-  names.push('Lat', 'Long');
-  fieldNames.push('Lat', 'Long');
+  if (names.length < 11 && fieldNames.length < 11) {
+    names.push('Lat', 'Long');
+    fieldNames.push('Lat', 'Long');
+  }
   console.log(fieldNames);
   console.log(fieldData);
 }
