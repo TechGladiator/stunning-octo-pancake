@@ -10,7 +10,7 @@ function initialize() {
   geocoder = new google.maps.Geocoder();
   const latlng = new google.maps.LatLng(38.928610, -98.579458);
   const mapOptions = {
-    zoom: 4,
+    zoom: 13,
     center: latlng
   };
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
