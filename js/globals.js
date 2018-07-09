@@ -25,6 +25,7 @@ let fieldErrors;
 let fieldNames;
 let fieldState = true;
 let fieldZip = true;
+let fileName;
 let firstError;
 let firstRun = true;
 let fullResults;

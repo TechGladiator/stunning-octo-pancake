@@ -83,7 +83,7 @@ function buildTable(row) {
   }
 
   $('#jumboHeader').removeClass('mb-5');
-  $('#jumboHeader').html('Edit CSV Data');
+  $('#jumboHeader').html(fileName);
   $('.wrapper').html('');
 
   $('.csv').html(`
