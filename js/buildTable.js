@@ -58,6 +58,12 @@ function buildTable(row) {
               case e.Zip:
                 addressFields(r, j, 5, f);
                 break;
+              case e.Lat:
+                addressFields(r, j, 9, f);
+                break;
+              case e.Long:
+                addressFields(r, j, 10, f);
+                break;
               case e.Name:
                 objEntry = Object.entries(e)[j][0];
                 if (objEntry != 'Property Owner') {
