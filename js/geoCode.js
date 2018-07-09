@@ -21,7 +21,9 @@ function codeAddress(fullAddress) {
     'address': fullAddress
   }, (results, status) => {
     if (status == 'OK') {
-      console.log('    Latitude and Longitude:', `${results[0].geometry.viewport.f.f}, ${results[0].geometry.viewport.b.b}`);
+      latitude = results[0].geometry.viewport.f.f;
+      longitude = results[0].geometry.viewport.b.b;
+      console.log('    Latitude and Longitude:', `${latitude}, ${longitude}`);
       map.setCenter(results[0].geometry.location);
       const marker = new google.maps.Marker({
         map,
