@@ -21,11 +21,11 @@ function codeAddress(fullAddress, fieldData) {
     'address': fullAddress
   }, (results, status) => {
     if (status == 'OK') {
-      latitude = results[0].geometry.viewport.f.f;
-      longitude = results[0].geometry.viewport.b.b;
-      console.log('    Latitude and Longitude:', `${latitude}, ${longitude}`);
-      fieldData.Latitude = latitude;
-      fieldData.Longitude = longitude;
+      lat = results[0].geometry.viewport.f.f;
+      long = results[0].geometry.viewport.b.b;
+      console.log('    Lat and Long:', `${lat}, ${long}`);
+      fieldData.Lat = lat;
+      fieldData.Long = long;
       map.setCenter(results[0].geometry.location);
       const marker = new google.maps.Marker({
         map,
@@ -58,8 +58,8 @@ function geoIterate(fullAddress) {
 }
 
 function showLatLong() {
-  names.push('Latitude', 'Longitude');
-  fieldNames.push('Latitude', 'Longitude');
+  names.push('Lat', 'Long');
+  fieldNames.push('Lat', 'Long');
   console.log(fieldNames);
   console.log(fieldData);
 }
