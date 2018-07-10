@@ -27,6 +27,39 @@ function codeAddress(fullAddress, fieldData, intervalId) {
       lat = results[0].geometry.location.lat();
       long = results[0].geometry.location.lng();
       console.log('    Lat and Long:', lat, long);
+      for (const k in fieldData) {
+        if (fieldData.hasOwnProperty(k)) {
+          const f = fieldData[k];
+          const addressComponents = results[0].address_components;
+          switch (f) {
+            case fieldData.Address:
+              if (f == '') {
+                fieldData.Address = `${addressComponents[0].short_name} ${addressComponents[1].short_name}`;
+                buildTable();
+              }
+              break;
+            case fieldData.City:
+              if (f == '') {
+                fieldData.City = addressComponents[3].short_name;
+                buildTable();
+              }
+              break;
+            case fieldData.State:
+              if (f == '') {
+                fieldData.State = addressComponents[4].short_name;
+                buildTable();
+              }
+              break;
+            case fieldData.Zip:
+              if (f == '') {
+                fieldData.Zip = addressComponents[6].short_name;
+                buildTable();
+              }
+            default:
+              buildTable();
+          }
+        }
+      }
       fieldData.Lat = lat;
       fieldData.Long = long;
       map.setCenter(results[0].geometry.location);
