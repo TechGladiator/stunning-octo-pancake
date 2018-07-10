@@ -16,9 +16,6 @@ function initialize() {
     center: latlng
   };
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
-  $('#submit').click(() => {
-    geocodeLatLng();
-  });
 }
 
 function codeAddress(fullAddress, fieldData, intervalId) {
