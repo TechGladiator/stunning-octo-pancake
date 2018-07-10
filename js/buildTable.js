@@ -8,17 +8,6 @@ function buildTable(row) {
   
   fn = getFieldNames(fn);
 
-  function addressFields(r, j, f) {
-    if (f == '') {
-      fd += `<td id="row${r}Field${j}"></td>`
-    } else {
-      fd += `<td id="row${r}Field${j}${names[j].replace(/\s+/g, '')}">${f}</td>`;
-      if (j == 0 || j == 1 || j == 3 || j == 4 || j == 5) {
-        fullAddress += ` ${f}`;
-      }
-    }
-  }
-
   if (errorCount) {
     let j = 0;
     fd += `
@@ -51,15 +40,13 @@ function buildTable(row) {
           if (f == e.State && !fieldState || f == e.Zip && !fieldZip || f == e['Creation Date'] && !fieldDate) {
             fd += `<td class="table-danger" id="row${r}Field${j}">${f}</td>`
           } else {
-            switch (f) {
-              case e.Name:
-                objEntry = Object.entries(e)[j][0];
-                if (objEntry != 'Property Owner') {
-                  addressFields(r, j, f);
-                  break;
-                }
-              default:
-                addressFields(r, j, f);
+            if (f == '') {
+              fd += `<td id="row${r}Field${j}"></td>`
+            } else {
+              fd += `<td id="row${r}Field${j}${names[j].replace(/\s+/g, '')}">${f}</td>`;
+              if (j == 0 || j == 1 || j == 3 || j == 4 || j == 5) {
+                fullAddress += ` ${f}`;
+              }
             }
           }
           j++;
