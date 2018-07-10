@@ -12,7 +12,7 @@ function initialize() {
   infowindow = new google.maps.InfoWindow;
   const latlng = new google.maps.LatLng(38.928610, -98.579458);
   const mapOptions = {
-    zoom: 13,
+    zoom: 4,
     center: latlng
   };
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
@@ -49,7 +49,7 @@ function geocodeLatLng() {
   geocoder.geocode({'location': latlng}, (results, status) => {
     if (status === 'OK') {
       if (results[0]) {
-        map.setZoom(11);
+        map.setZoom(15);
         const marker = new google.maps.Marker({
           position: latlng,
           map
