@@ -189,7 +189,10 @@ function parseFile() {
 function getFieldNames(fn) {
   if (headerCheck) {
     let i = 0;
-    fn += `<th scope="col">#</th>`;
+    fn += `
+    <th></th>
+    <th scope="col">#</th>
+    `;
     fieldNames.forEach(e => {
       validateFieldNames(e);
       if (name) {
