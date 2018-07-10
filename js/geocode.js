@@ -42,10 +42,9 @@ function codeAddress(fullAddress, fieldData, intervalId) {
 
 function geocodeLatLng() {
   const input = $('#latlng').val();
-  const latlngStr = input.split(',', 2);
   const latlng = {
-    lat: parseFloat(latlngStr[0]),
-    lng: parseFloat(latlngStr[1])
+    lat: lat,
+    lng: long
   };
   geocoder.geocode({'location': latlng}, (results, status) => {
     if (status === 'OK') {
