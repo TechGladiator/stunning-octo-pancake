@@ -48,3 +48,8 @@ function fixRow(code, close, row) {
     buildTable(row);
   });
 }
+
+function deleteRow(row) {
+  delete fieldData[row];
+  buildTable();
+}
