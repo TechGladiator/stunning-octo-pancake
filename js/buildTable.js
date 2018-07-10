@@ -110,4 +110,8 @@ function buildTable(row) {
   $('#cancelCSV').click(() => {
     cancelCSV();
   });
+  $('.latlong').click(() => {
+    console.log('clicked');
+    geocodeLatLng();
+  });
 }
