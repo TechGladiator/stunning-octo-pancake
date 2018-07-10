@@ -22,9 +22,10 @@ function codeAddress(fullAddress, fieldData, intervalId) {
   geocoder.geocode({
     'address': fullAddress
   }, (results, status) => {
+    console.log(results);
     if (status == 'OK') {
-      lat = results[0].geometry.viewport.f.f;
-      long = results[0].geometry.viewport.b.b;
+      lat = results[0].geometry.location.lat();
+      long = results[0].geometry.location.lng();
       console.log('    Lat and Long:', lat, long);
       fieldData.Lat = lat;
       fieldData.Long = long;
