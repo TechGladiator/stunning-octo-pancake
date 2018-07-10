@@ -43,7 +43,7 @@ function buildTable(row) {
             if (f == '') {
               fd += `<td id="row${r}Field${j}"></td>`
             } else if (f == e.Lat || f == e.Long) {
-              fd += `<td class="latlong" id="row${r}Field${j}${names[j]}">${f}</td>`;
+              fd += `<td class="latlong" id="row${r}Field${j}${names[j]}" onclick="geocodeLatLng(${r})" >${f}</td>`;
             } else {
               fd += `<td id="row${r}Field${j}${names[j].replace(/\s+/g, '')}">${f}</td>`;
               if (j == 0 || j == 1 || j == 3 || j == 4 || j == 5) {
@@ -109,9 +109,5 @@ function buildTable(row) {
   });
   $('#cancelCSV').click(() => {
     cancelCSV();
-  });
-  $('.latlong').click(() => {
-    console.log('clicked');
-    geocodeLatLng();
   });
 }
