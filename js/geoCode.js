@@ -1,4 +1,5 @@
 let geocoder;
+let infowindow;
 let map;
 
 function initialize() {
@@ -8,12 +9,16 @@ function initialize() {
     'margin': 'auto'
   });
   geocoder = new google.maps.Geocoder();
+  infowindow = new google.maps.InfoWindow;
   const latlng = new google.maps.LatLng(38.928610, -98.579458);
   const mapOptions = {
     zoom: 13,
     center: latlng
   };
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  $('#submit').click(() => {
+    geocodeLatLng();
+  });
 }
 
 function codeAddress(fullAddress, fieldData, intervalId) {
@@ -23,7 +28,7 @@ function codeAddress(fullAddress, fieldData, intervalId) {
     if (status == 'OK') {
       lat = results[0].geometry.viewport.f.f;
       long = results[0].geometry.viewport.b.b;
-      console.log('    Lat and Long:', `${lat}, ${long}`);
+      console.log('    Lat and Long:', lat, long);
       fieldData.Lat = lat;
       fieldData.Long = long;
       map.setCenter(results[0].geometry.location);
@@ -34,6 +39,32 @@ function codeAddress(fullAddress, fieldData, intervalId) {
     } else {
       modal(status, `Geocode was not successful for the following reason: ${status}: ${fullAddress}`);
       clearInterval(intervalId);
+    }
+  });
+}
+
+function geocodeLatLng() {
+  const input = $('#latlng').val();
+  const latlngStr = input.split(',', 2);
+  const latlng = {
+    lat: parseFloat(latlngStr[0]),
+    lng: parseFloat(latlngStr[1])
+  };
+  geocoder.geocode({'location': latlng}, (results, status) => {
+    if (status === 'OK') {
+      if (results[0]) {
+        map.setZoom(11);
+        const marker = new google.maps.Marker({
+          position: latlng,
+          map
+        });
+        infowindow.setContent(results[0].formatted_address);
+        infowindow.open(map, marker);
+      } else {
+        modal('noResults', 'No results found');
+      }
+    } else {
+      modal(status, `Geocoder failed due to: ${status}`);
     }
   });
 }
