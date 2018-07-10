@@ -40,11 +40,12 @@ function codeAddress(fullAddress, fieldData, intervalId) {
   });
 }
 
-function geocodeLatLng() {
-  const input = $('#latlng').val();
+function geocodeLatLng(r) {
+  const input0 = $(`#row${r}Field9Lat`).html();
+  const input1 = $(`#row${r}Field10Long`).html();
   const latlng = {
-    lat: lat,
-    lng: long
+    lat: parseFloat(input0),
+    lng: parseFloat(input1)
   };
   geocoder.geocode({'location': latlng}, (results, status) => {
     if (status === 'OK') {
