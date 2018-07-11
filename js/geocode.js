@@ -89,18 +89,7 @@ function geocodeLatLng(r) {
           position: latlng,
           map
         });
-        infowindow.setContent(`
-        <div id="content">
-          <div id="siteNotice"></div>
-          <h5 id="firstHeading" class="firstHeading">${$(`#row${r}Field0Name`).html()}</h5>
-          <div id="bodyContent">
-            ${$(`#row${r}Field1Address`).html()} ${$(`#row${r}Field2Address2`).html()} ${$(`#row${r}Field3City`).html()} ${$(`#row${r}Field4State`).html()} ${$(`#row${r}Field5Zip`).html()}
-            <br>
-            <b style="font-weight: 900">Purpose:</b> ${$(`#row${r}Field6Purpose`).html()} <b style="font-weight: 900">Property Owner:</b> ${$(`#row${r}Field7PropertyOwner`).html()} <b style="font-weight: 900">Creation Date:</b> ${$(`#row${r}Field8CreationDate`).html()}
-          </div>
-        </div>
-        `);
-        infowindow.open(map, marker);
+        showInfoWin(r, marker);
       } else {
         modal('noResults', 'No results found');
       }
@@ -108,6 +97,21 @@ function geocodeLatLng(r) {
       modal(status, `Geocoder failed due to: ${status}`);
     }
   });
+}
+
+function showInfoWin(r, marker) {
+  infowindow.setContent(`
+  <div id="content">
+    <div id="siteNotice"></div>
+    <h5 id="firstHeading" class="firstHeading">${$(`#row${r}Field0Name`).html()}</h5>
+    <div id="bodyContent">
+      ${$(`#row${r}Field1Address`).html()} ${$(`#row${r}Field2Address2`).html()} ${$(`#row${r}Field3City`).html()} ${$(`#row${r}Field4State`).html()} ${$(`#row${r}Field5Zip`).html()}
+      <br>
+      <b style="font-weight: 900">Purpose:</b> ${$(`#row${r}Field6Purpose`).html()} <b style="font-weight: 900">Property Owner:</b> ${$(`#row${r}Field7PropertyOwner`).html()} <b style="font-weight: 900">Creation Date:</b> ${$(`#row${r}Field8CreationDate`).html()}
+    </div>
+  </div>
+  `);
+  infowindow.open(map, marker);
 }
 
 function geoIterate(fullAddress) {
