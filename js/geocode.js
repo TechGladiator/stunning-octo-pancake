@@ -1,6 +1,7 @@
 let geocoder;
 let infowindow;
 let map;
+let markers = [];
 
 function initialize() {
   $('#map').css({
@@ -65,6 +66,7 @@ function codeAddress(fullAddress, fieldData, intervalId, r) {
         map,
         position: results[0].geometry.location
       });
+      markers.push(marker);
       marker.addListener('click', () => {
         map.setZoom(15);
         map.setCenter(results[0].geometry.location);
@@ -92,6 +94,7 @@ function geocodeLatLng(r) {
           position: latlng,
           map
         });
+        markers.push(marker);
         marker.addListener('click', () => {
           map.setZoom(15);
           showInfoWin(r, marker);
@@ -130,6 +133,7 @@ function geoIterate(fullAddress) {
   function start() {
     if (counter == 0) {
       clearInterval(intervalId);
+      setMarkerBounds();
     } else {
       codeAddress(fullAddress[i], fieldData[i], intervalId, i);
     }
@@ -140,6 +144,21 @@ function geoIterate(fullAddress) {
   intervalId = setInterval(start, 500);
   showLatLong();
   console.log('    Field Data:', fieldData);
+}
+
+function setMarkerBounds() {
+  let bounds = new google.maps.LatLngBounds();
+  for (let i = 0; i < markers.length; i++) {
+    const e = markers[i];
+    bounds.extend(e.getPosition());
+  }
+  map.setCenter(bounds.getCenter());
+  google.maps.event.addListenerOnce(map, 'zoom_changed', (e) => {
+    if (map.getZoom() > 15) {
+      map.setZoom(15);
+    }
+  });
+  map.fitBounds(bounds);
 }
 
 function showLatLong() {
