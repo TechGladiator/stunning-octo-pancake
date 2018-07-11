@@ -50,6 +50,6 @@ function fixRow(code, close, row) {
 }
 
 function deleteRow(row) {
-  delete fieldData[row];
+  console.log(fieldData.splice(row, 1));
   buildTable();
 }
