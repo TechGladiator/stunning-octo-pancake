@@ -33,7 +33,7 @@ function buildTable(row) {
       fd += `
             <tr>
               <th class="deleteRow table-danger" id="deleteRow${r}" onclick="deleteRow(${r})">X</th>
-              <th scope="row" id="row${r}">${r + 1}</th>
+              <th scope="row" class="latlong" id="row${r}" onclick="geocodeLatLng(${r})">${r + 1}</th>
             `;
       for (const k in e) {
         if (e.hasOwnProperty(k)) {
@@ -41,15 +41,9 @@ function buildTable(row) {
           if (f == e.State && !fieldState || f == e.Zip && !fieldZip || f == e['Creation Date'] && !fieldDate) {
             fd += `<td class="table-danger" id="row${r}Field${j}">${f}</td>`
           } else {
-            if (f == '') {
-              fd += `<td id="row${r}Field${j}"></td>`
-            } else if (f == e.Lat || f == e.Long) {
-              fd += `<td class="latlong" id="row${r}Field${j}${names[j]}" onclick="geocodeLatLng(${r})" >${f}</td>`;
-            } else {
-              fd += `<td id="row${r}Field${j}${names[j].replace(/\s+/g, '')}">${f}</td>`;
-              if (j == 0 || j == 1 || j == 3 || j == 4 || j == 5) {
-                fullAddress += ` ${f}`;
-              }
+            fd += `<td class="latlong" id="row${r}Field${j}${names[j].replace(/\s+/g, '')}" onclick="geocodeLatLng(${r})">${f}</td>`;
+            if (j == 0 || j == 1 || j == 3 || j == 4 || j == 5) {
+              fullAddress += ` ${f}`;
             }
           }
           j++;
