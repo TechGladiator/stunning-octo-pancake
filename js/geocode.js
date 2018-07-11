@@ -22,11 +22,9 @@ function codeAddress(fullAddress, fieldData, intervalId, r) {
   geocoder.geocode({
     'address': fullAddress
   }, (results, status) => {
-    console.log(results);
     if (status == 'OK') {
       lat = results[0].geometry.location.lat();
       long = results[0].geometry.location.lng();
-      console.log('    Lat and Long:', lat, long);
       for (const k in fieldData) {
         if (fieldData.hasOwnProperty(k)) {
           const f = fieldData[k];
@@ -134,8 +132,6 @@ function geoIterate(fullAddress) {
       clearInterval(intervalId);
     } else {
       codeAddress(fullAddress[i], fieldData[i], intervalId, i);
-      console.log(fullAddress[i]);
-      console.log(fieldData[i]);
     }
     counter--;
     i++;
@@ -143,6 +139,7 @@ function geoIterate(fullAddress) {
   }
   intervalId = setInterval(start, 500);
   showLatLong();
+  console.log('    Field Data:', fieldData);
 }
 
 function showLatLong() {
@@ -150,13 +147,10 @@ function showLatLong() {
     names.push('Lat', 'Long');
     fieldNames.push('Lat', 'Long');
   }
-  console.log(fieldNames);
-  console.log(fieldData);
 }
 
 function geoClear() {
   while (names.length > 9) {
     names.pop();
   }
-  console.log(names);
 }
