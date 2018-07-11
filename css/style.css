@@ -6,6 +6,10 @@
   cursor: pointer;
 }
 
+.invisible {
+  position: absolute;
+}
+
 /* apply Source Code Pro Font to editable fields */
 [contenteditable="true"] {
   font-family: 'Source Code Pro', monospace;
