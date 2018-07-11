@@ -68,6 +68,7 @@ function codeAddress(fullAddress, fieldData, intervalId, r) {
         position: results[0].geometry.location
       });
       marker.addListener('click', () => {
+        map.setZoom(15);
         showInfoWin(r, marker);
       });
     } else {
