@@ -89,7 +89,7 @@ function geocodeLatLng(r) {
           position: latlng,
           map
         });
-        infowindow.setContent(results[0].formatted_address);
+        infowindow.setContent(`${$(`#row${r}Field0Name`).html()} ${$(`#row${r}Field1Address`).html()} ${$(`#row${r}Field2Address2`).html()} ${$(`#row${r}Field3City`).html()} ${$(`#row${r}Field4State`).html()} ${$(`#row${r}Field5Zip`).html()} ${$(`#row${r}Field6Purpose`).html()} ${$(`#row${r}Field7PropertyOwner`).html()} ${$(`#row${r}Field8CreationDate`).html()}`);
         infowindow.open(map, marker);
       } else {
         modal('noResults', 'No results found');
