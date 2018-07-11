@@ -3,10 +3,12 @@ function toggleEditable() {
   if (!editable[0].isContentEditable) {
     editable[0].contentEditable = 'true';
     $('#editData').html('Save Edits');
+    $('.border-dark').removeClass('invisible');
   }
   else {
     editable[0].contentEditable = 'false';
     $('#editData').html('Edit Data');
+    $('.border-dark').addClass('invisible');
   }
 }
 
@@ -52,4 +54,5 @@ function fixRow(code, close, row) {
 function deleteRow(row) {
   console.log(fieldData.splice(row, 1));
   buildTable();
+  toggleEditable();
 }

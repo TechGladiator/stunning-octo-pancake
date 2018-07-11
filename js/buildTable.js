@@ -32,7 +32,7 @@ function buildTable(row) {
       validateDate(e);
       fd += `
             <tr>
-              <th class="deleteRow table-danger text-center align-middle border border-dark" id="deleteRow${r}" onclick="deleteRow(${r})">X</th>
+              <th class="deleteRow table-danger text-center align-middle border border-dark invisible" id="deleteRow${r}" onclick="deleteRow(${r})">X</th>
               <th scope="row" class="latlong" id="row${r}" onclick="geocodeLatLng(${r})">${r + 1}</th>
             `;
       for (const k in e) {

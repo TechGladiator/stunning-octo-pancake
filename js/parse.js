@@ -190,7 +190,7 @@ function getFieldNames(fn) {
   if (headerCheck) {
     let i = 0;
     fn += `
-    <th class="border border-dark">Delete Record</th>
+    <th class="border border-dark invisible">Delete Record</th>
     <th scope="col">#</th>
     `;
     fieldNames.forEach(e => {
