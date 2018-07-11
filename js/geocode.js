@@ -69,6 +69,7 @@ function codeAddress(fullAddress, fieldData, intervalId, r) {
       });
       marker.addListener('click', () => {
         map.setZoom(15);
+        map.setCenter(results[0].geometry.location);
         showInfoWin(r, marker);
       });
     } else {
@@ -94,9 +95,12 @@ function geocodeLatLng(r) {
           map
         });
         marker.addListener('click', () => {
+          map.setZoom(15);
           showInfoWin(r, marker);
+          map.setCenter(results[0].geometry.location);
         });
         showInfoWin(r, marker);
+        map.setCenter(results[0].geometry.location);
       } else {
         modal('noResults', 'No results found');
       }
