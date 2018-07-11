@@ -18,7 +18,7 @@ function initialize() {
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
 }
 
-function codeAddress(fullAddress, fieldData, intervalId) {
+function codeAddress(fullAddress, fieldData, intervalId, r) {
   geocoder.geocode({
     'address': fullAddress
   }, (results, status) => {
@@ -66,6 +66,9 @@ function codeAddress(fullAddress, fieldData, intervalId) {
       const marker = new google.maps.Marker({
         map,
         position: results[0].geometry.location
+      });
+      marker.addListener('click', () => {
+        showInfoWin(r, marker);
       });
     } else {
       modal(status, `Geocode was not successful for the following reason: ${status}: ${fullAddress}`);
@@ -122,7 +125,7 @@ function geoIterate(fullAddress) {
     if (counter == 0) {
       clearInterval(intervalId);
     } else {
-      codeAddress(fullAddress[i], fieldData[i], intervalId);
+      codeAddress(fullAddress[i], fieldData[i], intervalId, i);
       console.log(fullAddress[i]);
       console.log(fieldData[i]);
     }
