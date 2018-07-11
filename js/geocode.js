@@ -92,6 +92,9 @@ function geocodeLatLng(r) {
           position: latlng,
           map
         });
+        marker.addListener('click', () => {
+          showInfoWin(r, marker);
+        });
         showInfoWin(r, marker);
       } else {
         modal('noResults', 'No results found');
