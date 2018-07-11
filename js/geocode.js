@@ -10,7 +10,9 @@ function initialize() {
     'margin': 'auto'
   });
   geocoder = new google.maps.Geocoder();
-  infowindow = new google.maps.InfoWindow;
+  infowindow = new google.maps.InfoWindow({
+    maxWidth: 400
+  });
   const latlng = new google.maps.LatLng(38.928610, -98.579458);
   const mapOptions = {
     zoom: 4,
