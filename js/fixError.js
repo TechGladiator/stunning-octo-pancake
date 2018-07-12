@@ -4,11 +4,17 @@ function toggleEditable() {
     editable[0].contentEditable = 'true';
     $('#editData').html('Save Edits');
     $('.border-dark').removeClass('invisible');
+    if (mapped) {
+      $('tr').removeClass('latlong');
+    }
   }
   else {
     editable[0].contentEditable = 'false';
     $('#editData').html('Edit Data');
     $('.border-dark').addClass('invisible');
+    if (mapped) {
+      $('tr').addClass('latlong');
+    }
   }
 }
 
