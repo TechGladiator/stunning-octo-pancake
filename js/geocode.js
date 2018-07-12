@@ -4,6 +4,31 @@ let map;
 let mapped = false;
 let markers = [];
 
+function ShowAllMarkers(showAllControlDiv, map) {
+  const controlUI = document.createElement('div');
+  controlUI.style.backgroundColor = '#fff';
+  controlUI.style.border = '2px solid #fff';
+  controlUI.style.borderRadius = '3px';
+  controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+  controlUI.style.cursor = 'pointer';
+  controlUI.style.marginBottom = '22px';
+  controlUI.style.textAlign = 'center';
+  controlUI.title = 'Click to show all markers';
+  showAllControlDiv.appendChild(controlUI);
+
+  const controlText = document.createElement('div');
+  controlText.style.color = 'rgb(25,25,25)';
+  controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+  controlText.style.fontSize = '16px';
+  controlText.style.lineHeight = '38px';
+  controlText.style.paddingLeft = '5px';
+  controlText.style.paddingRight = '5px';
+  controlText.innerHTML = 'Show All Markers';
+  controlUI.appendChild(controlText);
+
+  controlUI.addEventListener('click', setMarkerBounds);
+}
+
 function initialize() {
   $('#map').css({
     'width': '75%',
@@ -21,6 +46,12 @@ function initialize() {
   };
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
   mapped = true;
+
+  const showAllControlDiv = document.createElement('div');
+  const showAllMarkers = new ShowAllMarkers(showAllControlDiv, map);
+
+  showAllControlDiv.index = 1;
+  map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(showAllControlDiv);
 }
 
 function codeAddress(fullAddress, fieldData, intervalId, r) {
