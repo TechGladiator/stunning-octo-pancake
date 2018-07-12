@@ -244,10 +244,21 @@ function getFieldData(fd, row, fullAddress, addressList) {
 }
 
 function buildFields(fd, r, e, j, fullAddress) {
+  let fieldClass;
+  let fieldClick;
+
+  if (mapped) {
+    fieldClass = 'class="latlong"';
+    fieldClick = `onclick="geocodeLatLng(${r})"`
+  } else {
+    fieldClass = '';
+    fieldClick = '';
+  }
+
   fd += `
             <tr>
               <th class="deleteRow table-danger text-center align-middle border border-dark invisible" id="deleteRow${r}" onclick="deleteRow(${r})">X</th>
-              <th scope="row" class="latlong" id="row${r}" onclick="geocodeLatLng(${r})">${r + 1}</th>
+              <th scope="row" ${fieldClass} id="row${r}" ${fieldClick}>${r + 1}</th>
             `;
   for (const k in e) {
     if (e.hasOwnProperty(k)) {
@@ -256,7 +267,7 @@ function buildFields(fd, r, e, j, fullAddress) {
         fd += `<td class="table-danger" id="row${r}Field${j}">${f}</td>`;
       }
       else {
-        fd += `<td class="latlong" id="row${r}Field${j}${names[j].replace(/\s+/g, '')}" onclick="geocodeLatLng(${r})">${f}</td>`;
+        fd += `<td ${fieldClass} id="row${r}Field${j}${names[j].replace(/\s+/g, '')}" ${fieldClick}>${f}</td>`;
         if (j == 0 || j == 1 || j == 3 || j == 4 || j == 5) {
           fullAddress += ` ${f}`;
         }
@@ -310,6 +321,7 @@ function cancelCSV() {
   fieldNames = {};
   fieldData = {};
   fieldErrors = {};
+  mapped = false;
   console.log('    Results:', fullResults);
   $('#map').html('');
   $('#map').removeAttr('style');

@@ -1,6 +1,7 @@
 let geocoder;
 let infowindow;
 let map;
+let mapped = false;
 let markers = [];
 
 function initialize() {
@@ -19,6 +20,7 @@ function initialize() {
     center: latlng
   };
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  mapped = true;
 }
 
 function codeAddress(fullAddress, fieldData, intervalId, r) {
