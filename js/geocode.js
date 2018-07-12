@@ -5,7 +5,7 @@ let markers = [];
 
 function initialize() {
   $('#map').css({
-    'width': '43.75%',
+    'width': '75%',
     'height': '400px',
     'margin': 'auto'
   });
