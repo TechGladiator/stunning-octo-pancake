@@ -233,26 +233,7 @@ function getFieldData(fd, row, fullAddress, addressList) {
       validateState(e);
       validateZip(e);
       validateDate(e);
-      fd += `
-            <tr>
-              <th class="deleteRow table-danger text-center align-middle border border-dark invisible" id="deleteRow${r}" onclick="deleteRow(${r})">X</th>
-              <th scope="row" class="latlong" id="row${r}" onclick="geocodeLatLng(${r})">${r + 1}</th>
-            `;
-      for (const k in e) {
-        if (e.hasOwnProperty(k)) {
-          const f = e[k];
-          if (f == e.State && !fieldState || f == e.Zip && !fieldZip || f == e['Creation Date'] && !fieldDate) {
-            fd += `<td class="table-danger" id="row${r}Field${j}">${f}</td>`;
-          }
-          else {
-            fd += `<td class="latlong" id="row${r}Field${j}${names[j].replace(/\s+/g, '')}" onclick="geocodeLatLng(${r})">${f}</td>`;
-            if (j == 0 || j == 1 || j == 3 || j == 4 || j == 5) {
-              fullAddress += ` ${f}`;
-            }
-          }
-          j++;
-        }
-      }
+      ({ fd, j, fullAddress } = buildFields(fd, r, e, j, fullAddress));
       addressList.push(fullAddress);
       fullAddress = '';
       fd += `</tr>`;
@@ -260,6 +241,30 @@ function getFieldData(fd, row, fullAddress, addressList) {
     });
   }
   return { fd, fullAddress };
+}
+
+function buildFields(fd, r, e, j, fullAddress) {
+  fd += `
+            <tr>
+              <th class="deleteRow table-danger text-center align-middle border border-dark invisible" id="deleteRow${r}" onclick="deleteRow(${r})">X</th>
+              <th scope="row" class="latlong" id="row${r}" onclick="geocodeLatLng(${r})">${r + 1}</th>
+            `;
+  for (const k in e) {
+    if (e.hasOwnProperty(k)) {
+      const f = e[k];
+      if (f == e.State && !fieldState || f == e.Zip && !fieldZip || f == e['Creation Date'] && !fieldDate) {
+        fd += `<td class="table-danger" id="row${r}Field${j}">${f}</td>`;
+      }
+      else {
+        fd += `<td class="latlong" id="row${r}Field${j}${names[j].replace(/\s+/g, '')}" onclick="geocodeLatLng(${r})">${f}</td>`;
+        if (j == 0 || j == 1 || j == 3 || j == 4 || j == 5) {
+          fullAddress += ` ${f}`;
+        }
+      }
+      j++;
+    }
+  }
+  return { fd, j, fullAddress };
 }
 
 function updateFields(row) {
