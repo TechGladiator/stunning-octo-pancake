@@ -83,6 +83,8 @@ function codeAddress(fullAddress, fieldData, intervalId, r) {
       modal(status, `Geocode was not successful for the following reason: ${status}: ${fullAddress}`, fix);
       modalDispose(status, buttonName, () => {
         console.log('fixed');
+        errorCount = 1;
+        buildTable(r);
       });
     }
   });
