@@ -116,6 +116,7 @@ function codeAddress(fullAddress, fieldData, intervalId, r) {
         console.log('fixed');
         errorCount = 1;
         buildTable(r);
+        errorCount = 0;
       });
     }
   });
