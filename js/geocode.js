@@ -77,8 +77,13 @@ function codeAddress(fullAddress, fieldData, intervalId, r) {
         showInfoWin(r, marker);
       });
     } else {
-      modal(status, `Geocode was not successful for the following reason: ${status}: ${fullAddress}`);
       clearInterval(intervalId);
+      let buttonName = 'Fix';
+      let fix = fixButton(status, buttonName);
+      modal(status, `Geocode was not successful for the following reason: ${status}: ${fullAddress}`, fix);
+      modalDispose(status, buttonName, () => {
+        console.log('fixed');
+      });
     }
   });
 }
