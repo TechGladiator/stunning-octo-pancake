@@ -23,6 +23,9 @@ function printStats(msg) {
     message = `Too ${codeWord.toLowerCase()} fields: expected ${names.length} fields but parsed ${fieldNames.length}`;
     modal(code, `${message} in "${fileName}", Row: 0. Header length errors must be corrected within file before further processing to prevent data loss.`);
     return;
+  } else if (!headerCheck) {
+    buildTable();
+    return;
   }
   for (let i = 0; i < fieldNames.length; i++) {
     validateFieldNames(fieldNames[i]);

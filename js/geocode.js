@@ -164,7 +164,7 @@ function setMarkerBounds() {
 }
 
 function showLatLong() {
-  if (names.length < 11 && fieldNames.length < 11) {
+  if (fieldNames && names.length < 11 && fieldNames.length < 11) {
     names.push('Lat', 'Long');
     fieldNames.push('Lat', 'Long');
   }
