@@ -213,6 +213,7 @@ function getFieldData(fd, row, fullAddress, addressList) {
   if (errorCount) {
     let j = 0;
     fd += `
+            <th class="deleteRow table-danger text-center align-middle border border-dark invisible" id="deleteRow${row}" onclick="deleteRow(${row})">X</th>
             <th scope="row">${row + 1}</th>
           `;
     for (const k in fieldData[row]) {
