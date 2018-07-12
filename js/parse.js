@@ -318,6 +318,7 @@ function cancelCSV() {
   fieldNames = {};
   fieldData = {};
   fieldErrors = {};
+  headerCheck = true;
   mapped = false;
   console.log('    Results:', fullResults);
   $('#map').html('');
