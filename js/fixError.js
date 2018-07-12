@@ -5,7 +5,7 @@ function toggleEditable() {
     $('#editData').html('Save Edits');
     $('.border-dark').removeClass('invisible');
     if (mapped) {
-      $('tr').removeClass('latlong');
+      $('tbody').removeClass('latlong');
     }
   }
   else {
@@ -13,7 +13,7 @@ function toggleEditable() {
     $('#editData').html('Edit Data');
     $('.border-dark').addClass('invisible');
     if (mapped) {
-      $('tr').addClass('latlong');
+      $('tbody').addClass('latlong');
     }
   }
 }

@@ -244,19 +244,16 @@ function getFieldData(fd, row, fullAddress, addressList) {
 }
 
 function buildFields(fd, r, e, j, fullAddress) {
-  let fieldClass;
   let fieldClick;
 
   if (mapped) {
-    fieldClass = 'class="latlong"';
     fieldClick = `onclick="geocodeLatLng(${r})"`
   } else {
-    fieldClass = '';
     fieldClick = '';
   }
 
   fd += `
-            <tr ${fieldClass}>
+            <tr>
               <th class="deleteRow table-danger text-center align-middle border border-dark invisible" id="deleteRow${r}" onclick="deleteRow(${r})">X</th>
               <th scope="row" id="row${r}" ${fieldClick}>${r + 1}</th>
             `;

@@ -41,6 +41,10 @@ function buildTable(row) {
                     </div>
                   `);
 
+  if (mapped) {
+    $('tbody').addClass('latlong');
+  }
+
   $('#editData').click(() => {
     toggleEditable();
     updateFields(row);
