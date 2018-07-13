@@ -23,9 +23,6 @@ function validateState(row) {
       }
 		}
 	}
-	if (!fieldState) {
-		console.log(`${row.State} is an invalid State abbreviation`);
-	}
 }
 
 function validateZip(row) {
@@ -41,9 +38,6 @@ function validateZip(row) {
 				fieldZip = false;
 			}
 		}
-	}
-	if (!fieldZip) {
-		console.log(`${row.Zip} is invalid`);
 	}
 }
 

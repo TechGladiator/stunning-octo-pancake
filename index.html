@@ -7,13 +7,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link rel="stylesheet" href="./css/vendor/bootstrap.min.css">
 
   <!-- Source Code Pro Font -->
   <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
   
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="./css/style.css">
 
   <title>Project: Batch CSV Import Process</title>
 </head>
@@ -32,30 +32,31 @@
       
       <div class="wrapper"></div>
     </div>
-
-    <div class="csv"></div>
+    
+    <div id="map"></div>
 
   </div>
 
+  <div class="csv"></div>
+
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
-    crossorigin="anonymous"></script>
+  <script src="./js/vendor/jquery-3.3.1.slim.min.js"></script>
+  <script src="./js/vendor/popper.min.js"></script>
+  <script src="./js/vendor/bootstrap.min.js"></script>
   <!-- PapaParse to parse csv file -->
-  <script src="js/vendor/papaparse.min.js"></script>
+  <script src="./js/vendor/papaparse.min.js"></script>
 
   <!-- custom scripts -->
-  <script src="js/globals.js"></script>
-  <script src="js/modal.js"></script>
-  <script src="js/fixError.js"></script>
-  <script src="js/parse.js"></script>
-  <script src="js/buildTable.js"></script>
-  <script src="js/validate.js"></script>
-  <script src="js/app.js"></script>
+  <script src="./js/globals.js"></script>
+  <script src="./js/modal.js"></script>
+  <script src="./js/fixError.js"></script>
+  <script src="./js/parse.js"></script>
+  <script src="./js/buildTable.js"></script>
+  <script src="./js/validate.js"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWp-He-X3RbdHc6V-Y0jpVrnMPky1KFZk"></script>
+  <script src="./js/geocode.js"></script>
+  <script src="./js/app.js"></script>
 </body>
 
 </html>

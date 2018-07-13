@@ -3,10 +3,18 @@ function toggleEditable() {
   if (!editable[0].isContentEditable) {
     editable[0].contentEditable = 'true';
     $('#editData').html('Save Edits');
+    $('.border-dark').removeClass('invisible');
+    if (mapped) {
+      $('tbody').removeClass('latlong');
+    }
   }
   else {
     editable[0].contentEditable = 'false';
     $('#editData').html('Edit Data');
+    $('.border-dark').addClass('invisible');
+    if (mapped) {
+      $('tbody').addClass('latlong');
+    }
   }
 }
 
@@ -47,4 +55,10 @@ function fixRow(code, close, row) {
     removeFirstErrorMessage(row);
     buildTable(row);
   });
+}
+
+function deleteRow(row) {
+  console.log(fieldData.splice(row, 1));
+  buildTable();
+  toggleEditable();
 }
