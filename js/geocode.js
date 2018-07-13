@@ -67,31 +67,48 @@ function codeAddress(fullAddress, fieldData, intervalId, r) {
           const addressComponents = results[0].address_components;
           switch (f) {
             case fieldData.Address:
-              if (f == '') {
-                fieldData.Address = `${addressComponents[0].short_name} ${addressComponents[1].short_name}`;
-                buildTable();
+              let address = '';
+              for (let i = 0; i < addressComponents.length; i++) {
+                const e = addressComponents[i];
+                if (e.types[0] == 'street_number') {
+                  address += e.short_name;
+                } else if (e.types[0] == 'route') {
+                  address += ` ${e.short_name}`;
+                  if (fieldData.Address != address) {
+                    fieldData.Address = address;
+                  }
+                  break;
+                }
               }
+              buildTable();
               break;
             case fieldData.City:
-              if (f == '') {
-                fieldData.City = addressComponents[3].short_name;
-                buildTable();
+              for (let i = 0; i < addressComponents.length; i++) {
+                const e = addressComponents[i];
+                if (e.types[0] == 'locality' && fieldData.City != e.long_name) {
+                  fieldData.City = e.long_name;
+                }
               }
+              buildTable();
               break;
             case fieldData.State:
-              if (f == '') {
-                fieldData.State = addressComponents[4].short_name;
-                buildTable();
+              for (let i = 0; i < addressComponents.length; i++) {
+                const e = addressComponents[i];
+                if (e.types[0] == 'administrative_area_level_1' && fieldData.State != e.short_name) {
+                  fieldData.State = e.short_name;
+                }
               }
+              buildTable();
               break;
             case fieldData.Zip:
-              if (f == '') {
-                if (addressComponents[6] == undefined) {
-                  fixGeocodeFail(intervalId, status, fullAddress, r);
+              for (let i = 0; i < addressComponents.length; i++) {
+                const e = addressComponents[i];
+                if (e.types[0] == 'postal_code' && fieldData.Zip != e.short_name) {
+                  fieldData.Zip = e.short_name;
                 }
-                fieldData.Zip = addressComponents[6].short_name;
-                buildTable();
               }
+              buildTable();
+              break;
             default:
               buildTable();
           }
