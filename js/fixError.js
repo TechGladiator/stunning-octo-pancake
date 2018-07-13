@@ -59,6 +59,9 @@ function fixRow(code, close, row) {
 
 function deleteRow(row) {
   console.log(fieldData.splice(row, 1));
+  if (errorCount > 0) {
+    errorCount--;
+  }
   buildTable();
   toggleEditable();
 }
