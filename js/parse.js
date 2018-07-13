@@ -304,7 +304,12 @@ function updateFields(row) {
       let j = 0;
       for (const k in e) {
         if (e.hasOwnProperty(k)) {
+          console.log(k);
+          console.log(e[k]);
+          console.log($(`#row${i}Field${j}${names[j].replace(/\s+/g, '')}`).html());
           e[k] = $(`#row${i}Field${j}${names[j].replace(/\s+/g, '')}`).html();
+          console.log(e[k]);
+          debugger;
           validateField(e, k, i, j);
         }
         j++;
