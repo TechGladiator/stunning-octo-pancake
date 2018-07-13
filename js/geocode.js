@@ -124,7 +124,11 @@ function fixGeocodeFail(intervalId, status, fullAddress, r) {
   modalDispose(status, buttonName, () => {
     errorCount = 1;
     buildTable(r);
-    errorCount = 0;
+    $('#mapData').html('Return to list');
+    $('#mapData').click(() => {
+      errorCount = 0;
+      buildTable();
+    });
   });
 }
 
