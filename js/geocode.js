@@ -86,6 +86,9 @@ function codeAddress(fullAddress, fieldData, intervalId, r) {
               break;
             case fieldData.Zip:
               if (f == '') {
+                if (addressComponents[6] == undefined) {
+                  fixGeocodeFail(intervalId, status, fullAddress, r);
+                }
                 fieldData.Zip = addressComponents[6].short_name;
                 buildTable();
               }
@@ -108,17 +111,20 @@ function codeAddress(fullAddress, fieldData, intervalId, r) {
         showInfoWin(r, marker);
       });
     } else {
-      clearInterval(intervalId);
-      let buttonName = 'Fix';
-      let fix = fixButton(status, buttonName);
-      modal(status, `Geocode was not successful for the following reason: ${status}: ${fullAddress}`, fix);
-      modalDispose(status, buttonName, () => {
-        console.log('fixed');
-        errorCount = 1;
-        buildTable(r);
-        errorCount = 0;
-      });
+      fixGeocodeFail(intervalId, status, fullAddress, r);
     }
+  });
+}
+
+function fixGeocodeFail(intervalId, status, fullAddress, r) {
+  clearInterval(intervalId);
+  let buttonName = 'Fix';
+  let fix = fixButton(status, buttonName);
+  modal(status, `Geocode was not successful for the following reason: ${status}: ${fullAddress}`, fix);
+  modalDispose(status, buttonName, () => {
+    errorCount = 1;
+    buildTable(r);
+    errorCount = 0;
   });
 }
 
