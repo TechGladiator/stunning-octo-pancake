@@ -1,7 +1,13 @@
 /* cursor pointer when hover over file picker */
 .custom-file-input,
-.input-group-append {
+.input-group-append,
+.latlong,
+.deleteRow {
   cursor: pointer;
+}
+
+.invisible {
+  position: absolute;
 }
 
 /* apply Source Code Pro Font to editable fields */

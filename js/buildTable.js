@@ -1,62 +1,27 @@
 function buildTable(row) {
   let fn = '';
   let fd = '';
+  let fullAddress = '';
+  let addressList = [];
+
+  $('.csv').addClass('p-5');
   
   fn = getFieldNames(fn);
 
-  if (errorCount) {
-    let j = 0;
-    fd += `
-            <th scope="row">${row + 1}</th>
-          `;
-    for (const k in fieldData[row]) {
-      if (fieldData[row].hasOwnProperty(k)) {
-        const e = fieldData[row][k];
-        validateState(e);
-        validateZip(e);
-        validateDate(e);
-        fd += `<td id="row${row}Field${j}">${e}</td>`;
-        j++;
-      }
-    }
-  } else {
-    let r = 0;
-    fieldData.forEach(e => {
-      let j = 0;
-      validateState(e);
-      validateZip(e);
-      validateDate(e);
-      fd += `
-            <tr>
-              <th scope="row" id="row${r}">${r + 1}</th>
-            `;
-      for (const k in e) {
-        if (e.hasOwnProperty(k)) {
-          const f = e[k];
-          if (f == e.State && !fieldState || f == e.Zip && !fieldZip || f == e['Creation Date'] && !fieldDate) {
-            fd += `<td class="table-danger" id="row${r}Field${j}">${f}</td>`
-          } else {
-            fd += `<td id="row${r}Field${j}">${f}</td>`
-          }
-          j++;
-        }
-      }
-      fd += `</tr>`
-      r++;
-    });
-  }
+  ({ fd, fullAddress } = getFieldData(fd, row, fullAddress, addressList));
 
   if (row == 'header') {
     fd = '';
   }
 
   $('#jumboHeader').removeClass('mb-5');
-  $('#jumboHeader').html('Edit CSV Data');
+  $('#jumboHeader').html(fileName);
   $('.wrapper').html('');
 
   $('.csv').html(`
                     <div class="btn-group d-flex justify-content-center mb-3" role="group" aria-label="button group">
                       <button type="button" class="btn btn-secondary" id="editData">Edit Data</button>
+                      <button type="button" class="btn btn-secondary" id="mapData">Map Imported Data</button>
                       <button type="button" class="btn btn-secondary" id="repairNext">Repair Next Error</button>
                       <button type="button" class="btn btn-secondary" id="cancelCSV">Cancel CSV Processing</button>
                     </div>
@@ -76,9 +41,17 @@ function buildTable(row) {
                     </div>
                   `);
 
+  if (mapped) {
+    $('tbody').addClass('latlong');
+  }
+
   $('#editData').click(() => {
     toggleEditable();
     updateFields(row);
+  });
+  $('#mapData').click(() => {
+    initialize();
+    geoIterate(addressList);
   });
   $('#repairNext').click(() => {
     updateFields(row);

@@ -23,6 +23,9 @@ function printStats(msg) {
     message = `Too ${codeWord.toLowerCase()} fields: expected ${names.length} fields but parsed ${fieldNames.length}`;
     modal(code, `${message} in "${fileName}", Row: 0. Header length errors must be corrected within file before further processing to prevent data loss.`);
     return;
+  } else if (!headerCheck) {
+    buildTable();
+    return;
   }
   for (let i = 0; i < fieldNames.length; i++) {
     validateFieldNames(fieldNames[i]);
@@ -189,7 +192,10 @@ function parseFile() {
 function getFieldNames(fn) {
   if (headerCheck) {
     let i = 0;
-    fn += `<th scope="col">#</th>`;
+    fn += `
+    <th class="border border-dark invisible">Delete Record</th>
+    <th scope="col">#</th>
+    `;
     fieldNames.forEach(e => {
       validateFieldNames(e);
       if (name) {
@@ -201,6 +207,73 @@ function getFieldNames(fn) {
     });
   }
   return fn;
+}
+
+function getFieldData(fd, row, fullAddress, addressList) {
+  if (errorCount) {
+    let j = 0;
+    fd += `
+            <th class="deleteRow table-danger text-center align-middle border border-dark invisible" id="deleteRow${row}" onclick="deleteRow(${row})">X</th>
+            <th scope="row">${row + 1}</th>
+          `;
+    for (const k in fieldData[row]) {
+      if (fieldData[row].hasOwnProperty(k)) {
+        const e = fieldData[row][k];
+        validateState(e);
+        validateZip(e);
+        validateDate(e);
+        fd += `<td id="row${row}Field${j}">${e}</td>`;
+        j++;
+      }
+    }
+  }
+  else {
+    let r = 0;
+    fieldData.forEach(e => {
+      let j = 0;
+      validateState(e);
+      validateZip(e);
+      validateDate(e);
+      ({ fd, j, fullAddress } = buildFields(fd, r, e, j, fullAddress));
+      addressList.push(fullAddress);
+      fullAddress = '';
+      fd += `</tr>`;
+      r++;
+    });
+  }
+  return { fd, fullAddress };
+}
+
+function buildFields(fd, r, e, j, fullAddress) {
+  let fieldClick;
+
+  if (mapped) {
+    fieldClick = `onclick="geocodeLatLng(${r})"`
+  } else {
+    fieldClick = '';
+  }
+
+  fd += `
+            <tr>
+              <th class="deleteRow table-danger text-center align-middle border border-dark invisible" id="deleteRow${r}" onclick="deleteRow(${r})">X</th>
+              <th scope="row" id="row${r}" ${fieldClick}>${r + 1}</th>
+            `;
+  for (const k in e) {
+    if (e.hasOwnProperty(k)) {
+      const f = e[k];
+      if (f == e.State && !fieldState || f == e.Zip && !fieldZip || f == e['Creation Date'] && !fieldDate) {
+        fd += `<td class="table-danger" id="row${r}Field${j}">${f}</td>`;
+      }
+      else {
+        fd += `<td id="row${r}Field${j}${names[j].replace(/\s+/g, '')}" ${fieldClick}>${f}</td>`;
+        if (j == 0 || j == 1 || j == 3 || j == 4 || j == 5) {
+          fullAddress += ` ${f}`;
+        }
+      }
+      j++;
+    }
+  }
+  return { fd, j, fullAddress };
 }
 
 function updateFields(row) {
@@ -230,7 +303,7 @@ function updateFields(row) {
       let j = 0;
       for (const k in e) {
         if (e.hasOwnProperty(k)) {
-          e[k] = $(`#row${i}Field${j}`).html();
+          e[k] = $(`#row${i}Field${j}${names[j].replace(/\s+/g, '')}`).html();
           validateField(e, k, i, j);
         }
         j++;
@@ -246,6 +319,12 @@ function cancelCSV() {
   fieldNames = {};
   fieldData = {};
   fieldErrors = {};
+  headerCheck = true;
+  mapped = false;
   console.log('    Results:', fullResults);
+  $('#map').html('');
+  $('#map').removeAttr('style');
+  $('.csv').removeClass('p-5');
+  geoClear();
   parseFile();
 }
