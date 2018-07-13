@@ -50,7 +50,9 @@ function buildTable(row) {
     updateFields(row);
   });
   $('#mapData').click(() => {
-    initialize();
+    if (!mapped) {
+      initialize();
+    }
     geoIterate(addressList);
   });
   $('#repairNext').click(() => {
