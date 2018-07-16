@@ -1,4 +1,12 @@
-function toggleEditable() {
+function returnToList() {
+  $('#mapData').html('Return to list');
+  $('#mapData').click(() => {
+    errorCount = 0;
+    buildTable();
+  });
+}
+
+function toggleEditable(row) {
   editable = $('#csvTable');
   if (!editable[0].isContentEditable) {
     editable[0].contentEditable = 'true';
@@ -9,11 +17,10 @@ function toggleEditable() {
     }
   }
   else {
-    editable[0].contentEditable = 'false';
-    $('#editData').html('Edit Data');
-    $('.border-dark').addClass('invisible');
-    if (mapped) {
-      $('tbody').addClass('latlong');
+    updateFields(row);
+    buildTable(row);
+    if (mapped && errorCount > 0) {
+      returnToList();
     }
   }
 }
@@ -22,16 +29,20 @@ function removeEmptyField(row) {
   let i = 0;
   for (const k in fieldData[row]) {
     if (fieldData[row].hasOwnProperty(k)) {
-      if (k != 'Address 2' && fieldData[row][k] == '') {
-        console.log(`${k} != 'Address 2'`);
+      if (k != names[i] && fieldData[row][k] == '') {
+        console.log(`${k} != ${names[i]}`);
         console.log('deleted empty field: ', k);
         delete fieldData[row][k];
       }
       if (Object.values(fieldData[row]).length < fieldNames.length) {
         console.log('fieldData is less then fieldNames');
-        fieldData[row][`filler${i}`] = '';
-        i++;
+        if (fieldData[row][`${names[i + 1]}`] != undefined) {
+          fieldData[row][`${names[i + 1]}`] = fieldData[row][`${names[i + 1]}`];
+        } else {
+          fieldData[row][`${names[i + 1]}`] = '';
+        }
       }
+      i++;
     }
   }
 }

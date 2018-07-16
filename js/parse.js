@@ -226,8 +226,7 @@ function getFieldData(fd, row, fullAddress, addressList) {
         j++;
       }
     }
-  }
-  else {
+  } else {
     let r = 0;
     fieldData.forEach(e => {
       let j = 0;
@@ -258,15 +257,17 @@ function buildFields(fd, r, e, j, fullAddress) {
               <th class="deleteRow table-danger text-center align-middle border border-dark invisible" id="deleteRow${r}" onclick="deleteRow(${r})">X</th>
               <th scope="row" id="row${r}" ${fieldClick}>${r + 1}</th>
             `;
-  for (const k in e) {
+  for (let k in e) {
     if (e.hasOwnProperty(k)) {
       const f = e[k];
       if (f == e.State && !fieldState || f == e.Zip && !fieldZip || f == e['Creation Date'] && !fieldDate) {
-        fd += `<td class="table-danger" id="row${r}Field${j}">${f}</td>`;
-      }
-      else {
-        fd += `<td id="row${r}Field${j}${names[j].replace(/\s+/g, '')}" ${fieldClick}>${f}</td>`;
-        if (j == 0 || j == 1 || j == 3 || j == 4 || j == 5) {
+        fd += `<td class="table-danger" id="row${r}Field${j}${k.replace(/\s+/g, '')}">${f}</td>`;
+      } else {
+        if (k == j) {
+          k = '';
+        }
+        fd += `<td id="row${r}Field${j}${k.replace(/\s+/g, '')}" ${fieldClick}>${f}</td>`;
+        if (k == 'Name' || k == 'Address' || k == 'City' || k == 'State' || k == 'Zip') {
           fullAddress += ` ${f}`;
         }
       }
