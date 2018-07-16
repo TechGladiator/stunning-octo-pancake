@@ -44,6 +44,10 @@ function buildTable(row) {
   if (mapped) {
     $('tbody').addClass('latlong');
   }
+  
+  if (firstError == undefined) {
+    $('#repairNext').addClass('invisible');
+  }
 
   $('#editData').click(() => {
     toggleEditable();
@@ -58,9 +62,6 @@ function buildTable(row) {
   $('#repairNext').click(() => {
     updateFields(row);
     printStats();
-    if (firstError == undefined) {
-      modal('noErrors', 'All rows have the correct number of fields');
-    }
   });
   $('#cancelCSV').click(() => {
     cancelCSV();
