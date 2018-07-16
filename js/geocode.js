@@ -141,11 +141,7 @@ function fixGeocodeFail(intervalId, status, fullAddress, r) {
   modalDispose(status, buttonName, () => {
     errorCount = 1;
     buildTable(r);
-    $('#mapData').html('Return to list');
-    $('#mapData').click(() => {
-      errorCount = 0;
-      buildTable();
-    });
+    returnToList();
   });
 }
 
@@ -204,11 +200,11 @@ function geoIterate(fullAddress) {
     if (counter == 0) {
       clearInterval(intervalId);
       setMarkerBounds();
-    } else if (fieldData[i].Lat || fieldData[i].Long) {
-      console.log('skip record already geocoded');
-    } else {
+    } else if (fieldData[i].Lat == '' || fieldData[i].Lat == undefined || fieldData[i].Long == '' || fieldData[i].Long == undefined) {
       console.log('this record hasn\'t been geocoded');
       codeAddress(fullAddress[i], fieldData[i], intervalId, i);
+    } else {
+      console.log('skip record already geocoded');
     }
     counter--;
     i++;

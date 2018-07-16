@@ -7,7 +7,7 @@
 }
 
 .invisible {
-  position: absolute;
+  position: absolute!important;
 }
 
 /* apply Source Code Pro Font to editable fields */

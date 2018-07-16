@@ -45,9 +45,14 @@ function buildTable(row) {
     $('tbody').addClass('latlong');
   }
 
+  if (firstError == undefined) {
+    $('#repairNext').addClass('invisible');
+  } else {
+    $('#mapData').addClass('invisible');
+  }
+
   $('#editData').click(() => {
-    toggleEditable();
-    updateFields(row);
+    toggleEditable(row);
   });
   $('#mapData').click(() => {
     if (!mapped) {
@@ -58,9 +63,6 @@ function buildTable(row) {
   $('#repairNext').click(() => {
     updateFields(row);
     printStats();
-    if (firstError == undefined) {
-      modal('noErrors', 'All rows have the correct number of fields');
-    }
   });
   $('#cancelCSV').click(() => {
     cancelCSV();
