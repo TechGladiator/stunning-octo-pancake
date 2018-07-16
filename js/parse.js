@@ -261,7 +261,7 @@ function buildFields(fd, r, e, j, fullAddress) {
     if (e.hasOwnProperty(k)) {
       const f = e[k];
       if (f == e.State && !fieldState || f == e.Zip && !fieldZip || f == e['Creation Date'] && !fieldDate) {
-        fd += `<td class="table-danger" id="row${r}Field${j}">${f}</td>`;
+        fd += `<td class="table-danger" id="row${r}Field${j}${k.replace(/\s+/g, '')}">${f}</td>`;
       } else {
         if (k == j) {
           k = '';
