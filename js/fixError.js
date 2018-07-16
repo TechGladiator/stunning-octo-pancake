@@ -1,4 +1,12 @@
-function toggleEditable() {
+function returnToList() {
+  $('#mapData').html('Return to list');
+  $('#mapData').click(() => {
+    errorCount = 0;
+    buildTable();
+  });
+}
+
+function toggleEditable(row) {
   editable = $('#csvTable');
   if (!editable[0].isContentEditable) {
     editable[0].contentEditable = 'true';
@@ -9,11 +17,10 @@ function toggleEditable() {
     }
   }
   else {
-    editable[0].contentEditable = 'false';
-    $('#editData').html('Edit Data');
-    $('.border-dark').addClass('invisible');
-    if (mapped) {
-      $('tbody').addClass('latlong');
+    updateFields(row);
+    buildTable(row);
+    if (mapped && errorCount > 0) {
+      returnToList();
     }
   }
 }

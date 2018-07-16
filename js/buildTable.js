@@ -44,14 +44,13 @@ function buildTable(row) {
   if (mapped) {
     $('tbody').addClass('latlong');
   }
-  
+
   if (firstError == undefined) {
     $('#repairNext').addClass('invisible');
   }
 
   $('#editData').click(() => {
-    toggleEditable();
-    updateFields(row);
+    toggleEditable(row);
   });
   $('#mapData').click(() => {
     if (!mapped) {
