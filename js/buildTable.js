@@ -47,6 +47,8 @@ function buildTable(row) {
 
   if (firstError == undefined) {
     $('#repairNext').addClass('invisible');
+  } else {
+    $('#mapData').addClass('invisible');
   }
 
   $('#editData').click(() => {
