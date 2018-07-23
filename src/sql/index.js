@@ -19,3 +19,5 @@ client.query('SELECT name, address, address2, city, statecode, zip FROM imported
   }
   client.end();
 });
+
+module.exports = client;

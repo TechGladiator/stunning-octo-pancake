@@ -6,6 +6,8 @@ const config = require('./config');
 
 const app = express();
 
+const client = require('./sql');
+
 const publicPath = path.resolve(__dirname, '../public');
 app.use(express.static(publicPath));
 
