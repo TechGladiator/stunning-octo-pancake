@@ -11,7 +11,7 @@ const client = new Client({
 
 client.connect();
 
-client.query('SELECT NOW() as now', (err, res) => {
+client.query('SELECT name, address, address2, city, statecode, zip FROM imported_data', (err, res) => {
   if (err) {
     console.log(err.stack);
   } else {
