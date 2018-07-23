@@ -15,7 +15,7 @@ client.query('SELECT name, address, address2, city, statecode, zip FROM imported
   if (err) {
     console.log(err.stack);
   } else {
-    console.log(res.rows[0])
+    console.log(res.rows)
   }
   client.end();
 });
