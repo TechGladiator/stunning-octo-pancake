@@ -1,9 +1,7 @@
 // src/sql/index.js
-const { Pool, Client } = require('pg');
+const { Client } = require('pg');
 
-// pools will use environment variables
-// for connection information
-const pool = new Pool({
+const client = new Client({
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
   database: process.env.DB,
@@ -11,13 +9,9 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
-const res = await pool.query('SELECT NOW()');
-await pool.end();
+client.connect();
 
-// clients will also use environment variables
-// for connection information
-const client = new Client();
-await client.connect();
-
-const res = await client.query('SELECT NOW()');
-await client.end();
+client.query('SELECT NOW()', (err, res) => {
+  console.log(err, res);
+  client.end();
+});
