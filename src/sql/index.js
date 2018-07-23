@@ -4,11 +4,11 @@ const { Pool, Client } = require('pg');
 // pools will use environment variables
 // for connection information
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'project',
-  password: 'secretpassword',
-  port: 5432,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB,
+  password: process.env.DB_PASS,
+  port: process.env.DB_PORT,
 });
 
 const res = await pool.query('SELECT NOW()');
