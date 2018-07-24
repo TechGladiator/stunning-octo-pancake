@@ -111,7 +111,6 @@ function completeFn(results) {
 // Enable application to parse file
 function parseFile() {
 
-  $('#jumboHeader').addClass('mb-5');
   $('#jumboHeader').html('Upload CSV File');
   $('.wrapper').html(`${wrapper2}`);
   $('.csv').html('');
@@ -328,6 +327,7 @@ function cancelCSV() {
   $('#map').html('');
   $('#map').removeAttr('style');
   $('.csv').removeClass('p-5');
+  $('#jumboHeader').addClass('mb-5');
   geoClear();
   parseFile();
 }
