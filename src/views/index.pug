@@ -1,0 +1,37 @@
+doctype html
+head
+  // Required meta tags
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+  // Bootstrap CSS
+  link(rel='stylesheet' href='./css/vendor/bootstrap.min.css')
+  // Source Code Pro Font
+  link(href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet')
+  // Custom CSS
+  link(rel='stylesheet' href='./css/style.css')
+  title Project: Batch CSV Import Process
+.container
+  nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.w-75.m-auto
+    p.navbar-brand Project: Batch CSV Import Process
+  .jumbotron.w-75.mt-5.ml-auto.mr-auto
+    h1#jumboHeader.text-center
+    .wrapper
+  #map
+.csv
+// Optional JavaScript
+// jQuery first, then Popper.js, then Bootstrap JS
+script(src='./js/vendor/jquery-3.3.1.slim.min.js')
+script(src='./js/vendor/popper.min.js')
+script(src='./js/vendor/bootstrap.min.js')
+// PapaParse to parse csv file
+script(src='./js/vendor/papaparse.min.js')
+// custom scripts
+script(src='./js/globals.js')
+script(src='./js/modal.js')
+script(src='./js/fixError.js')
+script(src='./js/parse.js')
+script(src='./js/buildTable.js')
+script(src='./js/validate.js')
+script(async='' defer='' src='https://maps.googleapis.com/maps/api/js?key=process.env.API_KEY')
+script(src='./js/geocode.js')
+script(src='./js/app.js')
