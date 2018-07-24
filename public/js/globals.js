@@ -2,8 +2,8 @@
 const names = ['Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date'];
 const wrapper1 = `
 <div class="text-center">
-	<button type="button" class="btn btn-dark">Upload CSV File</button>
-	<button type="button" class="btn btn-dark">Retrieve Existing Data</button>
+	<button type="button" class="btn btn-dark" id="uploadCSV">Upload CSV File</button>
+	<button type="button" class="btn btn-dark" id="retrieveData">Retrieve Existing Data</button>
 </div>
 `;
 const wrapper = `
