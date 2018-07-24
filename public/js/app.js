@@ -8,6 +8,11 @@ function main() {
     $('.wrapper').html(`${wrapper3}`);
     $('.csv').html('');
     $('#goBack').click(main);
+    $('#lookUpImportName').click(() => {
+      $('#jumboHeader').html('Enter Import Name');
+      $('.wrapper').html(`${wrapper4}`);
+      $('.csv').html('');
+    });
   });
 }
 
