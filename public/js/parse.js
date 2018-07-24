@@ -116,6 +116,8 @@ function parseFile() {
   $('.wrapper').html(`${wrapper2}`);
   $('.csv').html('');
 
+  $('#goBack').click(main);
+
   $('#headerCheck').click(() => {
     if ($('#headerCheck').prop('checked')) {
       headerCheck = true;
