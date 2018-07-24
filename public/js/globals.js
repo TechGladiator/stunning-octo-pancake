@@ -24,6 +24,12 @@ const wrapper2 = `
 <label for="headerCheck">Check here if a header is included as the first line of the file</label>
 </div>
 `;
+const wrapper3 = `
+<div class="text-center">
+	<button class="btn btn-dark" id="lookUpImportName" type="button">Look Up By Import Name</button>
+	<button class="btn btn-dark" id="goBack" type="button">Go Back</button>
+</div>
+`;
 let code;
 let editable;
 let end;
