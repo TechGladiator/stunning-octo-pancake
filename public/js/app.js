@@ -1,5 +1,8 @@
 // Enable uploading and parsing of csv file
-parseFile();
+$('#jumboHeader').addClass('mb-5');
+$('#jumboHeader').html('Upload or View Data');
+$('.wrapper').html(`${wrapper1}`);
+$('.csv').html('');
 
 // Flag records that do not meet data type formats
 

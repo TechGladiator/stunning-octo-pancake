@@ -1,5 +1,11 @@
 // global variables
 const names = ['Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date'];
+const wrapper1 = `
+<div class="text-center">
+	<button type="button" class="btn btn-dark">Upload CSV File</button>
+	<button type="button" class="btn btn-dark">Retrieve Existing Data</button>
+</div>
+`;
 const wrapper = `
 <div class="input-group mr-auto ml-auto mb-3">
 	<div class="custom-file">
