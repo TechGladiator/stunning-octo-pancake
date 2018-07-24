@@ -13,6 +13,20 @@ function main() {
     $('#lookUpImportName').click(() => {
       setPage('Enter Import Name', wrapper4);
       $('#goBack').click(main);
+      $('#searchDB').click(() => {
+        $.ajax({
+          url: '/search/',
+          type: 'get',
+          datatype: 'varchar',
+          data: $('#searchImports').val(),
+          success: (res) => {
+            alert('Success!');
+          },
+          error: () => {
+            alert('Something went wrong!');
+          }
+        });
+      });
     });
   });
 }

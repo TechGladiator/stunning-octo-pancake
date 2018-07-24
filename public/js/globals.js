@@ -32,7 +32,7 @@ const wrapper3 = `
 `;
 const wrapper4 = `
 <div class="input-group mb-3">
-	<input type="text" class="form-control">
+	<input type="text" class="form-control" id="searchImports">
 	<div class="input-group-append">
 		<span class="input-group-text" id="searchDB">Search</span>
 		<span class="input-group-text" id="goBack">Go Back</span>

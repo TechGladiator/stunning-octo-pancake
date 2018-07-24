@@ -6,10 +6,13 @@ const config = require('./config');
 
 const app = express();
 
+const router = require('./routes')
+
 const client = require('./sql');
 
 const publicPath = path.resolve(__dirname, '../public');
 app.use(express.static(publicPath));
+app.use('/api', router);
 
 app.set('views', './src/views');
 app.set('view engine', 'pug');
