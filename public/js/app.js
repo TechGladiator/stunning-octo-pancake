@@ -4,7 +4,10 @@ function main() {
   $('.csv').html('');
   $('#uploadCSV').click(parseFile);
   $('#retrieveData').click(() => {
-    
+    $('#jumboHeader').html('Look Up Data');
+    $('.wrapper').html(`${wrapper3}`);
+    $('.csv').html('');
+    $('#goBack').click(main);
   });
 }
 
