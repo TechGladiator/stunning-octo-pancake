@@ -15,7 +15,7 @@ app.set('views', './src/views');
 app.set('view engine', 'pug');
 
 app.get('/', (req, res) => {
-  res.render('index');
+  res.render('index', { apiKey: process.env.API_KEY});
 });
 
 app.listen(config.port, function() {
