@@ -15,6 +15,9 @@ const wrapper2 = `
 	<div class="input-group-append" id="upload">
 		<span class="input-group-text">Upload</span>
 	</div>
+	<div class="input-group-append" id="goBack">
+    <span class="input-group-text">Go Back</span>
+	</div>
 </div>
 <div class="text-center">
 	<input type="checkbox" id="headerCheck" checked aria-label="Checkbox if header is included">
