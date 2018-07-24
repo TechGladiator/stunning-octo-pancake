@@ -30,6 +30,14 @@ const wrapper3 = `
 	<button class="btn btn-dark" id="goBack" type="button">Go Back</button>
 </div>
 `;
+const wrapper4 = `
+<div class="input-group mb-3">
+	<input type="text" class="form-control">
+	<div class="input-group-append">
+		<span class="input-group-text" id="searchDB">Search</span>
+	</div>
+</div>
+`;
 let code;
 let editable;
 let end;
