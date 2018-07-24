@@ -3,6 +3,9 @@ function main() {
   $('.wrapper').html(`${wrapper1}`);
   $('.csv').html('');
   $('#uploadCSV').click(parseFile);
+  $('#retrieveData').click(() => {
+    
+  });
 }
 
 main();
