@@ -6,7 +6,7 @@ const wrapper1 = `
 	<button type="button" class="btn btn-dark" id="retrieveData">Retrieve Existing Data</button>
 </div>
 `;
-const wrapper = `
+const wrapper2 = `
 <div class="input-group mr-auto ml-auto mb-3">
 	<div class="custom-file">
 		<input type="file" class="custom-file-input" id="inputGroupFile02">

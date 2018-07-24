@@ -113,7 +113,7 @@ function parseFile() {
 
   $('#jumboHeader').addClass('mb-5');
   $('#jumboHeader').html('Upload CSV File');
-  $('.wrapper').html(`${wrapper}`);
+  $('.wrapper').html(`${wrapper2}`);
   $('.csv').html('');
 
   $('#headerCheck').click(() => {
