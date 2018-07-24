@@ -35,6 +35,7 @@ const wrapper4 = `
 	<input type="text" class="form-control">
 	<div class="input-group-append">
 		<span class="input-group-text" id="searchDB">Search</span>
+		<span class="input-group-text" id="goBack">Go Back</span>
 	</div>
 </div>
 `;

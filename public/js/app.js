@@ -12,6 +12,7 @@ function main() {
     $('#goBack').click(main);
     $('#lookUpImportName').click(() => {
       setPage('Enter Import Name', wrapper4);
+      $('#goBack').click(main);
     });
   });
 }
