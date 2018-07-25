@@ -4,11 +4,11 @@ const db = require('../sql');
 
 router.get('/search/:id', (req, res, next) => {
   const id = req.params.id;
-  db.query('SELECT name, address, address2, city, statecode, zip, purpose, "propertyOwner", "creationDate", lat, long FROM imports JOIN imported_data ON imports.importid=imported_data.importid WHERE importname = $1', [id], (err, res) => {
+  db.query('SELECT name, address, address2, city, statecode, zip, purpose, "propertyOwner", "creationDate", lat, long FROM imports JOIN imported_data ON imports.importid=imported_data.importid WHERE importname = $1', [id], (err, results) => {
     if (err) {
       return next(err);
     }
-    res.send(res.rows[0]);
+    res.send(results.rows[0]);
   });
 });
 
