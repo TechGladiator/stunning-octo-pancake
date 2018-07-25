@@ -26,7 +26,7 @@ function main() {
             }
           },
           error: (err) => {
-            modal('404', 'Something went wrong!');
+            modal(err.status, err.responseText);
           }
         });
       });
