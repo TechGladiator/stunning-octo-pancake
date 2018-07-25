@@ -110,6 +110,7 @@ function completeFn(results) {
 
 // Enable application to parse file
 function parseFile() {
+  pageSwitch = false;
 
   $('#jumboHeader').html('Upload CSV File');
   $('.wrapper').html(`${wrapper2}`);
