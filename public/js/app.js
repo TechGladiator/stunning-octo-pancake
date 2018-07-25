@@ -20,13 +20,13 @@ function main() {
           success: (res) => {
             console.log(res);
             if (res.length > 0) {
-              alert('Success!');
+              modal('success', 'Success!');
             } else {
-              alert('Not Found');
+              modal('404', 'Not Found');
             }
           },
           error: (err) => {
-            alert('Something went wrong!');
+            modal('404', 'Something went wrong!');
           }
         });
       });
