@@ -13,13 +13,18 @@ function setPage(header, wrapper, elId1, func1, elId2, func2) {
 }
 
 function searchRecords(searchId) {
+  let id = $(searchId).val();
   $.ajax({
-    url: '/api/search/' + $(searchId).val(),
+    url: '/api/search/' + id,
     type: 'get',
     success: (res) => {
       console.log(res);
       if (res.length > 0) {
-        modal('success', 'Success!');
+        setHeader(id);
+        names.push('Lat', 'Long');
+        fieldNames = names;
+        fieldData = res;
+        buildTable();
       } else {
         modal('404', 'Not Found');
       }
