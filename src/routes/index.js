@@ -8,7 +8,7 @@ router.get('/search/:id', (req, res, next) => {
     if (err) {
       return next(err);
     }
-    res.send(results.rows[0]);
+    res.send(results.rows);
   });
 });
 
