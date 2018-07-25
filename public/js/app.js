@@ -18,7 +18,12 @@ function main() {
           url: '/api/search/' + $('#searchImports').val(),
           type: 'get',
           success: (res) => {
-            alert('Success!');
+            console.log(res);
+            if (res.length > 0) {
+              alert('Success!');
+            } else {
+              alert('Not Found');
+            }
           },
           error: (err) => {
             alert('Something went wrong!');
