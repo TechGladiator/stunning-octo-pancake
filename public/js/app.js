@@ -15,14 +15,12 @@ function main() {
       $('#goBack').click(main);
       $('#searchDB').click(() => {
         $.ajax({
-          url: '/search/',
+          url: '/api/search/' + $('#searchImports').val(),
           type: 'get',
-          datatype: 'varchar',
-          data: $('#searchImports').val(),
           success: (res) => {
             alert('Success!');
           },
-          error: () => {
+          error: (err) => {
             alert('Something went wrong!');
           }
         });
