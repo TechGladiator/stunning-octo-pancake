@@ -1,7 +1,7 @@
 // src/sql/index.js
-const { Client } = require('pg');
+const { Pool } = require('pg');
 
-const client = new Client({
+const pool = new Pool({
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
   database: process.env.DB,
@@ -9,15 +9,13 @@ const client = new Client({
   port: process.env.DB_PORT,
 });
 
-client.connect();
-
-client.query('SELECT name, address, address2, city, statecode, zip FROM imported_data', (err, res) => {
-  if (err) {
-    console.log(err.stack);
-  } else {
-    console.log(res.rows)
+module.exports = {
+  query: (text, params, callback) => {
+    const start = Date.now();
+    return pool.query(text, params, (err, res) => {
+      const duration = Date.now() - start
+      console.log('executed query', { text, duration, rows: res.rowCount })
+      callback(err, res)
+    });
   }
-  client.end();
-});
-
-module.exports = client;
+}

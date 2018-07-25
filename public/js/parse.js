@@ -110,11 +110,13 @@ function completeFn(results) {
 
 // Enable application to parse file
 function parseFile() {
+  pageSwitch = false;
 
-  $('#jumboHeader').addClass('mb-5');
   $('#jumboHeader').html('Upload CSV File');
-  $('.wrapper').html(`${wrapper}`);
+  $('.wrapper').html(`${wrapper2}`);
   $('.csv').html('');
+
+  $('#goBack').click(main);
 
   $('#headerCheck').click(() => {
     if ($('#headerCheck').prop('checked')) {
@@ -326,6 +328,7 @@ function cancelCSV() {
   $('#map').html('');
   $('#map').removeAttr('style');
   $('.csv').removeClass('p-5');
+  $('#jumboHeader').addClass('mb-5');
   geoClear();
   parseFile();
 }

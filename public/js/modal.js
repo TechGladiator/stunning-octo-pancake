@@ -4,7 +4,7 @@ function modal(moId, moBody, moFooter) {
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="${moId}Label">CSV File Error</h5>
+          <h5 class="modal-title" id="${moId}Label">${moId}</h5>
           <button type="button" class="close" id="${moId}Close1" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
