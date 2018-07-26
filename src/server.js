@@ -8,7 +8,7 @@ const app = express();
 
 const router = require('./routes')
 
-const client = require('./sql');
+const pool = require('./sql');
 
 const publicPath = path.resolve(__dirname, '../public');
 app.use(express.static(publicPath));
