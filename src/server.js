@@ -10,6 +10,8 @@ const router = require('./routes')
 
 const pool = require('./sql');
 
+const cool = require('cool-ascii-faces');
+
 const publicPath = path.resolve(__dirname, '../public');
 app.use(express.static(publicPath));
 app.use('/api', router);
@@ -19,6 +21,10 @@ app.set('view engine', 'pug');
 
 app.get('/', (req, res) => {
   res.render('index', { project: 'Project: Database Schema Creation & Basic CRUD Operations', apiKey: process.env.API_KEY});
+});
+
+app.get('/cool', (req, res) => {
+  res.send(cool());
 });
 
 app.listen(config.port, function() {
