@@ -200,7 +200,7 @@ function geoIterate(fullAddress) {
     if (counter == 0) {
       clearInterval(intervalId);
       setMarkerBounds();
-    } else if (fieldData[i].Lat == '' || fieldData[i].Lat == undefined || fieldData[i].Long == '' || fieldData[i].Long == undefined) {
+    } else if (markers.length < fieldData.length) {
       console.log('this record hasn\'t been geocoded');
       codeAddress(fullAddress[i], fieldData[i], intervalId, i);
     } else {

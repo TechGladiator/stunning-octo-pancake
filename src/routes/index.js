@@ -4,7 +4,7 @@ const db = require('../sql');
 
 router.get('/search/:id', (req, res, next) => {
   const id = req.params.id;
-  db.query('SELECT name, address, address2, city, statecode, zip, purpose, "propertyOwner", "creationDate", lat, long FROM imports JOIN imported_data ON imports.importid=imported_data.importid WHERE importname = $1', [id], (err, results) => {
+  db.query('SELECT "Name", "Address", "Address 2", "City", "State", "Zip", "Purpose", "Property Owner", "Creation Date", "Lat", "Long" FROM imports JOIN imported_data ON imports.importid=imported_data.importid WHERE importname = $1', [id], (err, results) => {
     if (err) {
       return next(err);
     }
