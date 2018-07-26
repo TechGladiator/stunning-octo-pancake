@@ -324,6 +324,7 @@ function cancelCSV() {
   fieldErrors = {};
   headerCheck = true;
   mapped = false;
+  markers = [];
   console.log('    Results:', fullResults);
   $('#map').html('');
   $('#map').removeAttr('style');

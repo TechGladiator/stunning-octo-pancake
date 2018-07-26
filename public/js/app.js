@@ -24,7 +24,10 @@ function searchRecords(searchId) {
         names.push('Lat', 'Long');
         fieldNames = names;
         fieldData = res;
-        buildTable();
+        // buildTable();
+        // initialize();
+        // remap = true;
+        printStats();
       } else {
         modal('404', 'Not Found');
       }
