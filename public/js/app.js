@@ -1,6 +1,7 @@
 function setHeader(header, wrapper) {
   $('#jumboHeader').html(header);
   $('.wrapper').html(wrapper);
+  $('#map').html('');
   $('.csv').html('');
 }
 
