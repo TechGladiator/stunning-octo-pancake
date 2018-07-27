@@ -322,6 +322,7 @@ function newCSV() {
   fieldNames = {};
   fieldData = {};
   fieldErrors = {};
+  fileName = undefined;
   headerCheck = true;
   mapped = false;
   markers = [];

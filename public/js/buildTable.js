@@ -66,10 +66,9 @@ function buildTable(row) {
     printStats();
   });
   $('#lookup').click(() => {
+    newCSV();
     searchPage = true;
     main();
   });
-  $('#newCSV').click(() => {
-    newCSV();
-  });
+  $('#newCSV').click(newCSV);
 }
