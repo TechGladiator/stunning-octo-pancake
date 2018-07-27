@@ -317,7 +317,7 @@ function updateFields(row) {
   console.log('    Updated Data: ', fieldData);
 }
 
-function cancelCSV() {
+function newCSV() {
   fullResults = {};
   fieldNames = {};
   fieldData = {};
