@@ -21,6 +21,7 @@ function buildTable(row) {
   $('.csv').html(`
                     <div class="btn-group d-flex justify-content-center mb-3" role="group" aria-label="button group">
                       <button type="button" class="btn btn-secondary" id="editData">Edit Data</button>
+                      <button type="button" class="btn btn-secondary invisible" id="saveRecords">Save Records</button>
                       <button type="button" class="btn btn-secondary" id="mapData">Map Imported Data</button>
                       <button type="button" class="btn btn-secondary" id="repairNext">Repair Next Error</button>
                       <button type="button" class="btn btn-secondary" id="lookup">Lookup Record</button>
@@ -44,6 +45,7 @@ function buildTable(row) {
 
   if (mapped) {
     $('tbody').addClass('latlong');
+    $('#saveRecords').removeClass('invisible');
   }
 
   if (firstError == undefined) {
@@ -54,6 +56,13 @@ function buildTable(row) {
 
   $('#editData').click(() => {
     toggleEditable(row);
+  });
+  $('#saveRecords').click(() => {
+    let code = 'Save';
+    let cancel = `<button type="button" class="btn btn-danger" id="${code}Cancel">Cancel</button>`;
+    modal('Save', 'Name this imported data', cancel);
+    $('#modalBody').append(`<input class="form-control" type="text" placeholder="Import Name" value=${fileName || $('#jumboHeader').html()}>`);
+    modalDispose(code, 'Cancel');
   });
   $('#mapData').click(() => {
     if (!mapped) {
