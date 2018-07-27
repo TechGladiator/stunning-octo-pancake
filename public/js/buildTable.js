@@ -23,6 +23,7 @@ function buildTable(row) {
                       <button type="button" class="btn btn-secondary" id="editData">Edit Data</button>
                       <button type="button" class="btn btn-secondary" id="mapData">Map Imported Data</button>
                       <button type="button" class="btn btn-secondary" id="repairNext">Repair Next Error</button>
+                      <button type="button" class="btn btn-secondary" id="lookup">Lookup Record</button>
                       <button type="button" class="btn btn-secondary" id="newCSV">Import New CSV File</button>
                     </div>
                     <div class="card">
@@ -63,6 +64,10 @@ function buildTable(row) {
   $('#repairNext').click(() => {
     updateFields(row);
     printStats();
+  });
+  $('#lookup').click(() => {
+    searchPage = true;
+    main();
   });
   $('#newCSV').click(() => {
     newCSV();
