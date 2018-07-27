@@ -37,7 +37,7 @@ function searchRecords(searchId) {
 
 function main() {
   if (!pageSwitch && !searchPage) {
-    pageSwitch = true;
+    searchPage = true;
     setPage('Upload or View Data', wrapper1, '#uploadCSV', parseFile, '#retrieveData', main);
   } else if (pageSwitch && !searchPage) {
     pageSwitch = false;
