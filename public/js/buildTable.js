@@ -59,10 +59,12 @@ function buildTable(row) {
   });
   $('#saveRecords').click(() => {
     let code = 'Save';
-    let cancel = `<button type="button" class="btn btn-danger" id="${code}Cancel">Cancel</button>`;
-    modal('Save', 'Name this imported data', cancel);
+    let button = 'Cancel';
+    let cancel = `<button type="button" class="btn btn-danger" id="${code}${button}">${button}</button>`;
+    modal(code, 'Name this imported data', cancel);
     $('#modalBody').append(`<input class="form-control" type="text" placeholder="Import Name" value="${fileName || $('#jumboHeader').html()}">`);
-    modalDispose(code, 'Cancel');
+    $(`#${code}Close2`).html(code);
+    modalDispose(code, button);
   });
   $('#mapData').click(() => {
     if (!mapped) {
