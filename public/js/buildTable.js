@@ -61,7 +61,7 @@ function buildTable(row) {
     let code = 'Save';
     let cancel = `<button type="button" class="btn btn-danger" id="${code}Cancel">Cancel</button>`;
     modal('Save', 'Name this imported data', cancel);
-    $('#modalBody').append(`<input class="form-control" type="text" placeholder="Import Name" value=${fileName || $('#jumboHeader').html()}>`);
+    $('#modalBody').append(`<input class="form-control" type="text" placeholder="Import Name" value="${fileName || $('#jumboHeader').html()}">`);
     modalDispose(code, 'Cancel');
   });
   $('#mapData').click(() => {
