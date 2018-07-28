@@ -12,4 +12,8 @@ router.get('/search/:id', (req, res, next) => {
   });
 });
 
+router.post('/import/', (req, res, next) => {
+  
+});
+
 module.exports = router;

@@ -65,6 +65,11 @@ function buildTable(row) {
     $('#modalBody').append(`<input class="form-control" type="text" placeholder="Import Name" value="${fileName || $('#jumboHeader').html()}">`);
     $(`#${code}Close2`).html(code);
     modalDispose(code, button);
+    modalDispose(code, 'Close2', () => {
+      $.ajax({
+        
+      });
+    });
   });
   $('#mapData').click(() => {
     if (!mapped) {
