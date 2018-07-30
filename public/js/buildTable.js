@@ -70,7 +70,7 @@ function buildTable(row) {
       const importData = {importName, fieldData};
       console.log(importData);
       $.ajax({
-        url: '/import/',
+        url: '/api/import/',
         type: 'post',
         data: importData,
         dataType: 'json',
