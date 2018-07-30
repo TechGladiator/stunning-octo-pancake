@@ -78,6 +78,7 @@ function buildTable(row) {
       }).done((res) => {
         modal('Success', 'Data has posted');
       }).fail((err) => {
+        console.log('you are getting a fail response');
         modal(err.status, err.responseText);
       });
     });

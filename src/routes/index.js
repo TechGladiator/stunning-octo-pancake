@@ -13,7 +13,13 @@ router.get('/search/:id', (req, res, next) => {
 });
 
 router.post('/import/', (req, res, next) => {
-  
+  res.send('Test response');
+  console.log('req = ', res);
+  const importname = req.importName;
+  const fieldData = req.fieldData;
+  // db.query();
+  console.log('importname = ', importname);
+  console.log('fieldData = ', fieldData);
 });
 
 module.exports = router;
