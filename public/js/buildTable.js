@@ -63,10 +63,16 @@ function buildTable(row) {
     let cancel = `<button type="button" class="btn btn-danger" id="${code}${button}">${button}</button>`;
     modal(code, 'Name this imported data', cancel);
     $('#modalBody').append(`<input class="form-control" id="saveImportName" type="text" placeholder="Import Name" value="${fileName || $('#jumboHeader').html()}">`);
+    let saveName = document.getElementById('saveImportName');
+    let importName;
+    function getSaveName() {
+      importName = saveName.value;
+      console.log(importName);
+    }
+    saveName.onchange = getSaveName;
     $(`#${code}Close2`).html(code);
     modalDispose(code, button);
     modalDispose(code, 'Close2', () => {
-      const importName = $('#saveImportName').val();
       const importData = {importName, fieldData};
       console.log(importData);
       $.ajax({
