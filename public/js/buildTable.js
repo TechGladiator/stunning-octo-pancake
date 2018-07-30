@@ -67,7 +67,15 @@ function buildTable(row) {
     modalDispose(code, button);
     modalDispose(code, 'Close2', () => {
       $.ajax({
-        
+        url: '/import/',
+        type: 'post',
+        data: fieldData,
+        dataType: 'json',
+        contentType: 'application/json'
+      }).done((res) => {
+        console.log('Data has posted');
+      }).fail((err) => {
+        console.error('Failed to post', err);
       });
     });
   });
