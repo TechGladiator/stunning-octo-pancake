@@ -13,13 +13,17 @@ router.get('/search/:id', (req, res, next) => {
 });
 
 router.post('/import/', (req, res, next) => {
-  res.send('Test response');
-  console.log('req = ', res);
-  const importname = req.importName;
-  const fieldData = req.fieldData;
-  // db.query();
-  console.log('importname = ', importname);
-  console.log('fieldData = ', fieldData);
+  const query = {
+    text: "WITH get_importid AS (INSERT INTO imports (importname) VALUES ($1) returning importid) INSERT INTO imported_data (\"importid\", \"Name\", \"Address\", \"Address 2\", \"City\", \"State\", \"Zip\", \"Purpose\", \"Property Owner\", \"Creation Date\", \"Lat\", \"Long\") VALUES ( (SELECT importid FROM get_importid), '3Com Corp', '350 Campus Dr', '', 'Marlborough', 'MA', '01752', 'Technology', '3Com Corp', '2017-05-04', '42.3256103', '-71.58414069999998' )",
+    values: ['test']
+  }
+  db.query(query, (err, res) => {
+    if (err) {
+      console.log(err.stack);
+    } else {
+      console.log(res.rows[0]);
+    }
+  });
 });
 
 module.exports = router;

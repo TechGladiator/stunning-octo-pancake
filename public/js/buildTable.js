@@ -62,11 +62,11 @@ function buildTable(row) {
     let button = 'Cancel';
     let cancel = `<button type="button" class="btn btn-danger" id="${code}${button}">${button}</button>`;
     modal(code, 'Name this imported data', cancel);
-    $('#modalBody').append(`<input class="form-control" type="text" placeholder="Import Name" value="${fileName || $('#jumboHeader').html()}">`);
+    $('#modalBody').append(`<input class="form-control" id="saveImportName" type="text" placeholder="Import Name" value="${fileName || $('#jumboHeader').html()}">`);
     $(`#${code}Close2`).html(code);
     modalDispose(code, button);
     modalDispose(code, 'Close2', () => {
-      const importName = $('#jumboHeader').html();
+      const importName = $('#saveImportName').val();
       const importData = {importName, fieldData};
       console.log(importData);
       $.ajax({
@@ -76,6 +76,7 @@ function buildTable(row) {
         dataType: 'json',
         contentType: 'application/json'
       }).done((res) => {
+        console.log('you are getting a success response');
         modal('Success', 'Data has posted');
       }).fail((err) => {
         console.log('you are getting a fail response');
