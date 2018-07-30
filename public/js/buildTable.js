@@ -73,9 +73,9 @@ function buildTable(row) {
         dataType: 'json',
         contentType: 'application/json'
       }).done((res) => {
-        console.log('Data has posted');
+        modal('Success', 'Data has posted');
       }).fail((err) => {
-        console.error('Failed to post', err);
+        modal(err.status, err.responseText);
       });
     });
   });
