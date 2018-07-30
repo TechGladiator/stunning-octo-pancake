@@ -66,10 +66,13 @@ function buildTable(row) {
     $(`#${code}Close2`).html(code);
     modalDispose(code, button);
     modalDispose(code, 'Close2', () => {
+      const importName = $('#jumboHeader').html();
+      const importData = {importName, fieldData};
+      console.log(importData);
       $.ajax({
         url: '/import/',
         type: 'post',
-        data: fieldData,
+        data: importData,
         dataType: 'json',
         contentType: 'application/json'
       }).done((res) => {
