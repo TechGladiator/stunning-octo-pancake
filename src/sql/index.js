@@ -17,5 +17,10 @@ module.exports = {
       console.log('executed query', { text, params, duration, rows: res.rowCount });
       callback(err, res);
     });
+  },
+  connect: (callback) => {
+    return pool.connect((err, client, done) => {
+      callback(err, client, done);
+    });
   }
 }
