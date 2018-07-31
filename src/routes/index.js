@@ -17,7 +17,6 @@ router.post('/import/', (req, res, next) => {
     importName: req.body.importName,
     fieldData: req.body.fieldData
   }
-  // res.json(importData);
 
   let insertValues = '';
   let i = 0;
@@ -38,42 +37,17 @@ router.post('/import/', (req, res, next) => {
     }
     i++;
   });
-  
-  res.send(insertValues);
-  
-  db.connect((err, client, done) => {
-    
-    const shouldAbort = (err) => {
-      if (err) {
-        console.error('Error in transaction', err.stack)
-        client.query('ROLLBACK', (err) => {
-          if (err) {
-            console.error('Error rolling back client', err.stack);
-          }
-          // release the client back to the pool
-          done();
-        })
-      }
-      return !!err;
+
+  const insertRecordText = `WITH get_importid AS (INSERT INTO imports (importname) VALUES ($1) returning importid) INSERT INTO imported_data ("importid", "Name", "Address", "Address 2", "City", "State", "Zip", "Purpose", "Property Owner", "Creation Date", "Lat", "Long") VALUES ${insertValues}`;
+
+  db.query(insertRecordText, [importData.importName], (err, res) => {
+    if (err) {
+      return next(err);
     }
-    
-    client.query('BEGIN', (err) => {
-      if (shouldAbort(err)) return;
-      client.query('WITH get_importid AS (INSERT INTO imports (importname) VALUES ($1) returning importid)', [importData.importName], (err, res) => {
-        if (shouldAbort(err)) return;
-        const insertRecordText = 'INSERT INTO imported_data ("importid", "Name", "Address", "Address 2", "City", "State", "Zip", "Purpose", "Property Owner", "Creation Date", "Lat", "Long") VALUES ($1)';
-        client.query(insertRecordText, insertValues, (err, res) => {
-          if (shouldAbort(err)) return;
-          client.query('COMMIT', (err) => {
-            if (err) {
-              console.error('Error committing transaction', err.stack);
-            }
-            done();
-          });
-        });
-      });
-    });
   });
+
+  res.send(req.params);
+
 });
 
 module.exports = router;
