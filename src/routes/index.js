@@ -13,7 +13,11 @@ router.get('/search/:id', (req, res, next) => {
 });
 
 router.post('/import/', (req, res, next) => {
-  res.send(req.params);
+  const importData = {
+    importName: req.body.importName,
+    fieldData: req.body.fieldData
+  }
+  res.json(importData);
 });
 
 module.exports = router;
