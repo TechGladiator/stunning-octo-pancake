@@ -73,32 +73,18 @@ function buildTable(row) {
     $(`#${code}Close2`).html(code);
     modalDispose(code, button);
     modalDispose(code, 'Close2', () => {
-      let dataFields = [];
-      function getDataFields() {
-        let i = 0;
-        fieldData.forEach(e => {
-          dataFields.push(['(SELECT importid FROM get_importid)']);
-          for (const k in e) {
-            if (e.hasOwnProperty(k)) {
-              const f = e[k];
-              dataFields[i].push(f);
-            }
-          }
-          i++;
-        });
-        console.log(dataFields);
-      }
-      getDataFields();
-      const importData = {importName, dataFields};
+      const importData = {importName, fieldData};
       console.log(importData);
+      console.log(JSON.stringify(importData));
       $.ajax({
         url: '/api/import/',
         type: 'post',
-        data: importData,
+        data: JSON.stringify(importData),
         dataType: 'json',
         contentType: 'application/json'
       }).done((res) => {
         console.log('you are getting a success response');
+        console.log(res);
         modal('Success', 'Data has posted');
       }).fail((err) => {
         console.log('you are getting a fail response');
