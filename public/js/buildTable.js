@@ -73,7 +73,23 @@ function buildTable(row) {
     $(`#${code}Close2`).html(code);
     modalDispose(code, button);
     modalDispose(code, 'Close2', () => {
-      const importData = {importName, fieldData};
+      let dataFields = [];
+      function getDataFields() {
+        let i = 0;
+        fieldData.forEach(e => {
+          dataFields.push(['(SELECT importid FROM get_importid)']);
+          for (const k in e) {
+            if (e.hasOwnProperty(k)) {
+              const f = e[k];
+              dataFields[i].push(f);
+            }
+          }
+          i++;
+        });
+        console.log(dataFields);
+      }
+      getDataFields();
+      const importData = {importName, dataFields};
       console.log(importData);
       $.ajax({
         url: '/api/import/',
