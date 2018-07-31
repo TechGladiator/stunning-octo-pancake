@@ -64,7 +64,7 @@ function buildTable(row) {
     modal(code, 'Name this imported data', cancel);
     $('#modalBody').append(`<input class="form-control" id="saveImportName" type="text" placeholder="Import Name" value="${fileName || $('#jumboHeader').html()}">`);
     let saveName = document.getElementById('saveImportName');
-    let importName;
+    let importName = saveName.value;
     function getSaveName() {
       importName = saveName.value;
       console.log(importName);
