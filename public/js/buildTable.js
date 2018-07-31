@@ -92,9 +92,9 @@ function buildTable(row) {
       const importData = {importName, dataFields};
       console.log(importData);
       $.ajax({
-        url: '/api/import/' + importData.importName,
+        url: '/api/import/',
         type: 'post',
-        data: importData.dataFields,
+        data: importData,
         dataType: 'json',
         contentType: 'application/json'
       }).done((res) => {

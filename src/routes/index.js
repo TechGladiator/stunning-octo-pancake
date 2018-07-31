@@ -12,8 +12,7 @@ router.get('/search/:id', (req, res, next) => {
   });
 });
 
-router.post('/import/:id', (req, res, next) => {
-  const id = req.params.id;
+router.post('/import/', (req, res, next) => {
   res.send(req.params);
 });
 
