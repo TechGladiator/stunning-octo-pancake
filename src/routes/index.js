@@ -50,4 +50,8 @@ router.post('/import/', (req, res, next) => {
 
 });
 
+router.delete('/import/record/:id', (req, res, next) => {
+  
+});
+
 module.exports = router;
