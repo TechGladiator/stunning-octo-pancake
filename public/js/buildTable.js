@@ -10,6 +10,7 @@ function buildTable(row) {
 
   ({ fd, fullAddress } = getFieldData(fd, row, fullAddress, addressList));
 
+  // force correction of header names
   if (row == 'header') {
     fd = '';
   }
