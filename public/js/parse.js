@@ -268,7 +268,11 @@ function buildFields(fd, r, e, j, fullAddress) {
         if (k == j) {
           k = '';
         }
-        fd += `<td id="row${r}Field${j}${k.replace(/\s+/g, '')}" ${fieldClick}>${f}</td>`;
+        if (k == 'recordid') {
+          fd += `<td id="row${r}Field${j}${k}" class="invisible">${f}</td>`;
+        } else {
+          fd += `<td id="row${r}Field${j}${k.replace(/\s+/g, '')}" ${fieldClick}>${f}</td>`;
+        }
         if (k == 'Name' || k == 'Address' || k == 'City' || k == 'State' || k == 'Zip') {
           fullAddress += ` ${f}`;
         }
