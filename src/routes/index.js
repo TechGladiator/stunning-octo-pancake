@@ -42,9 +42,15 @@ router.post('/imports/', (req, res, next) => {
 
   db.query(insertRecordText, [importData.importName], (err) => {
     if (err) {
-      res.send(err);
+      res.send({
+        status: 'Error',
+        error: `Error occurred when trying to save ${importData.importName}.`
+      });
     } else {
-      res.send(req.body);
+      res.send({
+        status: 'Posted',
+        message: `${importData.importName} saved.`
+      });
     }
   });
 

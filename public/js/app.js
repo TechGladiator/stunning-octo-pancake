@@ -43,9 +43,10 @@ function postData(importName) {
     type: 'post',
     data: JSON.stringify(importData),
     dataType: 'json',
-    contentType: 'application/json'
-  }).done((res) => {
-    modal('Success', 'Data has posted');
+    contentType: 'application/json',
+    success: (res) => {
+      modal(res.status, res.message || res.error);
+    }
   }).fail((err) => {
     modal(err.status, err.responseText);
   });
