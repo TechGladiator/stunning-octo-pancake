@@ -53,7 +53,15 @@ router.post('/imports/', (req, res, next) => {
 
 router.delete('/imports/records/:id', (req, res, next) => {
   const id = req.params.id;
-  res.send(`record ${id} deleted`);
+
+  db.query('DELETE FROM imported_data WHERE recordid = $1', [id], (err) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(`record ${id} deleted`);
+    }
+  });
+  
 });
 
 module.exports = router;
