@@ -73,6 +73,16 @@ function deleteRow(row) {
   if (errorCount > 0) {
     errorCount--;
   }
+  if ($(`#row${row}Field11recordid`).html()) {
+    let id = $(`#row${row}Field11recordid`).html()
+    $.ajax({
+      url: '/api/imports/records/' + id,
+      type: 'delete',
+      success: (res) => {
+        modal('Deleted', res);
+      }
+    });
+  }
   buildTable();
   toggleEditable();
 }
