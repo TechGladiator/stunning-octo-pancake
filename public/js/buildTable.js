@@ -74,23 +74,7 @@ function buildTable(row) {
     $(`#${code}Close2`).html(code);
     modalDispose(code, button);
     modalDispose(code, 'Close2', () => {
-      const importData = {importName, fieldData};
-      console.log(importData);
-      console.log(JSON.stringify(importData));
-      $.ajax({
-        url: '/api/imports/',
-        type: 'post',
-        data: JSON.stringify(importData),
-        dataType: 'json',
-        contentType: 'application/json'
-      }).done((res) => {
-        console.log('you are getting a success response');
-        console.log(res);
-        modal('Success', 'Data has posted');
-      }).fail((err) => {
-        console.log('you are getting a fail response');
-        modal(err.status, err.responseText);
-      });
+      postData(importName);
     });
   });
   $('#mapData').click(() => {

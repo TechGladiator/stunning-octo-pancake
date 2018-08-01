@@ -36,6 +36,26 @@ function searchRecords(searchId) {
   });
 }
 
+function postData(importName) {
+  const importData = { importName, fieldData };
+  console.log(importData);
+  console.log(JSON.stringify(importData));
+  $.ajax({
+    url: '/api/imports/',
+    type: 'post',
+    data: JSON.stringify(importData),
+    dataType: 'json',
+    contentType: 'application/json'
+  }).done((res) => {
+    console.log('you are getting a success response');
+    console.log(res);
+    modal('Success', 'Data has posted');
+  }).fail((err) => {
+    console.log('you are getting a fail response');
+    modal(err.status, err.responseText);
+  });
+}
+
 function main() {
   if (!pageSwitch && !searchPage) {
     searchPage = true;
