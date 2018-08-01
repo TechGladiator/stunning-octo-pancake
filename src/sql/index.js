@@ -14,8 +14,13 @@ module.exports = {
     const start = Date.now();
     return pool.query(text, params, (err, res) => {
       const duration = Date.now() - start;
-      console.log('executed query', { text, params, duration, rows: res.rowCount });
-      callback(err, res);
+      if (err) {
+        console.log('executed query', { text, params, duration, error: err.detail });
+        callback(err, res);
+      } else {
+        console.log('executed query', { text, params, duration, rows: res.rowCount });
+        callback(err, res);
+      }
     });
   }
 }

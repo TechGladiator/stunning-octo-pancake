@@ -40,13 +40,14 @@ router.post('/imports/', (req, res, next) => {
 
   const insertRecordText = `WITH get_importid AS (INSERT INTO imports (importname) VALUES ($1) returning importid) INSERT INTO imported_data ("importid", "Name", "Address", "Address 2", "City", "State", "Zip", "Purpose", "Property Owner", "Creation Date", "Lat", "Long") VALUES ${insertValues}`;
 
-  db.query(insertRecordText, [importData.importName], (err, res) => {
+  db.query(insertRecordText, [importData.importName], (err) => {
     if (err) {
-      return next(err);
+      res.send(err);
+    } else {
+      res.send(req.body);
     }
   });
 
-  res.send(req.params);
 
 });
 
