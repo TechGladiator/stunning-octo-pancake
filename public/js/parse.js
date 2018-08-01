@@ -305,7 +305,7 @@ function updateFields(row) {
     fieldData.forEach(e => {
       let j = 0;
       for (const k in e) {
-        if (e.hasOwnProperty(k)) {
+        if (e.hasOwnProperty(k) && k != 'recordid') {
           e[k] = $(`#row${i}Field${j}${names[j].replace(/\s+/g, '')}`).html();
           validateField(e, k, i, j);
         }
