@@ -68,7 +68,6 @@ function buildTable(row) {
     let importName = saveName.value;
     function getSaveName() {
       importName = saveName.value;
-      console.log(importName);
     }
     saveName.onchange = getSaveName;
     $(`#${code}Close2`).html(code);
