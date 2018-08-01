@@ -77,7 +77,7 @@ function buildTable(row) {
       console.log(importData);
       console.log(JSON.stringify(importData));
       $.ajax({
-        url: '/api/import/',
+        url: '/api/imports/',
         type: 'post',
         data: JSON.stringify(importData),
         dataType: 'json',

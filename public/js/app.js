@@ -16,7 +16,7 @@ function setPage(header, wrapper, elId1, func1, elId2, func2) {
 function searchRecords(searchId) {
   let id = $(searchId).val();
   $.ajax({
-    url: '/api/search/' + id,
+    url: '/api/imports/' + id,
     type: 'get',
     success: (res) => {
       console.log(res);

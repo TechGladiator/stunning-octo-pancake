@@ -2,7 +2,7 @@
 const router = require('express').Router();
 const db = require('../sql');
 
-router.get('/search/:id', (req, res, next) => {
+router.get('/imports/:id', (req, res, next) => {
   const id = req.params.id;
   db.query('SELECT "Name", "Address", "Address 2", "City", "State", "Zip", "Purpose", "Property Owner", "Creation Date", "Lat", "Long" FROM imports JOIN imported_data ON imports.importid=imported_data.importid WHERE importname = $1', [id], (err, results) => {
     if (err) {
@@ -12,7 +12,7 @@ router.get('/search/:id', (req, res, next) => {
   });
 });
 
-router.post('/import/', (req, res, next) => {
+router.post('/imports/', (req, res, next) => {
   const importData = {
     importName: req.body.importName,
     fieldData: req.body.fieldData
@@ -50,7 +50,7 @@ router.post('/import/', (req, res, next) => {
 
 });
 
-router.delete('/import/record/:id', (req, res, next) => {
+router.delete('/imports/records/:id', (req, res, next) => {
   
 });
 
