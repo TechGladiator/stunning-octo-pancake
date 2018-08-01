@@ -51,7 +51,8 @@ router.post('/imports/', (req, res, next) => {
 });
 
 router.delete('/imports/records/:id', (req, res, next) => {
-  
+  const id = req.params.id;
+  res.send(`record ${id} deleted`);
 });
 
 module.exports = router;
