@@ -44,7 +44,7 @@ router.post('/imports/', (req, res, next) => {
     if (err) {
       res.send({
         status: 'Error',
-        error: `Error occurred when trying to save ${importData.importName}.`
+        error: `Error occurred when trying to save ${importData.importName}:<br>${err.detail}`
       });
     } else {
       res.send({
