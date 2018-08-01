@@ -25,7 +25,7 @@ router.post('/imports/', (req, res, next) => {
     insertValues += '((SELECT importid FROM get_importid)';
     for (const k in e) {
       if (e.hasOwnProperty(k)) {
-        const f = e[k];
+        const f = e[k].toString().replace(/'/g, "''");
         insertValues += `, '${f}'`;
       }
     }
