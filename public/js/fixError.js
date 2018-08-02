@@ -69,9 +69,19 @@ function fixRow(code, close, row) {
 }
 
 function deleteRow(row) {
-  console.log(fieldData.splice(row, 1));
+  fieldData.splice(row, 1);
   if (errorCount > 0) {
     errorCount--;
+  }
+  if ($(`#row${row}Field11recordid`).html()) {
+    let id = $(`#row${row}Field11recordid`).html()
+    $.ajax({
+      url: '/api/imports/records/' + id,
+      type: 'delete',
+      success: (res) => {
+        modal('Deleted', res);
+      }
+    });
   }
   buildTable();
   toggleEditable();
