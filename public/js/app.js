@@ -54,7 +54,7 @@ function postData(importName) {
 
 function main() {
   if (!pageSwitch && !searchPage) {
-    searchPage = true;
+    pageSwitch = true;
     setPage('Upload or View Data', wrapper1, '#uploadCSV', parseFile, '#retrieveData', main);
   } else if (pageSwitch && !searchPage) {
     pageSwitch = false;
@@ -63,6 +63,7 @@ function main() {
       main();
     })
   } else {
+    pageSwitch = true;
     searchPage = false;
     setPage('Enter Import Name', wrapper4, '#goBack', main, '#searchDB', () => {
       searchRecords('#searchImports');
