@@ -17,6 +17,7 @@ function buildTable(row) {
 
   $('#jumboHeader').removeClass('mb-5');
   $('#jumboHeader').html(fileName);
+  $('title').html(fileName);
   $('.wrapper').html('');
 
   $('.csv').html(`
