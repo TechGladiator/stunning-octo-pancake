@@ -1,6 +1,7 @@
 function setHeader(header, wrapper) {
   $('#jumboHeader').html(header);
   $('.wrapper').html(wrapper);
+  $('#map').html('');
   $('.csv').html('');
 }
 
@@ -15,7 +16,7 @@ function setPage(header, wrapper, elId1, func1, elId2, func2) {
 function searchRecords(searchId) {
   let id = $(searchId).val();
   $.ajax({
-    url: '/api/search/' + id,
+    url: '/api/imports/' + id,
     type: 'get',
     success: (res) => {
       console.log(res);
@@ -35,9 +36,25 @@ function searchRecords(searchId) {
   });
 }
 
+function postData(importName) {
+  const importData = { importName, fieldData };
+  $.ajax({
+    url: '/api/imports/',
+    type: 'post',
+    data: JSON.stringify(importData),
+    dataType: 'json',
+    contentType: 'application/json',
+    success: (res) => {
+      modal(res.status, res.message || res.error);
+    }
+  }).fail((err) => {
+    modal(err.status, err.responseText);
+  });
+}
+
 function main() {
   if (!pageSwitch && !searchPage) {
-    pageSwitch = true;
+    searchPage = true;
     setPage('Upload or View Data', wrapper1, '#uploadCSV', parseFile, '#retrieveData', main);
   } else if (pageSwitch && !searchPage) {
     pageSwitch = false;

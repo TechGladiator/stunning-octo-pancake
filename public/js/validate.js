@@ -48,7 +48,6 @@ function validateDate(row) {
 	if (row['Creation Date']) {
 		if (!row['Creation Date'].match(regEx)) { // Invalid format
 			fieldDate = false;
-			console.log(`${row['Creation Date']} is an invalid date format`);
 		}
 
 		const d = new Date(row['Creation Date']);
