@@ -110,7 +110,7 @@ function completeFn(results) {
 
 // Enable application to parse file
 function parseFile() {
-  pageSwitch = false;
+  searchPage = false;
 
   $('#jumboHeader').html('Upload CSV File');
   $('.wrapper').html(`${wrapper2}`);
@@ -268,7 +268,11 @@ function buildFields(fd, r, e, j, fullAddress) {
         if (k == j) {
           k = '';
         }
-        fd += `<td id="row${r}Field${j}${k.replace(/\s+/g, '')}" ${fieldClick}>${f}</td>`;
+        if (k == 'recordid') {
+          fd += `<td id="row${r}Field${j}${k}" class="invisible">${f}</td>`;
+        } else {
+          fd += `<td id="row${r}Field${j}${k.replace(/\s+/g, '')}" ${fieldClick}>${f}</td>`;
+        }
         if (k == 'Name' || k == 'Address' || k == 'City' || k == 'State' || k == 'Zip') {
           fullAddress += ` ${f}`;
         }
@@ -305,7 +309,7 @@ function updateFields(row) {
     fieldData.forEach(e => {
       let j = 0;
       for (const k in e) {
-        if (e.hasOwnProperty(k)) {
+        if (e.hasOwnProperty(k) && k != 'recordid') {
           e[k] = $(`#row${i}Field${j}${names[j].replace(/\s+/g, '')}`).html();
           validateField(e, k, i, j);
         }
@@ -317,11 +321,12 @@ function updateFields(row) {
   console.log('    Updated Data: ', fieldData);
 }
 
-function cancelCSV() {
+function newCSV() {
   fullResults = {};
   fieldNames = {};
   fieldData = {};
   fieldErrors = {};
+  fileName = undefined;
   headerCheck = true;
   mapped = false;
   markers = [];
