@@ -12,6 +12,10 @@ router.get('/imports/:id', (req, res, next) => {
   });
 });
 
+router.get('/importlist/', (req, res, next) => {
+  res.send('list of imports');
+});
+
 router.post('/imports/', (req, res, next) => {
   const importData = {
     importName: req.body.importName,
