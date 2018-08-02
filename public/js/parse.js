@@ -112,7 +112,11 @@ function completeFn(results) {
 function parseFile() {
   pageSwitch = false;
 
-  $('#jumboHeader').html('Upload CSV File');
+  let jHeader = 'Upload CSV File';
+
+  $('title').html(jHeader);
+
+  $('#jumboHeader').html(jHeader);
   $('.wrapper').html(`${wrapper2}`);
   $('.csv').html('');
 
