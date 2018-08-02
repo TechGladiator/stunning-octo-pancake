@@ -59,33 +59,34 @@ function postData(importName) {
   });
 }
 
+function getImportList() {
+  $('#listImportName').addClass('invisible');
+  setHeader('Import List');
+  $.ajax({
+    url: '/api/importlist/',
+    type: 'get',
+    success: (res) => {
+      let resHTML = '<div class="d-flex justify-content-center mb-3" role="group" aria-label="button group">';
+      res.forEach(e => {
+        console.log(e.importname);
+        resHTML += `<button type="button" class="btn btn-dark m-1" onclick="searchRecords('${e.importname}')">${e.importname}</button>`;
+      });
+      resHTML += '</div>';
+      $('.csv').html(resHTML);
+    },
+    error: (err) => {
+      modal(err.status, err.responseText);
+    }
+  });
+}
+
 function main() {
   if (!pageSwitch && !searchPage) {
     pageSwitch = true;
     setPage('Upload or Search', wrapper1, '#uploadCSV', parseFile, '#searchData', main);
   } else if (pageSwitch && !searchPage) {
     pageSwitch = false;
-    setPage('Search Data', wrapper3, '#listImportName', () => {
-      console.log('you clicked on #listImportName');
-      $('#listImportName').addClass('invisible');
-      setHeader('Import List');
-      $.ajax({
-        url: '/api/importlist/',
-        type: 'get',
-        success: (res) => {
-          let resHTML = '<div class="d-flex justify-content-center mb-3" role="group" aria-label="button group">';
-          res.forEach(e => {
-            console.log(e.importname);
-            resHTML += `<button type="button" class="btn btn-dark m-1" onclick="searchRecords('${e.importname}')">${e.importname}</button>`;
-          });
-          resHTML += '</div>';
-          $('.csv').html(resHTML);
-        },
-        error: (err) => {
-          modal(err.status, err.responseText);
-        }
-      });
-    }, '#goBack', main, '#searchImportName', () => {
+    setPage('Search Data', wrapper3, '#listImportName', getImportList, '#goBack', main, '#searchImportName', () => {
       searchPage = true;
       main();
     });
@@ -96,6 +97,25 @@ function main() {
       searchRecords('#searchImports');
     });
   }
+}
+
+function saveRecords() {
+  let code = 'Save';
+  let button = 'Cancel';
+  let cancel = `<button type="button" class="btn btn-danger" id="${code}${button}">${button}</button>`;
+  modal(code, 'Name this imported data', cancel);
+  $('#modalBody').append(`<input class="form-control" id="saveImportName" type="text" placeholder="Import Name" value="${fileName || $('#jumboHeader').html()}">`);
+  let saveName = document.getElementById('saveImportName');
+  let importName = saveName.value;
+  function getSaveName() {
+    importName = saveName.value;
+  }
+  saveName.onchange = getSaveName;
+  $(`#${code}Close2`).html(code);
+  modalDispose(code, button);
+  modalDispose(code, 'Close2', () => {
+    postData(importName);
+  });
 }
 
 main();
