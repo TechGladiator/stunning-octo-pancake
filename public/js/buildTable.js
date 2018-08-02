@@ -48,7 +48,7 @@ function buildTable(row) {
   if (mapped) {
     $('tbody').addClass('latlong');
     $('#saveRecords').removeClass('invisible');
-    $('title').html(`${fileName} Mapped`);
+    $('title').html(`${$('#jumboHeader').html()} Mapped`);
   }
 
   if (firstError == undefined) {
