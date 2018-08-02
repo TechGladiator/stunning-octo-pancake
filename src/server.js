@@ -18,7 +18,7 @@ app.set('views', './src/views');
 app.set('view engine', 'pug');
 
 app.get('/', (req, res) => {
-  res.render('index', { project: 'Project: Database Schema Creation & Basic CRUD Operations', apiKey: process.env.API_KEY});
+  res.render('index', { title: 'Stunning Octo Pancake', apiKey: process.env.API_KEY});
 });
 
 app.get('/cool', (req, res) => {
