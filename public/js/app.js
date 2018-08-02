@@ -47,9 +47,10 @@ function postData(importName) {
     contentType: 'application/json',
     success: (res) => {
       modal(res.status, res.message || res.error);
+    },
+    error: (err) => {
+      modal(err.status, err.responseText);
     }
-  }).fail((err) => {
-    modal(err.status, err.responseText);
   });
 }
 
@@ -63,7 +64,7 @@ function main() {
       console.log('you clicked on #listImportName');
       $('#listImportName').addClass('invisible');
       setHeader('Import List');
-      
+
     }, '#goBack', main, '#searchImportName', () => {
       searchPage = true;
       main();
