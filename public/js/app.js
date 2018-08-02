@@ -61,6 +61,9 @@ function main() {
     pageSwitch = false;
     setPage('Search Data', wrapper3, '#listImportName', () => {
       console.log('you clicked on #listImportName');
+      $('#listImportName').addClass('invisible');
+      setHeader('Import List');
+      
     }, '#goBack', main, '#searchImportName', () => {
       searchPage = true;
       main();
