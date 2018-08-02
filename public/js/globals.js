@@ -1,4 +1,5 @@
 // global variables
+const mainTitle = $('title').html();
 const names = ['Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date'];
 const wrapper1 = `
 <div class="text-center">
