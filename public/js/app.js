@@ -84,6 +84,7 @@ function main() {
   if (!pageSwitch && !searchPage) {
     pageSwitch = true;
     setPage('Upload or Search', wrapper1, '#uploadCSV', parseFile, '#searchData', main);
+    $('title').html(mainTitle);
   } else if (pageSwitch && !searchPage) {
     pageSwitch = false;
     setPage('Search Data', wrapper3, '#listImportName', getImportList, '#goBack', main, '#searchImportName', () => {
