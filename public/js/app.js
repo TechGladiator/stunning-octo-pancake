@@ -5,8 +5,9 @@ function setHeader(header, wrapper) {
   $('.csv').html('');
 }
 
-function setPage(header, wrapper, elId1, func1, elId2, func2) {
+function setPage(header, wrapper, elId0, func0, elId1, func1, elId2, func2) {
   setHeader(header, wrapper);
+  $(elId0).click(func0);
   $(elId1).click(func1);
   $(elId2).click((params) => {
     func2(params);
@@ -58,10 +59,12 @@ function main() {
     setPage('Upload or Search', wrapper1, '#uploadCSV', parseFile, '#searchData', main);
   } else if (pageSwitch && !searchPage) {
     pageSwitch = false;
-    setPage('Search Data', wrapper3, '#goBack', main, '#searchImportName', () => {
+    setPage('Search Data', wrapper3, '#listImportName', () => {
+      console.log('you clicked on #listImportName');
+    }, '#goBack', main, '#searchImportName', () => {
       searchPage = true;
       main();
-    })
+    });
   } else {
     pageSwitch = true;
     searchPage = false;
