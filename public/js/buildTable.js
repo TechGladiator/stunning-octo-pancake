@@ -25,7 +25,7 @@ function buildTable(row) {
                       <button type="button" class="btn btn-secondary invisible" id="saveRecords">Save Records</button>
                       <button type="button" class="btn btn-secondary" id="mapData">Map Imported Data</button>
                       <button type="button" class="btn btn-secondary" id="repairNext">Repair Next Error</button>
-                      <button type="button" class="btn btn-secondary" id="lookup">New Search</button>
+                      <button type="button" class="btn btn-secondary" id="search">New Search</button>
                       <button type="button" class="btn btn-secondary" id="newCSV">Import New CSV File</button>
                     </div>
                     <div class="card">
@@ -71,9 +71,10 @@ function buildTable(row) {
     updateFields(row);
     printStats();
   });
-  $('#lookup').click(() => {
+  $('#search').click(() => {
     newCSV();
-    searchPage = true;
+    pageSwitch = true;
+    searchPage = false;
     main();
   });
   $('#newCSV').click(newCSV);
