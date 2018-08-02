@@ -15,7 +15,12 @@ function setPage(header, wrapper, elId0, func0, elId1, func1, elId2, func2) {
 }
 
 function searchRecords(searchId) {
-  let id = $(searchId).val();
+  let id;
+  if ($(searchId).val()) {
+    id = $(searchId).val();
+  } else {
+    id = searchId;
+  }
   $.ajax({
     url: '/api/imports/' + id,
     type: 'get',
@@ -68,7 +73,13 @@ function main() {
         url: '/api/importlist/',
         type: 'get',
         success: (res) => {
-          $('.csv').html(res);
+          let resHTML = '<div class="d-flex justify-content-center mb-3" role="group" aria-label="button group">';
+          res.forEach(e => {
+            console.log(e.importname);
+            resHTML += `<button type="button" class="btn btn-dark m-1" onclick="searchRecords('${e.importname}')">${e.importname}</button>`;
+          });
+          resHTML += '</div>';
+          $('.csv').html(resHTML);
         },
         error: (err) => {
           modal(err.status, err.responseText);
