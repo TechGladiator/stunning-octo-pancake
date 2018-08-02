@@ -64,7 +64,16 @@ function main() {
       console.log('you clicked on #listImportName');
       $('#listImportName').addClass('invisible');
       setHeader('Import List');
-
+      $.ajax({
+        url: '/api/importlist/',
+        type: 'get',
+        success: (res) => {
+          $('.csv').html(res);
+        },
+        error: (err) => {
+          modal(err.status, err.responseText);
+        }
+      });
     }, '#goBack', main, '#searchImportName', () => {
       searchPage = true;
       main();
