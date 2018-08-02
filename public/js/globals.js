@@ -3,7 +3,7 @@ const names = ['Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose'
 const wrapper1 = `
 <div class="text-center">
 	<button type="button" class="btn btn-dark" id="uploadCSV">Upload CSV File</button>
-	<button type="button" class="btn btn-dark" id="retrieveData">Retrieve Existing Data</button>
+	<button type="button" class="btn btn-dark" id="searchData">Search</button>
 </div>
 `;
 const wrapper2 = `
@@ -26,7 +26,7 @@ const wrapper2 = `
 `;
 const wrapper3 = `
 <div class="text-center">
-	<button class="btn btn-dark" id="lookUpImportName" type="button">Look Up By Import Name</button>
+	<button class="btn btn-dark" id="searchImportName" type="button">Search By Import Name</button>
 	<button class="btn btn-dark" id="goBack" type="button">Go Back</button>
 </div>
 `;

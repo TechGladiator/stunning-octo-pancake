@@ -55,17 +55,17 @@ function postData(importName) {
 function main() {
   if (!pageSwitch && !searchPage) {
     pageSwitch = true;
-    setPage('Upload or View Data', wrapper1, '#uploadCSV', parseFile, '#retrieveData', main);
+    setPage('Upload or Search', wrapper1, '#uploadCSV', parseFile, '#searchData', main);
   } else if (pageSwitch && !searchPage) {
     pageSwitch = false;
-    setPage('Look Up Data', wrapper3, '#goBack', main, '#lookUpImportName', () => {
+    setPage('Search Data', wrapper3, '#goBack', main, '#searchImportName', () => {
       searchPage = true;
       main();
     })
   } else {
     pageSwitch = true;
     searchPage = false;
-    setPage('Enter Import Name', wrapper4, '#goBack', main, '#searchDB', () => {
+    setPage('Search By Import Name', wrapper4, '#goBack', main, '#searchDB', () => {
       searchRecords('#searchImports');
     });
   }

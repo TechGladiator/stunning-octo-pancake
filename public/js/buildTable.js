@@ -25,7 +25,7 @@ function buildTable(row) {
                       <button type="button" class="btn btn-secondary invisible" id="saveRecords">Save Records</button>
                       <button type="button" class="btn btn-secondary" id="mapData">Map Imported Data</button>
                       <button type="button" class="btn btn-secondary" id="repairNext">Repair Next Error</button>
-                      <button type="button" class="btn btn-secondary" id="lookup">Lookup Record</button>
+                      <button type="button" class="btn btn-secondary" id="lookup">Search Imports</button>
                       <button type="button" class="btn btn-secondary" id="newCSV">Import New CSV File</button>
                     </div>
                     <div class="card">
