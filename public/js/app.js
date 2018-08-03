@@ -60,11 +60,11 @@ function postData(importName) {
   });
 }
 
-function getImportList() {
+function searchImports() {
   $('#listImportName').addClass('invisible');
   setHeader('Import List');
   $.ajax({
-    url: '/api/imports/',
+    url: '/api/search/',
     type: 'get',
     success: (res) => {
       let resHTML = '<div class="d-flex justify-content-center mb-3" role="group" aria-label="button group">';
