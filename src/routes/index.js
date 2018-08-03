@@ -2,17 +2,13 @@
 const router = require('express').Router();
 const db = require('../sql');
 
-router.get('/imports/', (req, res, next) => {
+router.get('/search/', (req, res, next) => {
   db.query('SELECT importname FROM imports', (err, results) => {
     if (err) {
       return next(err);
     }
     res.send(results.rows);
   });
-});
-
-router.get('/search/', (req, res, next) => {
-  res.send('Please enter a search term');
 });
 
 router.get('/search/:searchString', (req, res, next) => {
