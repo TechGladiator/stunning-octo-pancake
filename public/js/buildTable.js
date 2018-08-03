@@ -17,6 +17,7 @@ function buildTable(row) {
 
   $('#jumboHeader').removeClass('mb-5');
   $('#jumboHeader').html(fileName);
+  $('title').html(fileName);
   $('.wrapper').html('');
 
   $('.csv').html(`
@@ -25,7 +26,7 @@ function buildTable(row) {
                       <button type="button" class="btn btn-secondary invisible" id="saveRecords">Save Records</button>
                       <button type="button" class="btn btn-secondary" id="mapData">Map Imported Data</button>
                       <button type="button" class="btn btn-secondary" id="repairNext">Repair Next Error</button>
-                      <button type="button" class="btn btn-secondary" id="lookup">Lookup Record</button>
+                      <button type="button" class="btn btn-secondary" id="search">New Search</button>
                       <button type="button" class="btn btn-secondary" id="newCSV">Import New CSV File</button>
                     </div>
                     <div class="card">
@@ -47,6 +48,7 @@ function buildTable(row) {
   if (mapped) {
     $('tbody').addClass('latlong');
     $('#saveRecords').removeClass('invisible');
+    $('title').html(`${$('#jumboHeader').html()} Mapped`);
   }
 
   if (firstError == undefined) {
@@ -59,22 +61,7 @@ function buildTable(row) {
     toggleEditable(row);
   });
   $('#saveRecords').click(() => {
-    let code = 'Save';
-    let button = 'Cancel';
-    let cancel = `<button type="button" class="btn btn-danger" id="${code}${button}">${button}</button>`;
-    modal(code, 'Name this imported data', cancel);
-    $('#modalBody').append(`<input class="form-control" id="saveImportName" type="text" placeholder="Import Name" value="${fileName || $('#jumboHeader').html()}">`);
-    let saveName = document.getElementById('saveImportName');
-    let importName = saveName.value;
-    function getSaveName() {
-      importName = saveName.value;
-    }
-    saveName.onchange = getSaveName;
-    $(`#${code}Close2`).html(code);
-    modalDispose(code, button);
-    modalDispose(code, 'Close2', () => {
-      postData(importName);
-    });
+    saveRecords();
   });
   $('#mapData').click(() => {
     if (!mapped) {
@@ -86,9 +73,9 @@ function buildTable(row) {
     updateFields(row);
     printStats();
   });
-  $('#lookup').click(() => {
+  $('#search').click(() => {
     newCSV();
-    searchPage = true;
+    pageSwitch = true;
     main();
   });
   $('#newCSV').click(newCSV);
