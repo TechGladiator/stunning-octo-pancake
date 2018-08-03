@@ -11,6 +11,15 @@ router.get('/imports/', (req, res, next) => {
   });
 });
 
+router.get('/search/', (req, res, next) => {
+  res.send('Please enter a search term');
+});
+
+router.get('/search/:searchString', (req, res, next) => {
+  const searchString = req.params.searchString;
+  res.send(`You searched for ${searchString}`);
+});
+
 router.get('/imports/:id', (req, res, next) => {
   const id = req.params.id;
   db.query('SELECT "Name", "Address", "Address 2", "City", "State", "Zip", "Purpose", "Property Owner", "Creation Date", "Lat", "Long", "recordid" FROM imports JOIN imported_data ON imports.importid=imported_data.importid WHERE importname = $1', [id], (err, results) => {
