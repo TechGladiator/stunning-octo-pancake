@@ -112,15 +112,7 @@ function completeFn(results) {
 function parseFile() {
   pageSwitch = false;
 
-  let jHeader = 'Upload CSV File';
-
-  $('title').html(jHeader);
-
-  $('#jumboHeader').html(jHeader);
-  $('.wrapper').html(`${wrapper2}`);
-  $('.csv').html('');
-
-  $('#goBack').click(main);
+  setPage('Upload CSV File', wrapper2, '#goBack', main);
 
   $('#headerCheck').click(() => {
     if ($('#headerCheck').prop('checked')) {
