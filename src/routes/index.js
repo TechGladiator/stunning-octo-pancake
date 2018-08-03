@@ -20,7 +20,7 @@ router.get('/search/:searchString', (req, res, next) => {
   db.query(`SELECT importname FROM imports WHERE importname LIKE '%${searchString}%'`, (err, results) => {
     if (err) {
       return next(err);
-    } else if (results,rows == []) {
+    } else if (results.rows.length < 1) {
       res.send({
         status: 404,
         message: `No results matching ${searchString} found`
