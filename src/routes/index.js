@@ -17,7 +17,12 @@ router.get('/search/', (req, res, next) => {
 
 router.get('/search/:searchString', (req, res, next) => {
   const searchString = req.params.searchString;
-  res.send(`You searched for ${searchString}`);
+  db.query(`SELECT importname FROM imports WHERE importname LIKE '%${searchString}%'`, (err, results) => {
+    if (err) {
+      return next(err);
+    }
+    res.send(results.rows);
+  });
 });
 
 router.get('/imports/:id', (req, res, next) => {
