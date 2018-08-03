@@ -2,9 +2,8 @@
 const router = require('express').Router();
 const db = require('../sql');
 
-router.get('/imports/:id', (req, res, next) => {
-  const id = req.params.id;
-  db.query('SELECT "Name", "Address", "Address 2", "City", "State", "Zip", "Purpose", "Property Owner", "Creation Date", "Lat", "Long", "recordid" FROM imports JOIN imported_data ON imports.importid=imported_data.importid WHERE importname = $1', [id], (err, results) => {
+router.get('/imports/', (req, res, next) => {
+  db.query('SELECT importname FROM imports', (err, results) => {
     if (err) {
       return next(err);
     }
@@ -12,8 +11,9 @@ router.get('/imports/:id', (req, res, next) => {
   });
 });
 
-router.get('/imports/', (req, res, next) => {
-  db.query('SELECT importname FROM imports', (err, results) => {
+router.get('/imports/:id', (req, res, next) => {
+  const id = req.params.id;
+  db.query('SELECT "Name", "Address", "Address 2", "City", "State", "Zip", "Purpose", "Property Owner", "Creation Date", "Lat", "Long", "recordid" FROM imports JOIN imported_data ON imports.importid=imported_data.importid WHERE importname = $1', [id], (err, results) => {
     if (err) {
       return next(err);
     }
