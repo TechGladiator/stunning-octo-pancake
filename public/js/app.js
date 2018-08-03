@@ -60,10 +60,10 @@ function postData(importName) {
   });
 }
 
-function searchImports() {
+function searchImports(searchString) {
   setHeader('Import List');
   $.ajax({
-    url: '/api/search/',
+    url: '/api/search/' + searchString,
     type: 'get',
     success: (res) => {
       let resHTML = '<div class="d-flex justify-content-center mb-3" role="group" aria-label="button group">';
