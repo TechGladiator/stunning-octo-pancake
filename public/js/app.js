@@ -71,13 +71,17 @@ function searchImports(searchString) {
     url: '/api/search/' + searchTerm,
     type: 'get',
     success: (res) => {
-      let resHTML = '<div class="d-flex justify-content-center mb-3" role="group" aria-label="button group">';
-      res.forEach(e => {
-        console.log(e.importname);
-        resHTML += `<button type="button" class="btn btn-dark m-1" onclick="searchRecords('${e.importname}')">${e.importname}</button>`;
-      });
-      resHTML += '</div>';
-      $('.csv').html(resHTML);
+      if (res.status) {
+        modal(res.status, res.message);
+      } else {
+        let resHTML = '<div class="d-flex justify-content-center mb-3" role="group" aria-label="button group">';
+        res.forEach(e => {
+          console.log(e.importname);
+          resHTML += `<button type="button" class="btn btn-dark m-1" onclick="searchRecords('${e.importname}')">${e.importname}</button>`;
+        });
+        resHTML += '</div>';
+        $('.csv').html(resHTML);
+      }
     },
     error: (err) => {
       modal(err.status, err.responseText);
