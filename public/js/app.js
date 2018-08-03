@@ -61,9 +61,14 @@ function postData(importName) {
 }
 
 function searchImports(searchString) {
-  setHeader('Import List');
+  let searchTerm;
+  if ($(searchString).val()) {
+    searchTerm = $(searchString).val();
+  } else {
+    searchTerm = searchString;
+  }
   $.ajax({
-    url: '/api/search/' + searchString,
+    url: '/api/search/' + searchTerm,
     type: 'get',
     success: (res) => {
       let resHTML = '<div class="d-flex justify-content-center mb-3" role="group" aria-label="button group">';
@@ -88,7 +93,7 @@ function main() {
   } else {
     pageSwitch = false;
     setPage('Search By Import Name', wrapper3, '#goBack', main, '#searchDB', () => {
-      searchRecords('#searchImports');
+      searchImports('#searchImports');
     });
   }
 }
