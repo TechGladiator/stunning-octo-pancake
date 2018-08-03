@@ -64,7 +64,7 @@ function getImportList() {
   $('#listImportName').addClass('invisible');
   setHeader('Import List');
   $.ajax({
-    url: '/api/importlist/',
+    url: '/api/imports/',
     type: 'get',
     success: (res) => {
       let resHTML = '<div class="d-flex justify-content-center mb-3" role="group" aria-label="button group">';
