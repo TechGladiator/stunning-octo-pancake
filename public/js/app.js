@@ -61,7 +61,6 @@ function postData(importName) {
 }
 
 function searchImports() {
-  $('#listImportName').addClass('invisible');
   setHeader('Import List');
   $.ajax({
     url: '/api/search/',
