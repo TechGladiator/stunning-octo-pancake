@@ -88,7 +88,7 @@ function main() {
     $('title').html(mainTitle);
   } else {
     pageSwitch = false;
-    setPage('Search By Import Name', wrapper4, '#goBack', main, '#searchDB', () => {
+    setPage('Search By Import Name', wrapper3, '#goBack', main, '#searchDB', () => {
       searchRecords('#searchImports');
     });
   }

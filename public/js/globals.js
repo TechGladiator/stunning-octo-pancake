@@ -26,13 +26,6 @@ const wrapper2 = `
 </div>
 `;
 const wrapper3 = `
-<div class="text-center">
-	<button class="btn btn-dark" id="listImportName" type="button">List By Import Name</button>
-	<button class="btn btn-dark" id="searchImportName" type="button">Search By Import Name</button>
-	<button class="btn btn-dark" id="goBack" type="button">Go Back</button>
-</div>
-`;
-const wrapper4 = `
 <div class="input-group mb-3">
 	<input type="text" class="form-control" id="searchImports">
 	<div class="input-group-append">
