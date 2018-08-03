@@ -1,9 +1,10 @@
 // global variables
+const mainTitle = $('title').html();
 const names = ['Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date'];
 const wrapper1 = `
 <div class="text-center">
 	<button type="button" class="btn btn-dark" id="uploadCSV">Upload CSV File</button>
-	<button type="button" class="btn btn-dark" id="retrieveData">Retrieve Existing Data</button>
+	<button type="button" class="btn btn-dark" id="searchData">Search</button>
 </div>
 `;
 const wrapper2 = `
@@ -25,12 +26,6 @@ const wrapper2 = `
 </div>
 `;
 const wrapper3 = `
-<div class="text-center">
-	<button class="btn btn-dark" id="lookUpImportName" type="button">Look Up By Import Name</button>
-	<button class="btn btn-dark" id="goBack" type="button">Go Back</button>
-</div>
-`;
-const wrapper4 = `
 <div class="input-group mb-3">
 	<input type="text" class="form-control" id="searchImports">
 	<div class="input-group-append">
@@ -59,7 +54,6 @@ let long;
 let message;
 let name = true;
 let pageSwitch = false;
-let searchPage = false;
 let row;
 let rowCount = 0;
 let start;
