@@ -61,7 +61,6 @@ let long;
 let message;
 let name = true;
 let pageSwitch = false;
-let searchPage = false;
 let row;
 let rowCount = 0;
 let start;

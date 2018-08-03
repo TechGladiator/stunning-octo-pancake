@@ -76,7 +76,6 @@ function buildTable(row) {
   $('#search').click(() => {
     newCSV();
     pageSwitch = true;
-    searchPage = false;
     main();
   });
   $('#newCSV').click(newCSV);
