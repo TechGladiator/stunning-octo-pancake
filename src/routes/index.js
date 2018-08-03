@@ -2,6 +2,37 @@
 const router = require('express').Router();
 const db = require('../sql');
 
+router.get('/search/', (req, res, next) => {
+  db.query('SELECT importname FROM imports', (err, results) => {
+    if (err) {
+      return next(err);
+    } else if (results.rows.length < 1) {
+      res.send({
+        status: 404,
+        message: `Database is currently empty. Try adding some records and then search again`
+      })
+    } else {
+      res.send(results.rows);
+    }
+  });
+});
+
+router.get('/search/:searchString', (req, res, next) => {
+  const searchString = req.params.searchString;
+  db.query(`SELECT importname FROM imports WHERE importname LIKE '%${searchString}%'`, (err, results) => {
+    if (err) {
+      return next(err);
+    } else if (results.rows.length < 1) {
+      res.send({
+        status: 404,
+        message: `No results matching ${searchString} found`
+      })
+    } else {
+      res.send(results.rows);
+    }
+  });
+});
+
 router.get('/imports/:id', (req, res, next) => {
   const id = req.params.id;
   db.query('SELECT "Name", "Address", "Address 2", "City", "State", "Zip", "Purpose", "Property Owner", "Creation Date", "Lat", "Long", "recordid" FROM imports JOIN imported_data ON imports.importid=imported_data.importid WHERE importname = $1', [id], (err, results) => {
@@ -44,7 +75,7 @@ router.post('/imports/', (req, res, next) => {
     if (err) {
       res.send({
         status: 'Error',
-        error: `Error occurred when trying to save ${importData.importName}:<br>${err.detail}`
+        error: `Error occurred when trying to save ${importData.importName}:<br>${err}`
       });
     } else {
       res.send({
