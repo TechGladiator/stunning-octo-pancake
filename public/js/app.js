@@ -82,19 +82,12 @@ function getImportList() {
 }
 
 function main() {
-  if (!pageSwitch && !searchPage) {
+  if (!pageSwitch) {
     pageSwitch = true;
     setPage('Upload or Search', wrapper1, '#uploadCSV', parseFile, '#searchData', main);
     $('title').html(mainTitle);
-  } else if (pageSwitch && !searchPage) {
-    pageSwitch = false;
-    setPage('Search Data', wrapper3, '#listImportName', getImportList, '#goBack', main, '#searchImportName', () => {
-      searchPage = true;
-      main();
-    });
   } else {
-    pageSwitch = true;
-    searchPage = false;
+    pageSwitch = false;
     setPage('Search By Import Name', wrapper4, '#goBack', main, '#searchDB', () => {
       searchRecords('#searchImports');
     });
