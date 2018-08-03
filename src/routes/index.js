@@ -12,7 +12,7 @@ router.get('/imports/:id', (req, res, next) => {
   });
 });
 
-router.get('/importlist/', (req, res, next) => {
+router.get('/imports/', (req, res, next) => {
   db.query('SELECT importname FROM imports', (err, results) => {
     if (err) {
       return next(err);
