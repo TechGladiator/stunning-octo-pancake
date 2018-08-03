@@ -6,8 +6,14 @@ router.get('/search/', (req, res, next) => {
   db.query('SELECT importname FROM imports', (err, results) => {
     if (err) {
       return next(err);
+    } else if (results.rows.length < 1) {
+      res.send({
+        status: 404,
+        message: `Database is currently empty. Try adding some records and then search again`
+      })
+    } else {
+      res.send(results.rows);
     }
-    res.send(results.rows);
   });
 });
 
