@@ -7,4 +7,5 @@ RSpec.describe State, type: :model do
   # ensure column name is present before saving
   it { should validate_presence_of(:id) }
   it { should validate_presence_of(:name) }
+  it { should validate_presence_of(:short_name) }
 end
