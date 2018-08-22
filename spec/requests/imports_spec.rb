@@ -76,7 +76,7 @@ RSpec.describe 'Imports API', type: :request do
 
       it 'returns a validation failure message' do
         expect(response.body)
-          .to match(/Validation failed: Created by can't be blank/)
+          .to match(/Validation failed: Import name can't be blank/)
       end
     end
   end
