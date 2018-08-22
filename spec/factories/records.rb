@@ -10,6 +10,6 @@ FactoryBot.define do
     purpose { Faker::Book.genre }
     property_owner { Faker::StarWars.character }
     creation_date { Faker::Date.backward(14) }
-    record_id nil
+    import_id nil
   end
 end
