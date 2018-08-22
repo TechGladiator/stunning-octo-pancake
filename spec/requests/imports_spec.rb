@@ -68,7 +68,7 @@ RSpec.describe 'Imports API', type: :request do
     end
 
     context 'when the request is invalid' do
-      before { post '/imports', params: { import_name: 'Foobar' } }
+      before { post '/imports', params: { import_name: '' } }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
