@@ -1,5 +1,5 @@
 /* frontend/init/index.css */
-@import "normalize.css/normalize.css";
+@import "bootstrap";
 
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
