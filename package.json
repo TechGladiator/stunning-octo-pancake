@@ -2,9 +2,7 @@
   "name": "evil_chat",
   "private": true,
   "dependencies": {
-    "@rails/webpacker": "^3.2.0",
-    "coffeescript": "1.12.7",
-    "normalize.css": "^7.0.0"
+    "@rails/webpacker": "^3.2.0"
   },
   "scripts": {
     "lint-staged": "$(yarn bin)/lint-staged"
