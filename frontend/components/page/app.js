@@ -641,8 +641,8 @@ function validateZip(row) {
 			fieldZip = false;
 		}
 		for (let i = 0; i < row.Zip.length; i++) {
-			temp = `${row.Zip.substring(i, i+1)}`;
-			if (digits.indexOf(temp) == '-1') {
+			const zipDigit = `${row.Zip.substring(i, i+1)}`;
+			if (digits.indexOf(zipDigit) == '-1') {
 				fieldZip = false;
 			}
 		}
