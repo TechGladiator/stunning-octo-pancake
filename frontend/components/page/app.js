@@ -59,6 +59,8 @@ let row;
 let rowCount = 0;
 let start;
 
+// Modal
+
 function modal(moId, moBody, moFooter) {
 	$('body').append(`
   <div class="modal fade" id="${moId}" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="${moId}Label" aria-hidden="true">
@@ -98,6 +100,8 @@ function modalDispose(moId, close, func) {
 		});
 	});
 }
+
+// fix errors
 
 function returnToList() {
   $('#mapData').html('Return to list');
@@ -191,6 +195,8 @@ function deleteRow(row) {
 function fixButton(code, buttonName) {
   return `<button type="button" class="btn btn-danger" id="${code}${buttonName}">${buttonName}</button>`;
 }
+
+// parse csv file
 
 function printStats(msg) {
   let buttonName;
@@ -525,6 +531,8 @@ function newCSV() {
   parseFile();
 }
 
+// build table
+
 function buildTable(row) {
   let fn = '';
   let fd = '';
@@ -608,6 +616,8 @@ function buildTable(row) {
   $('#newCSV').click(newCSV);
 }
 
+// validate
+
 // Validate field names
 function validateFieldNames(fieldName) {
 	for (let i = 0; i < names.length; i++) {
@@ -679,3 +689,4 @@ function validateField(e, k, i, j) {
     $(`#row${i}Field${j}`).removeClass('table-danger');
   }
 }
+
