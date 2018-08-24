@@ -1,2 +1,10 @@
 // frontend/components/page/page.js
 import "./page.css";
+import "./globals";
+import "./modal";
+import "./fixError";
+import "./parse";
+import "./buildTable";
+import "./validate";
+import "./geocode";
+import "./app";
