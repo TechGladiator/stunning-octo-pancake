@@ -999,8 +999,8 @@ function searchImports(searchString) {
       } else {
         let resHTML = '<div class="d-flex justify-content-center mb-3" role="group" aria-label="button group">';
         res.forEach(e => {
-          console.log(e.importname);
-          resHTML += `<button type="button" class="btn btn-dark m-1" onclick="searchRecords('${e.importname}')">${e.importname}</button>`;
+          console.log(e.import_name);
+          resHTML += `<button type="button" class="btn btn-dark m-1" onclick="searchRecords('${e.import_name}')">${e.import_name}</button>`;
         });
         resHTML += '</div>';
         $('.csv').html(resHTML);
