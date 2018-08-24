@@ -49,9 +49,14 @@ let fileName;
 let firstError;
 let firstRun = true;
 let fullResults;
+let geocoder;
 let headerCheck = true;
+let infowindow;
 let lat;
 let long;
+let map;
+let mapped = false;
+let markers = [];
 let message;
 let name = true;
 let pageSwitch = false;
@@ -689,4 +694,6 @@ function validateField(e, k, i, j) {
     $(`#row${i}Field${j}`).removeClass('table-danger');
   }
 }
+
+// geocode
 
