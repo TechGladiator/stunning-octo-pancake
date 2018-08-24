@@ -351,40 +351,22 @@ function parseFile() {
       modal("noFileChosen", "Please choose at least one file to parse.");
       return;
     }
+    const file = document.getElementById('inputGroupFile02').files[0];
     // use jquery to select files
     const papa = require('papaparse');
-    papa.parse(fileName, {
-      config: {
-        // base config to use for each file
-        delimiter: "",
-        header: headerCheck,
-        dynamicTyping: false,
-        skipEmptyLines: true,
-        preview: 0,
-        step: undefined,
-        encoding: "",
-        worker: false,
-        comments: false,
-        complete: completeFn,
-        error: errorFn,
-      },
-      before(file) {
-        // executed before parsing each file begins;
-        // what you return here controls the flow
-        start = now();
-        console.log('Parsing file...', file);
-      },
-      error(err, file) {
-        // executed if an error occurs while loading the file,
-        // or if before callback aborted for some reason
-        console.log('ERROR:', err, file);
-        firstError = firstError || err;
-        errorCount++;
-      },
-      complete() {
-        // executed after all files are complete
-        end = now();
-      }
+    papa.parse(file, {
+      // base config to use for each file
+      delimiter: "",
+      header: headerCheck,
+      dynamicTyping: false,
+      skipEmptyLines: true,
+      preview: 0,
+      step: undefined,
+      encoding: "",
+      worker: false,
+      comments: false,
+      complete: completeFn,
+      error: errorFn
     });
   });
 }
