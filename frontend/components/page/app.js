@@ -991,7 +991,7 @@ function searchImports(searchString) {
     searchTerm = searchString;
   }
   $.ajax({
-    url: '/search/' + searchTerm,
+    url: '/imports/' + searchTerm,
     type: 'get',
     success: (res) => {
       if (res.status) {
