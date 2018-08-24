@@ -1,5 +1,6 @@
 /* frontend/init/index.css */
 @import "bootstrap";
+@import url("https://fonts.googleapis.com/css?family=Source+Code+Pro");
 
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
