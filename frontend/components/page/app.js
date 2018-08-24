@@ -186,7 +186,7 @@ function deleteRow(row) {
   if ($(`#row${row}Field11recordid`).html()) {
     let id = $(`#row${row}Field11recordid`).html()
     $.ajax({
-      url: '/api/imports/records/' + id,
+      url: '/imports/records/' + id,
       type: 'delete',
       success: (res) => {
         modal('Deleted', res);
@@ -946,7 +946,7 @@ function searchRecords(searchId) {
     id = searchId;
   }
   $.ajax({
-    url: '/api/imports/' + id,
+    url: '/imports/' + id,
     type: 'get',
     success: (res) => {
       console.log(res);
@@ -969,7 +969,7 @@ function searchRecords(searchId) {
 function postData(importName) {
   const importData = { importName, fieldData };
   $.ajax({
-    url: '/api/imports/',
+    url: '/imports/',
     type: 'post',
     data: JSON.stringify(importData),
     dataType: 'json',
@@ -991,7 +991,7 @@ function searchImports(searchString) {
     searchTerm = searchString;
   }
   $.ajax({
-    url: '/api/search/' + searchTerm,
+    url: '/search/' + searchTerm,
     type: 'get',
     success: (res) => {
       if (res.status) {
