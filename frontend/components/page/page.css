@@ -1,7 +1,23 @@
 /* frontend/components/page/page.css */
-.page {
-  height: 100vh;
-  width: 700px;
-  margin: 0 auto;
-  overflow: hidden;
+
+/* cursor pointer when hover over file picker */
+.custom-file-input,
+.input-group-append,
+.latlong,
+.deleteRow {
+  cursor: pointer;
+}
+
+.invisible {
+  position: absolute !important;
+}
+
+/* apply Source Code Pro Font to editable fields */
+[contenteditable="true"] {
+  font-family: "Source Code Pro", monospace;
+}
+
+[contenteditable="true"] th,
+[contenteditable="true"] td {
+  box-shadow: inset 0 0 0 2px black;
 }
