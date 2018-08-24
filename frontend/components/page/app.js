@@ -352,7 +352,8 @@ function parseFile() {
       return;
     }
     // use jquery to select files
-    $('#inputGroupFile02').parse({
+    const papa = require('papaparse');
+    papa.parse(fileName, {
       config: {
         // base config to use for each file
         delimiter: "",
