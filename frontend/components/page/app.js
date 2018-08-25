@@ -938,15 +938,9 @@ function setPage(header, wrapper, elId0, func0, elId1, func1, elId2, func2) {
   })
 }
 
-function searchRecords(searchId) {
-  let id;
-  if ($(searchId).val()) {
-    id = $(searchId).val();
-  } else {
-    id = searchId;
-  }
+function searchRecords(id) {
   $.ajax({
-    url: '/imports/' + id,
+    url: '/imports/' + id +'/records/',
     type: 'get',
     success: (res) => {
       console.log(res);
@@ -997,15 +991,17 @@ function searchImports(searchString) {
       if (res.status) {
         modal(res.status, res.message);
       } else {
+        let importId;
         let resHTML = '<div class="d-flex justify-content-center mb-3" role="group" aria-label="button group">';
         res.forEach(e => {
           console.log(e.import_name);
           resHTML += `<button type="button" class="btn btn-dark m-1" id="search-records">${e.import_name}</button>`;
+          importId = e.id;
         });
         resHTML += '</div>';
         $('.csv').html(resHTML);
         $('#search-records').click(() => {
-          searchRecords($('#search-records').html());
+          searchRecords(importId);
         });
       }
     },
