@@ -1,0 +1,11 @@
+const $ = require("jquery");
+const { buildTable } = require("./app");
+
+function returnToList() {
+  $("#mapData").html("Return to list");
+  $("#mapData").click(() => {
+    errorCount = 0;
+    buildTable();
+  });
+}
+exports.returnToList = returnToList;
