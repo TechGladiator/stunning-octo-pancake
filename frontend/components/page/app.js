@@ -448,8 +448,10 @@ function buildFields(fd, r, e, j, fullAddress) {
         if (k == j) {
           k = '';
         }
-        if (k == 'recordid') {
+        if (k == 'import_id') {
           fd += `<td id="row${r}Field${j}${k}" class="invisible">${f}</td>`;
+        } else if (k == 'id') {
+          fd += '';
         } else {
           fd += `<td id="row${r}Field${j}${k.replace(/\s+/g, '')}" ${fieldClick}>${f}</td>`;
         }
