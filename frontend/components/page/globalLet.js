@@ -1,7 +1,6 @@
 function globalLet() {
   let code;
   let editable;
-  let end;
   let errorCount = 0;
   let fieldData;
   let fieldDate = true;
@@ -26,7 +25,6 @@ function globalLet() {
   let pageSwitch = false;
   let row;
   let rowCount = 0;
-  let start;
   return {
     errorCount,
     editable,
@@ -35,8 +33,6 @@ function globalLet() {
     fieldNames,
     fieldErrors,
     firstError,
-    end,
-    start,
     rowCount,
     code,
     message,
