@@ -1,5 +1,5 @@
 const $ = require("jquery");
-const { modalDispose } = require("./app");
+const { modalDispose } = require("./modalDispose");
 
 function modal(moId, moBody, moFooter) {
   $("body").append(`
