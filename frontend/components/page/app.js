@@ -203,7 +203,7 @@ function fixButton(code, buttonName) {
 
 // parse csv file
 
-function printStats(msg) {
+function printRecords(msg) {
   let buttonName;
   let fix;
   if (msg) {
@@ -260,7 +260,7 @@ function printStats(msg) {
               }
             }
           });
-          printStats('Key updated');
+          printRecords('Key updated');
         });
       });
       return;
@@ -305,7 +305,7 @@ function completeFn(results) {
       rowCount = fieldData.length;
     }
   }
-  printStats('Parse complete');
+  printRecords('Parse complete');
   console.log('    Results:', fullResults);
 }
 
@@ -594,7 +594,7 @@ function buildTable(row) {
   });
   $('#repairNext').click(() => {
     updateFields(row);
-    printStats();
+    printRecords();
   });
   $('#search').click(() => {
     newCSV();
@@ -949,7 +949,7 @@ function searchRecords(id) {
         names.push('Lat', 'Long');
         fieldNames = names;
         fieldData = res;
-        printStats();
+        printRecords();
       } else {
         modal('404', 'Not Found');
       }
