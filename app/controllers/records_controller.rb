@@ -34,7 +34,7 @@ class RecordsController < ApplicationController
   private
 
   def record_params
-    params.permit(:name, :address, :address_2, :city, :state, :zip, :purpose, :property_owner, :creation_date, :lat, :long)
+    params.permit(:Name, :Address, :"Address 2", :City, :State, :Zip, :Purpose, :"Property Owner", :"Creation Date", :Lat, :Long)
   end
 
   def set_import
