@@ -962,11 +962,11 @@ function searchRecords(id) {
 }
 
 function postData(importName) {
-  const importData = { importName, fieldData };
+  const data = { "impoort_name": importName };
   $.ajax({
     url: '/imports/',
     type: 'post',
-    data: JSON.stringify(importData),
+    data: JSON.stringify(data),
     dataType: 'json',
     contentType: 'application/json',
     success: (res) => {
