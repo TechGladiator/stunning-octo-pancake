@@ -1,3 +1,5 @@
+const { removeFirstErrorMessage } = require("./removeFirstErrorMessage");
+
 const { removeEmptyField } = require("./removeEmptyField");
 
 const { toggleEditable } = require("./toggleEditable");
@@ -13,19 +15,6 @@ let { errorCount, mapped, fieldData, fieldNames, fieldErrors, firstError, end, s
 const { names, wrapper2, wrapper1, mainTitle, wrapper3 } = require("./globalConst");
 
 const $ = require('jquery');
-
-function removeFirstErrorMessage(row) {
-  $(`.modal`).on('hidden.bs.modal', () => {
-    if (Object.values(fieldData[row]).length == fieldNames.length) {
-      fieldErrors.shift(0);
-      console.log(fieldErrors);
-      errorCount--;
-      firstError = fieldErrors[0];
-      console.log('     Errors:', errorCount);
-      console.log('First Error:', firstError);
-    }
-  });
-}
 
 function fixRow(code, close, row) {
   $(`#${code}${close}`).click(() => {
