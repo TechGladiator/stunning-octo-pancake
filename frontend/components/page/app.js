@@ -448,9 +448,7 @@ function buildFields(fd, r, e, j, fullAddress) {
         if (k == j) {
           k = '';
         }
-        if (k == 'import_id') {
-          fd += `<td id="row${r}Field${j}${k}" class="invisible">${f}</td>`;
-        } else if (k == 'id') {
+        if (k == 'id' || k == 'import_id') {
           fd += '';
           j--;
         } else {
