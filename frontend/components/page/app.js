@@ -1,6 +1,6 @@
-const { removeFirstErrorMessage } = require("./removeFirstErrorMessage");
+const { fixRow } = require("./fixRow");
 
-const { removeEmptyField } = require("./removeEmptyField");
+
 
 const { toggleEditable } = require("./toggleEditable");
 
@@ -15,14 +15,6 @@ let { errorCount, mapped, fieldData, fieldNames, fieldErrors, firstError, end, s
 const { names, wrapper2, wrapper1, mainTitle, wrapper3 } = require("./globalConst");
 
 const $ = require('jquery');
-
-function fixRow(code, close, row) {
-  $(`#${code}${close}`).click(() => {
-    removeEmptyField(row);
-    removeFirstErrorMessage(row);
-    buildTable(row);
-  });
-}
 
 function deleteRow(row) {
   fieldData.splice(row, 1);
