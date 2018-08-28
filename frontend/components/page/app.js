@@ -1,32 +1,16 @@
+const { toggleEditable } = require("./toggleEditable");
+
 const { returnToList } = require("./returnToList");
 
 const { modalDispose } = require("./modalDispose");
 
 const { modal } = require("./modal");
 
-let { errorCount, editable, mapped, fieldData, fieldNames, fieldErrors, firstError, end, start, rowCount, code, message, fileName, headerCheck, name, row, fullResults, pageSwitch, firstRun, fieldState, fieldZip, fieldDate, markers, geocoder, infowindow, map, lat, long } = require("./globalLet");
+let { errorCount, mapped, fieldData, fieldNames, fieldErrors, firstError, end, start, rowCount, code, message, fileName, headerCheck, name, row, fullResults, pageSwitch, firstRun, fieldState, fieldZip, fieldDate, markers, geocoder, infowindow, map, lat, long } = require("./globalLet");
 
 const { names, wrapper2, wrapper1, mainTitle, wrapper3 } = require("./globalConst");
 
 const $ = require('jquery');
-function toggleEditable(row) {
-  editable = $('#csvTable');
-  if (!editable[0].isContentEditable) {
-    editable[0].contentEditable = 'true';
-    $('#editData').html('Save Edits');
-    $('.border-dark').removeClass('invisible');
-    if (mapped) {
-      $('tbody').removeClass('latlong');
-    }
-  }
-  else {
-    updateFields(row);
-    buildTable(row);
-    if (mapped && errorCount > 0) {
-      returnToList();
-    }
-  }
-}
 
 function removeEmptyField(row) {
   let i = 0;
@@ -394,6 +378,7 @@ function updateFields(row) {
   }
   console.log('    Updated Data: ', fieldData);
 }
+exports.updateFields = updateFields;
 
 function newCSV() {
   fullResults = {};
