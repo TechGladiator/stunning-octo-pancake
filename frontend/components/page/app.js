@@ -1,3 +1,5 @@
+const { fixButton } = require("./fixButton");
+
 const { fixRow } = require("./fixRow");
 
 
@@ -15,10 +17,6 @@ let { errorCount, mapped, fieldData, fieldNames, fieldErrors, firstError, end, s
 const { names, wrapper2, wrapper1, mainTitle, wrapper3 } = require("./globalConst");
 
 const $ = require('jquery');
-
-function fixButton(code, buttonName) {
-  return `<button type="button" class="btn btn-danger" id="${code}${buttonName}">${buttonName}</button>`;
-}
 
 // parse csv file
 
