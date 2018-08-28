@@ -941,7 +941,7 @@ function setPage(header, wrapper, elId0, func0, elId1, func1, elId2, func2) {
 
 function searchRecords(id) {
   $.ajax({
-    url: '/imports/' + id +'/records/',
+    url: `/imports/${id}/records/`,
     type: 'get',
     success: (res) => {
       console.log(res);
@@ -986,7 +986,7 @@ function searchImports(searchString) {
     searchTerm = searchString;
   }
   $.ajax({
-    url: '/imports/' + searchTerm,
+    url: `/imports/${searchTerm}`,
     type: 'get',
     success: (res) => {
       if (res.status) {
