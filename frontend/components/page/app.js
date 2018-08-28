@@ -1,6 +1,7 @@
+const { printRecords } = require("./printRecords");
+
 const { fixButton } = require("./fixButton");
 
-const { fixRow } = require("./fixRow");
 
 
 
@@ -12,87 +13,11 @@ const { modalDispose } = require("./modalDispose");
 
 const { modal } = require("./modal");
 
-let { errorCount, mapped, fieldData, fieldNames, fieldErrors, firstError, rowCount, code, message, fileName, headerCheck, name, row, fullResults, pageSwitch, firstRun, fieldState, fieldZip, fieldDate, markers, geocoder, infowindow, map, lat, long } = require("./globalLet");
+let { errorCount, mapped, fieldData, fieldNames, fieldErrors, firstError, rowCount, fileName, headerCheck, name, fullResults, pageSwitch, firstRun, fieldState, fieldZip, fieldDate, markers, geocoder, infowindow, map, lat, long } = require("./globalLet");
 
 const { names, wrapper2, wrapper1, mainTitle, wrapper3 } = require("./globalConst");
 
 const $ = require('jquery');
-
-function printRecords(msg) {
-  let buttonName;
-  let fix;
-  if (msg) {
-    console.log(msg);
-    console.log('  Row count:', rowCount);
-    console.log('     Errors:', errorCount);
-  }
-  if (fieldNames && fieldNames.length != names.length) {
-    console.log('header length is wrong');
-    let codeWord;
-    if (fieldNames.length < names.length) {
-      codeWord = 'Few';
-    } else {
-      codeWord = 'Many';
-    }
-    code = `Too${codeWord}Fields`;
-    message = `Too ${codeWord.toLowerCase()} fields: expected ${names.length} fields but parsed ${fieldNames.length}`;
-    modal(code, `${message} in "${fileName}", Row: 0. Header length errors must be corrected within file before further processing to prevent data loss.`);
-    return;
-  } else if (!headerCheck) {
-    buildTable();
-    return;
-  }
-  for (let i = 0; i < fieldNames.length; i++) {
-    validateFieldNames(fieldNames[i]);
-    if (!name) {
-      console.log(fieldNames[i], ' is invalid');
-      buttonName = 'Cancel';
-      code = 'invalidHeader';
-      fix = fixButton(code, buttonName);
-      modal(code, `${fieldNames[i]} is an invalid header name. Replace with correct header: ${names[i]}?`, fix);
-      modalDispose(code, buttonName);
-      $(`#${code}Close2`).click(() => {
-        $(`#${code}`).on('hidden.bs.modal', () => {
-          let oldKey = fieldNames[i];
-          fieldNames[i] = names[i];
-          let newKey = fieldNames[i];
-          console.log('Field Name was: ', oldKey);
-          console.log('Field Name is now: ', newKey);
-          fieldData.forEach((e) => {
-            for (const k in e) {
-              if (k == oldKey) {
-                e[newKey] = e[oldKey];
-                delete e[oldKey];
-              } else if (k == 'Address 2') {
-                e['Address2'] = e['Address 2'];
-                delete e['Address 2'];
-                e['Address 2'] = e['Address2'];
-                delete e['Address2'];
-              } else if (k == '__parsed_extra') {
-                e['parsed_extra'] = e['__parsed_extra'];
-                delete e['__parsed_extra'];
-              }
-            }
-          });
-          printRecords('Key updated');
-        });
-      });
-      return;
-    }
-  }
-  if (errorCount) {
-    console.log('First error:', firstError);
-    buttonName = 'Fix';
-    code = firstError.code;
-    fix = fixButton(code, buttonName);
-    message = firstError.message;
-    row = firstError.row;
-    modal(code, `${message} in "${fileName}", Row: ${row + 1}`, fix);
-    modalDispose(code, buttonName, fixRow(code, buttonName, row));
-  } else {
-    buildTable();
-  }
-}
 
 function errorFn(err, file) {
   console.log('ERROR:', err, file);
@@ -427,6 +352,7 @@ function validateFieldNames(fieldName) {
 		}
 	}
 }
+exports.validateFieldNames = validateFieldNames;
 
 // Validate data type formats in each record
 function validateState(row) {
