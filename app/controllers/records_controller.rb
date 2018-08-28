@@ -1,5 +1,6 @@
 # app/controllers/records_controller.rb
 class RecordsController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :set_import
   before_action :set_import_record, only: [:show, :update, :destroy]
 
