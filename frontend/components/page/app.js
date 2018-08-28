@@ -1,3 +1,5 @@
+const { returnToList } = require("./returnToList");
+
 const { modalDispose } = require("./modalDispose");
 
 const { modal } = require("./modal");
@@ -7,16 +9,6 @@ let { errorCount, editable, mapped, fieldData, fieldNames, fieldErrors, firstErr
 const { names, wrapper2, wrapper1, mainTitle, wrapper3 } = require("./globalConst");
 
 const $ = require('jquery');
-// fix errors
-
-function returnToList() {
-  $('#mapData').html('Return to list');
-  $('#mapData').click(() => {
-    errorCount = 0;
-    buildTable();
-  });
-}
-
 function toggleEditable(row) {
   editable = $('#csvTable');
   if (!editable[0].isContentEditable) {
@@ -505,6 +497,7 @@ function buildTable(row) {
   });
   $('#newCSV').click(newCSV);
 }
+exports.buildTable = buildTable;
 
 // validate
 
