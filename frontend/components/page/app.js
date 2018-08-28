@@ -12,20 +12,17 @@ const { modalDispose } = require("./modalDispose");
 
 const { modal } = require("./modal");
 
-let { errorCount, mapped, fieldData, fieldNames, fieldErrors, firstError, end, start, rowCount, code, message, fileName, headerCheck, name, row, fullResults, pageSwitch, firstRun, fieldState, fieldZip, fieldDate, markers, geocoder, infowindow, map, lat, long } = require("./globalLet");
+let { errorCount, mapped, fieldData, fieldNames, fieldErrors, firstError, rowCount, code, message, fileName, headerCheck, name, row, fullResults, pageSwitch, firstRun, fieldState, fieldZip, fieldDate, markers, geocoder, infowindow, map, lat, long } = require("./globalLet");
 
 const { names, wrapper2, wrapper1, mainTitle, wrapper3 } = require("./globalConst");
 
 const $ = require('jquery');
-
-// parse csv file
 
 function printRecords(msg) {
   let buttonName;
   let fix;
   if (msg) {
     console.log(msg);
-    console.log('       Time:', end - start || '(Unknown; your browser does not support the Performance API)', 'ms');
     console.log('  Row count:', rowCount);
     console.log('     Errors:', errorCount);
   }
@@ -97,18 +94,11 @@ function printRecords(msg) {
   }
 }
 
-// track parsing time
-function now() {
-  return typeof window.performance !== 'undefined' ? window.performance.now() : 0;
-}
-
 function errorFn(err, file) {
-  end = now();
   console.log('ERROR:', err, file);
 }
 
 function completeFn(results) {
-  end = now();
   fullResults = results;
   fieldNames = fullResults.meta.fields;
   fieldData = fullResults.data;
