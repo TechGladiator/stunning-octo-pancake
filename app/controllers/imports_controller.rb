@@ -1,5 +1,6 @@
 # app/controllers/imports_controller.rb
 class ImportsController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :set_import, only: [:show, :update, :destroy]
 
   # GET /imports
