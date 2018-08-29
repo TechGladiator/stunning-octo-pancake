@@ -970,10 +970,11 @@ function postData(importName) {
     dataType: 'json',
     contentType: 'application/json',
     success: (res) => {
-      modal(res.status, res.message || res.error);
+      modal('Success', 'Saved Data');
     },
     error: (err) => {
-      modal(err.status, err.responseText);
+      console.log(err.responseText);
+      modal(err.status, err.statusText);
     }
   });
 }
