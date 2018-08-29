@@ -962,7 +962,7 @@ function searchRecords(id) {
 }
 
 function postData(importName) {
-  const data = { "impoort_name": importName };
+  const data = { "import_name": importName };
   $.ajax({
     url: '/imports/',
     type: 'post',
