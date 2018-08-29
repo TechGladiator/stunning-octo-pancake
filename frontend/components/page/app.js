@@ -1016,7 +1016,8 @@ function searchImports(searchString) {
       }
     },
     error: (err) => {
-      modal(err.status, err.responseText);
+      console.log(err);
+      modal(err.status, err.statusText);
     }
   });
 }
