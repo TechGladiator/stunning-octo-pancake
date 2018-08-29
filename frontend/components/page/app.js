@@ -970,19 +970,26 @@ function postData(importName) {
     dataType: 'json',
     contentType: 'application/json',
     success: (res) => {
-      $.ajax({
-        url: `/imports/${res.id}/records`,
-        type: 'post',
-        data: JSON.stringify(fieldData),
-        dataType: 'json',
-        contentType: 'application/json',
-        success: (res) => {
-          modal('Success', 'Saved Data');
-        },
-        error: (err) => {
-          modal(err.status, err.statusText);
-        }
-      });
+      for (let i = 0; i < fieldData.length; i++) {
+        const e = fieldData[i];
+        $.ajax({
+          url: `/imports/${res.id}/records`,
+          type: 'post',
+          data: JSON.stringify(e),
+          dataType: 'json',
+          contentType: 'application/json',
+          success: (res) => {
+            console.log(`inserted ${JSON.stringify(res)}`);
+            if (i == fieldData.length - 1) {
+              modal('Success', 'Saved Data');
+            }
+          },
+          error: (err) => {
+            modal(err.status, err.statusText);
+            return;
+          }
+        });
+      }
     },
     error: (err) => {
       modal(err.status, err.statusText);
