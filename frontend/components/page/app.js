@@ -1002,21 +1002,16 @@ function searchImports(searchString) {
     url: `/imports/${$(searchString).val()}`,
     type: 'get',
     success: (res) => {
-      if (res.status) {
-        modal(res.status, res.message);
-      } else {
-        $('.csv').append('<div id="import-list" class="d-flex justify-content-center mb-3" role="group" aria-label="button group"></div>');
-        res.forEach(e => {
-          console.log(e.import_name);
-          $('#import-list').append(`<button type="button" class="btn btn-dark m-1" id="search-records-${e.id}">${e.import_name}</button>`);
-          $(`#search-records-${e.id}`).click(() => {
-            searchRecords(e.id);
-          });
+      $('.csv').html('<div id="import-list" class="d-flex justify-content-center mb-3" role="group" aria-label="button group"></div>');
+      res.forEach(e => {
+        console.log(e.import_name);
+        $('#import-list').append(`<button type="button" class="btn btn-dark m-1" id="search-records-${e.id}">${e.import_name}</button>`);
+        $(`#search-records-${e.id}`).click(() => {
+          searchRecords(e.id);
         });
-      }
+      });
     },
     error: (err) => {
-      console.log(err);
       modal(err.status, err.statusText);
     }
   });
