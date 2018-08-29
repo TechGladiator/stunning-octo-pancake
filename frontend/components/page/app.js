@@ -998,14 +998,8 @@ function postData(importName) {
 }
 
 function searchImports(searchString) {
-  let searchTerm;
-  if ($(searchString).val()) {
-    searchTerm = $(searchString).val();
-  } else {
-    searchTerm = searchString;
-  }
   $.ajax({
-    url: `/imports/${searchTerm}`,
+    url: `/imports/${$(searchString).val()}`,
     type: 'get',
     success: (res) => {
       if (res.status) {
