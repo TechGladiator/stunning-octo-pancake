@@ -970,10 +970,21 @@ function postData(importName) {
     dataType: 'json',
     contentType: 'application/json',
     success: (res) => {
-      modal('Success', 'Saved Data');
+      $.ajax({
+        url: `/imports/${res.id}/records`,
+        type: 'post',
+        data: JSON.stringify(fieldData),
+        dataType: 'json',
+        contentType: 'application/json',
+        success: (res) => {
+          modal('Success', 'Saved Data');
+        },
+        error: (err) => {
+          modal(err.status, err.statusText);
+        }
+      });
     },
     error: (err) => {
-      console.log(err.responseText);
       modal(err.status, err.statusText);
     }
   });
