@@ -1011,17 +1011,13 @@ function searchImports(searchString) {
       if (res.status) {
         modal(res.status, res.message);
       } else {
-        let importId;
-        let resHTML = '<div class="d-flex justify-content-center mb-3" role="group" aria-label="button group">';
+        $('.csv').append('<div id="import-list" class="d-flex justify-content-center mb-3" role="group" aria-label="button group"></div>');
         res.forEach(e => {
           console.log(e.import_name);
-          resHTML += `<button type="button" class="btn btn-dark m-1" id="search-records">${e.import_name}</button>`;
-          importId = e.id;
-        });
-        resHTML += '</div>';
-        $('.csv').html(resHTML);
-        $('#search-records').click(() => {
-          searchRecords(importId);
+          $('#import-list').append(`<button type="button" class="btn btn-dark m-1" id="search-records-${e.id}">${e.import_name}</button>`);
+          $(`#search-records-${e.id}`).click(() => {
+            searchRecords(e.id);
+          });
         });
       }
     },
