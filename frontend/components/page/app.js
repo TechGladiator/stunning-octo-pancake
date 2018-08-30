@@ -944,7 +944,6 @@ function searchRecords(id, importName) {
     url: `/imports/${id}/records/`,
     type: 'get',
     success: (res) => {
-      console.log(res);
       if (res.length > 0) {
         setHeader(importName);
         names.push('Lat', 'Long');
@@ -979,7 +978,6 @@ function postData(importName) {
           dataType: 'json',
           contentType: 'application/json',
           success: (res) => {
-            console.log(`inserted ${JSON.stringify(res)}`);
             if (i == fieldData.length - 1) {
               modal('Success', 'Saved Data');
             }
@@ -1004,7 +1002,6 @@ function searchImports(searchString) {
     success: (res) => {
       $('.csv').html('<div id="import-list" class="d-flex justify-content-center mb-3" role="group" aria-label="button group"></div>');
       res.forEach(e => {
-        console.log(e.import_name);
         $('#import-list').append(`<button type="button" class="btn btn-dark m-1" id="search-records-${e.id}">${e.import_name}</button>`);
         $(`#search-records-${e.id}`).click(() => {
           searchRecords(e.id, e.import_name);
