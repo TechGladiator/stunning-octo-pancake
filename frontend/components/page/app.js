@@ -939,14 +939,14 @@ function setPage(header, wrapper, elId0, func0, elId1, func1, elId2, func2) {
   })
 }
 
-function searchRecords(id) {
+function searchRecords(id, importName) {
   $.ajax({
     url: `/imports/${id}/records/`,
     type: 'get',
     success: (res) => {
       console.log(res);
       if (res.length > 0) {
-        setHeader(id);
+        setHeader(importName);
         names.push('Lat', 'Long');
         fieldNames = names;
         fieldData = res;
@@ -1007,7 +1007,7 @@ function searchImports(searchString) {
         console.log(e.import_name);
         $('#import-list').append(`<button type="button" class="btn btn-dark m-1" id="search-records-${e.id}">${e.import_name}</button>`);
         $(`#search-records-${e.id}`).click(() => {
-          searchRecords(e.id);
+          searchRecords(e.id, e.import_name);
         });
       });
     },
