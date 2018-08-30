@@ -939,7 +939,7 @@ function setPage(header, wrapper, elId0, func0, elId1, func1, elId2, func2) {
   })
 }
 
-function searchRecords(id, importName) {
+function getRecords(id, importName) {
   $.ajax({
     url: `/imports/${id}/records/`,
     type: 'get',
@@ -1002,9 +1002,9 @@ function searchImports(searchString) {
     success: (res) => {
       $('.csv').html('<div id="import-list" class="d-flex justify-content-center mb-3" role="group" aria-label="button group"></div>');
       res.forEach(e => {
-        $('#import-list').append(`<button type="button" class="btn btn-dark m-1" id="search-records-${e.id}">${e.import_name}</button>`);
-        $(`#search-records-${e.id}`).click(() => {
-          searchRecords(e.id, e.import_name);
+        $('#import-list').append(`<button type="button" class="btn btn-dark m-1" id="get-records-${e.id}">${e.import_name}</button>`);
+        $(`#get-records-${e.id}`).click(() => {
+          getRecords(e.id, e.import_name);
         });
       });
     },
