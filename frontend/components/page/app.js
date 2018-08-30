@@ -674,14 +674,13 @@ function setPage(header, wrapper, elId0, func0, elId1, func1, elId2, func2) {
   })
 }
 
-function searchRecords(id) {
+function getRecords(id, importName) {
   $.ajax({
     url: `/imports/${id}/records/`,
     type: 'get',
     success: (res) => {
-      console.log(res);
       if (res.length > 0) {
-        setHeader(id);
+        setHeader(importName);
         names.push('Lat', 'Long');
         fieldNames = names;
         fieldData = res;
@@ -697,7 +696,7 @@ function searchRecords(id) {
 }
 
 function postData(importName) {
-  const data = { "impoort_name": importName };
+  const data = { "import_name": importName };
   $.ajax({
     url: '/imports/',
     type: 'post',
@@ -705,44 +704,47 @@ function postData(importName) {
     dataType: 'json',
     contentType: 'application/json',
     success: (res) => {
-      modal(res.status, res.message || res.error);
+      for (let i = 0; i < fieldData.length; i++) {
+        const e = fieldData[i];
+        $.ajax({
+          url: `/imports/${res.id}/records`,
+          type: 'post',
+          data: JSON.stringify(e),
+          dataType: 'json',
+          contentType: 'application/json',
+          success: (res) => {
+            if (i == fieldData.length - 1) {
+              modal('Success', 'Saved Data');
+            }
+          },
+          error: (err) => {
+            modal(err.status, err.statusText);
+            return;
+          }
+        });
+      }
     },
     error: (err) => {
-      modal(err.status, err.responseText);
+      modal(err.status, err.statusText);
     }
   });
 }
 
 function searchImports(searchString) {
-  let searchTerm;
-  if ($(searchString).val()) {
-    searchTerm = $(searchString).val();
-  } else {
-    searchTerm = searchString;
-  }
   $.ajax({
-    url: `/imports/${searchTerm}`,
+    url: `/imports/search?term=${$(searchString).val()}`,
     type: 'get',
     success: (res) => {
-      if (res.status) {
-        modal(res.status, res.message);
-      } else {
-        let importId;
-        let resHTML = '<div class="d-flex justify-content-center mb-3" role="group" aria-label="button group">';
-        res.forEach(e => {
-          console.log(e.import_name);
-          resHTML += `<button type="button" class="btn btn-dark m-1" id="search-records">${e.import_name}</button>`;
-          importId = e.id;
+      $('.csv').html('<div id="import-list" class="d-flex justify-content-center mb-3" role="group" aria-label="button group"></div>');
+      res.forEach(e => {
+        $('#import-list').append(`<button type="button" class="btn btn-dark m-1" id="get-records-${e.id}">${e.import_name}</button>`);
+        $(`#get-records-${e.id}`).click(() => {
+          getRecords(e.id, e.import_name);
         });
-        resHTML += '</div>';
-        $('.csv').html(resHTML);
-        $('#search-records').click(() => {
-          searchRecords(importId);
-        });
-      }
+      });
     },
     error: (err) => {
-      modal(err.status, err.responseText);
+      modal(err.status, err.statusText);
     }
   });
 }
