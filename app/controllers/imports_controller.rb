@@ -37,7 +37,7 @@ class ImportsController < ApplicationController
     term = params[:term] || nil
     @imports = []
     @imports = Import.where('import_name LIKE ?', "%#{term}%") if term
-    json_response(@import)
+    json_response(@imports)
   end
 
   private
