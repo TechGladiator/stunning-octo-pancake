@@ -997,7 +997,7 @@ function postData(importName) {
 
 function searchImports(searchString) {
   $.ajax({
-    url: `/imports/${$(searchString).val()}`,
+    url: `/imports/search?term=${$(searchString).val()}`,
     type: 'get',
     success: (res) => {
       $('.csv').html('<div id="import-list" class="d-flex justify-content-center mb-3" role="group" aria-label="button group"></div>');
