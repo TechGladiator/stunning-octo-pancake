@@ -123,13 +123,15 @@ function getFieldNames(fn) {
   return fn;
 }
 
+function deleteButton(rowNum) {
+  return `<th class="deleteRow table-danger text-center align-middle border border-dark invisible" id="deleteRow${rowNum}">X</th>
+  <th scope="row">${rowNum + 1}</th>`;
+};
+
 function getFieldData(fd, row, fullAddress, addressList) {
   if (errorCount) {
     let j = 0;
-    fd += `
-            <th class="deleteRow table-danger text-center align-middle border border-dark invisible" id="deleteRow${row}" onclick="deleteRow(${row})">X</th>
-            <th scope="row">${row + 1}</th>
-          `;
+    fd += deleteButton(row);
     for (const k in fieldData[row]) {
       if (fieldData[row].hasOwnProperty(k)) {
         const e = fieldData[row][k];
@@ -158,33 +160,17 @@ function getFieldData(fd, row, fullAddress, addressList) {
 }
 
 function buildFields(fd, r, e, j, fullAddress) {
-  let fieldClick;
-
-  if (mapped) {
-    fieldClick = `onclick="geocodeLatLng(${r})"`
-  } else {
-    fieldClick = '';
-  }
-
-  fd += `
-            <tr>
-              <th class="deleteRow table-danger text-center align-middle border border-dark invisible" id="deleteRow${r}" onclick="deleteRow(${r})">X</th>
-              <th scope="row" id="row${r}" ${fieldClick}>${r + 1}</th>
-            `;
+  fd += `<tr id ="row${r}">${deleteButton(r)}`;
   for (let k in e) {
     if (e.hasOwnProperty(k)) {
       const f = e[k];
       if (f == e.State && !fieldState || f == e.Zip && !fieldZip || f == e['Creation Date'] && !fieldDate) {
         fd += `<td class="table-danger" id="row${r}Field${j}${k.replace(/\s+/g, '')}">${f}</td>`;
       } else {
-        if (k == j) {
-          k = '';
-        }
         if (k == 'id' || k == 'import_id') {
-          fd += '';
           j--;
         } else {
-          fd += `<td id="row${r}Field${j}${k.replace(/\s+/g, '')}" ${fieldClick}>${f}</td>`;
+          fd += `<td id="row${r}Field${j}${k.replace(/\s+/g, '')}">${f}</td>`;
         }
         if (k == 'Name' || k == 'Address' || k == 'City' || k == 'State' || k == 'Zip') {
           fullAddress += ` ${f}`;
@@ -193,6 +179,8 @@ function buildFields(fd, r, e, j, fullAddress) {
       j++;
     }
   }
+  fd += `<td class="invisible" id="row${r}Field${j}record_id">${e.id}</td>
+         <td class="invisible" id="row${r}Field${j + 1}import_id">${e.import_id}</td>`;
   return { fd, j, fullAddress };
 }
 
@@ -306,6 +294,17 @@ function buildTable(row) {
     $('tbody').addClass('latlong');
     $('#saveRecords').removeClass('invisible');
     $('title').html(`${$('#jumboHeader').html()} Mapped`);
+  }
+  
+  for (let i = 0; i < fieldData.length; i++) {
+    if (mapped) {
+      $(`#row${i}`).click(() => {
+        geocodeLatLng(i);
+      });
+    }
+    $(`#deleteRow${i}`).click(() => {
+      deleteRow(i);
+    });
   }
 
   if (firstError == undefined) {

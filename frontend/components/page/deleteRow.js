@@ -9,13 +9,14 @@ function deleteRow(row) {
   if (errorCount > 0) {
     errorCount -= 1;
   }
-  if ($(`#row${row}Field11recordid`).html()) {
-    let id = $(`#row${row}Field11recordid`).html();
+  if ($(`#row${row}Field11record_id`).html()) {
+    let recordId = $(`#row${row}Field11record_id`).html();
+    let importId = $(`#row${row}Field12import_id`).html();
     $.ajax({
-      url: `/imports/records/${id}`,
-      type: "delete",
-      success: res => {
-        modal("Deleted", res);
+      url: `/imports/${importId}/records/${recordId}`,
+      type: 'delete',
+      success: (res) => {
+        modal('Deleted', `Deleted Record.`);
       }
     });
   }
