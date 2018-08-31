@@ -563,6 +563,11 @@ function buildTable(row) {
     $('tbody').addClass('latlong');
     $('#saveRecords').removeClass('invisible');
     $('title').html(`${$('#jumboHeader').html()} Mapped`);
+    for (let i = 0; i < fieldData.length; i++) {
+      $(`#row${i}`).click(() => {
+        geocodeLatLng(i);
+      });
+    }
   }
 
   if (firstError == undefined) {
