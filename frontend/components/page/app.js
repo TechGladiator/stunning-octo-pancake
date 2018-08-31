@@ -561,11 +561,17 @@ function buildTable(row) {
     $('tbody').addClass('latlong');
     $('#saveRecords').removeClass('invisible');
     $('title').html(`${$('#jumboHeader').html()} Mapped`);
-    for (let i = 0; i < fieldData.length; i++) {
+  }
+  
+  for (let i = 0; i < fieldData.length; i++) {
+    if (mapped) {
       $(`#row${i}`).click(() => {
         geocodeLatLng(i);
       });
     }
+    $(`#deleteRow${i}`).click(() => {
+      deleteRow(i);
+    });
   }
 
   if (firstError == undefined) {
