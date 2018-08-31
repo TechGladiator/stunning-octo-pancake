@@ -435,11 +435,7 @@ function buildFields(fd, r, e, j, fullAddress) {
       if (f == e.State && !fieldState || f == e.Zip && !fieldZip || f == e['Creation Date'] && !fieldDate) {
         fd += `<td class="table-danger" id="row${r}Field${j}${k.replace(/\s+/g, '')}">${f}</td>`;
       } else {
-        if (k == j) {
-          k = '';
-        }
         if (k == 'id' || k == 'import_id') {
-          fd += '';
           j--;
         } else {
           fd += `<td id="row${r}Field${j}${k.replace(/\s+/g, '')}">${f}</td>`;
