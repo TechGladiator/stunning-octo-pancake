@@ -428,14 +428,6 @@ function getFieldData(fd, row, fullAddress, addressList) {
 }
 
 function buildFields(fd, r, e, j, fullAddress) {
-  let fieldClick;
-
-  if (mapped) {
-    fieldClick = `onclick="geocodeLatLng(${r})"`
-  } else {
-    fieldClick = '';
-  }
-
   fd += `<tr>${deleteButton(r)}`;
   for (let k in e) {
     if (e.hasOwnProperty(k)) {
@@ -450,7 +442,7 @@ function buildFields(fd, r, e, j, fullAddress) {
           fd += '';
           j--;
         } else {
-          fd += `<td id="row${r}Field${j}${k.replace(/\s+/g, '')}" ${fieldClick}>${f}</td>`;
+          fd += `<td id="row${r}Field${j}${k.replace(/\s+/g, '')}">${f}</td>`;
         }
         if (k == 'Name' || k == 'Address' || k == 'City' || k == 'State' || k == 'Zip') {
           fullAddress += ` ${f}`;
