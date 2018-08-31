@@ -393,7 +393,7 @@ function getFieldNames(fn) {
 
 function deleteButton(rowNum) {
   return `<th class="deleteRow table-danger text-center align-middle border border-dark invisible" id="deleteRow${rowNum}">X</th>
-  <th scope="row" id="row${rowNum}">${rowNum + 1}</th>`;
+  <th scope="row">${rowNum + 1}</th>`;
 };
 
 function getFieldData(fd, row, fullAddress, addressList) {
@@ -428,7 +428,7 @@ function getFieldData(fd, row, fullAddress, addressList) {
 }
 
 function buildFields(fd, r, e, j, fullAddress) {
-  fd += `<tr>${deleteButton(r)}`;
+  fd += `<tr id ="row${r}">${deleteButton(r)}`;
   for (let k in e) {
     if (e.hasOwnProperty(k)) {
       const f = e[k];
