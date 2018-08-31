@@ -479,15 +479,43 @@ function updateFields(row) {
     fieldData.forEach(e => {
       let j = 0;
       for (const k in e) {
-        if (e.hasOwnProperty(k) && k != 'recordid') {
-          e[k] = $(`#row${i}Field${j}${names[j].replace(/\s+/g, '')}`).html();
-          validateField(e, k, i, j);
-        }
+        e[k] = $(`#row${i}Field${j}${k.replace(/\s+/g, '')}`).html();
+        validateField(e, k, i, j);
         j++;
       }
       i++;
     });
   }
+
+  if (fieldData[0].id) {
+    let counter = fieldData.length;
+    let i = 0;
+    let intervalId;
+    function start() {
+      if (counter == 0) {
+        clearInterval(intervalId);
+        modal('Updated', 'Records Updated');
+      } else {
+        $.ajax({
+          url: `/imports/${fieldData[i].import_id}/records/${fieldData[i].id}`,
+          type: 'put',
+          data: JSON.stringify(fieldData[i]),
+          dataType: 'json',
+          contentType: 'application/json',
+          success: (res) => {
+            counter--;
+            i++;
+          },
+          error: (err) => {
+            modal(err.status, err.statusText);
+            clearInterval(intervalId);
+          }
+        });
+      }
+    }
+    intervalId = setInterval(start, 100);
+  }
+
   console.log('    Updated Data: ', fieldData);
 }
 
