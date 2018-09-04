@@ -468,20 +468,20 @@ function updateFields(row) {
   let j = 0;
   if (row != undefined) {
     for (const k in fieldData[row]) {
-      if (fieldData[row].hasOwnProperty(k)) {
-        fieldData[row][k] = $(`#row${row}Field${j}`).html();
-        validateField(fieldData[row], k, row, j);
-        j++;
-      }
+      fieldData[row][k] = $(`#row${row}Field${j}`).html();
+      validateField(fieldData[row], k, row, j);
+      j++;
     }
   } else {
     let i = 0;
     fieldData.forEach(e => {
       let j = 0;
       for (const k in e) {
-        e[k] = $(`#row${i}Field${j}${k.replace(/\s+/g, '')}`).html();
-        validateField(e, k, i, j);
-        j++;
+        if (k != 'id' && k != 'import_id') {
+          e[k] = $(`#row${i}Field${j}${k.replace(/\s+/g, '')}`).html();
+          validateField(e, k, i, j);
+          j++;
+        }
       }
       i++;
     });
