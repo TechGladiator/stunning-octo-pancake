@@ -80,6 +80,6 @@ test:
 #
 production:
   <<: *default
-  database: stunning-octo-pancake_production
-  username: stunning-octo-pancake
-  password: <%= ENV['STUNNING-OCTO-PANCAKE_DATABASE_PASSWORD'] %>
+  database: dbnpvh9ok7rggr
+  username: coawdkcfdlicby
+  password: <%= ENV['dbnpvh9ok7rggr_PASSWORD'] %>
