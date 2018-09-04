@@ -80,8 +80,8 @@ test:
 #
 production:
   <<: *default
-  host: ec2-50-17-194-186.compute-1.amazonaws.com
-  database: dbnpvh9ok7rggr
-  username: coawdkcfdlicby
+  host: DATABASE_HOST
+  database: DATABASE_NAME
+  username: DATABASE_USERNAME
   password: <%= ENV['DATABASE_PASSWORD'] %>
-  port: 5432
+  port: DATABASE_PORT
