@@ -1,5 +1,6 @@
 const $ = require("jquery");
-const { getRecords, modal } = require("./temp");
+const { getRecords } = require("./temp");
+const { modal } = require("./modal");
 
 function searchImports(searchString) {
   $.ajax({

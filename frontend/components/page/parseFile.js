@@ -11,7 +11,8 @@ let {
 } = require("./globalLets");
 const { wrapper2 } = require("./globalConsts");
 const $ = require("jquery");
-const { modal, completeFn, errorFn } = require("./temp");
+const { completeFn, errorFn } = require("./temp");
+const { modal } = require("./modal");
 const papa = require("papaparse");
 
 function parseFile() {
