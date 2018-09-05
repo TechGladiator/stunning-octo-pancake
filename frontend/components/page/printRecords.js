@@ -1,5 +1,6 @@
 const { updateKeyValues } = require("./updateKeyValues");
-
+const { fixButton } = require("./fixButton");
+const { fixRow } = require("./fixRow");
 const { modalDispose } = require("./modalDispose");
 const { modal } = require("./modal");
 const {
@@ -13,7 +14,7 @@ const {
 } = require("./globalLets");
 let { code, message, row } = require("./globalLets");
 const { names } = require("./globalConsts");
-const { buildTable, validateFieldNames, fixButton, fixRow } = require("./temp");
+const { buildTable, validateFieldNames } = require("./temp");
 
 function printRecords(msg) {
   let buttonName;
