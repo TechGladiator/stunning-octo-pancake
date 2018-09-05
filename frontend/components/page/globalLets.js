@@ -22,8 +22,6 @@ let fileName;
 exports.fileName = fileName;
 let firstError;
 exports.firstError = firstError;
-let firstRun = true;
-exports.firstRun = firstRun;
 let fullResults;
 exports.fullResults = fullResults;
 let geocoder;

@@ -1,7 +1,8 @@
 let { pageSwitch } = require("./globalLets");
 const { wrapper1, mainTitle, wrapper3 } = require("./globalConsts");
 const $ = require("jquery");
-const { parseFile, searchImports } = require("./temp");
+const { searchImports } = require("./temp");
+const { parseFile } = require("./parseFile");
 const { setPage } = require("./setPage");
 
 function main() {
