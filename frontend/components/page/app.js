@@ -1,3 +1,3 @@
-const { main } = require("./modal");
+const { main } = require("./main");
 
 main();
