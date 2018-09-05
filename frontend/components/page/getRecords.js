@@ -3,7 +3,7 @@ const { setHeader } = require("./setHeader");
 let { fieldData, fieldNames } = require("./globalLets");
 const { names } = require("./globalConsts");
 const $ = require("jquery");
-const { printRecords } = require("./temp");
+const { printRecords } = require("./printRecords");
 
 function getRecords(id, importName) {
   $.ajax({

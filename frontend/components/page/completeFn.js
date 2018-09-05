@@ -7,7 +7,7 @@ let {
   rowCount,
   fullResults
 } = require("./globalLets");
-const { printRecords } = require("./temp");
+const { printRecords } = require("./printRecords");
 
 function completeFn(results) {
   fullResults = results;
