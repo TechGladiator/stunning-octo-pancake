@@ -1,5 +1,5 @@
 const $ = require("jquery");
-const { setHeader } = require("./modal");
+const { setHeader } = require("./setHeader");
 
 function setPage(header, wrapper, elId0, func0, elId1, func1, elId2, func2) {
   setHeader(header, wrapper);
