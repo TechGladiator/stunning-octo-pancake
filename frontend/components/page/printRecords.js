@@ -1,8 +1,9 @@
+const { updateKeyValues } = require("./updateKeyValues");
+
 const { modalDispose } = require("./modalDispose");
 const { modal } = require("./modal");
 const {
   errorCount,
-  fieldData,
   fieldNames,
   firstError,
   rowCount,
@@ -12,33 +13,7 @@ const {
 } = require("./globalLets");
 let { code, message, row } = require("./globalLets");
 const { names } = require("./globalConsts");
-const $ = require("jquery");
 const { buildTable, validateFieldNames, fixButton, fixRow } = require("./temp");
-
-function updateKeyValues(i) {
-  $(`#${code}`).on("hidden.bs.modal", () => {
-    const oldKey = fieldNames[i];
-    fieldNames[i] = names[i];
-    const newKey = fieldNames[i];
-    fieldData.forEach(e => {
-      Object.keys(e).forEach(key => {
-        if (key === oldKey) {
-          e[newKey] = e[oldKey];
-          delete e[oldKey];
-        } else if (key === "Address 2") {
-          e.Address2 = e["Address 2"];
-          delete e["Address 2"];
-          e["Address 2"] = e.Address2;
-          delete e.Address2;
-        } else if (key === "__parsed_extra") {
-          e.parsed_extra = e.__parsed_extra;
-          delete e.__parsed_extra;
-        }
-      });
-    });
-    printRecords("Key updated");
-  });
-}
 
 function printRecords(msg) {
   let buttonName;
