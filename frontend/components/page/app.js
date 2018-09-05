@@ -424,6 +424,23 @@ function getFieldData(fd, row, fullAddress, addressList) {
       fd += `</tr>`;
       r++;
     });
+    fd += `<tr id="row${r}">
+             <th class="invisible" scope="row"></th>
+             <td class="invisible" id="row${r}Field0Name"></td>
+             <td class="invisible" id="row${r}Field1Address"></td>
+             <td class="invisible" id="row${r}Field2Address2"></td>
+             <td class="invisible" id="row${r}Field3City"></td>
+             <td class="invisible" id="row${r}Field4State"></td>
+             <td class="invisible" id="row${r}Field5Zip"></td>
+             <td class="invisible" id="row${r}Field6Purpose"></td>
+             <td class="invisible" id="row${r}Field7PropertyOwner"></td>
+             <td class="invisible" id="row${r}Field8CreationDate"></td>
+             <td class="invisible" id="row${r}Field9Lat"></td>
+             <td class="invisible" id="row${r}Field10Long"></td>
+             <td class="invisible" id="row${r}Field11record_id"></td>
+             <td class="invisible" id="row${r}Field12import_id"></td>
+           </tr>
+          `;
   }
   return { fd, fullAddress };
 }
