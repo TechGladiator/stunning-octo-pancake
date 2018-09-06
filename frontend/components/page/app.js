@@ -147,7 +147,7 @@ function toggleEditable(row) {
         dataType: 'json',
         contentType: 'application/json',
         success: (res) => {
-          console.log(res);
+          
         },
         error: (err) => {
           modal(err.status, err.statusText);
