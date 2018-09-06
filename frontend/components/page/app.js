@@ -133,11 +133,8 @@ function toggleEditable(row) {
     let r = 0;
     while (r < fieldData.length) {
       r++;
-      console.log(r);
     }
-    let newRow = {
-      "Name": $(`#row${r}Field`)
-    }
+    let newRow = {};
 
     updateFields(row);
     buildTable(row);
