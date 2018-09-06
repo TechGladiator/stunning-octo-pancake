@@ -567,6 +567,7 @@ function updateFields(row) {
 }
 
 function newCSV() {
+  errorCount = 0;
   fullResults = {};
   fieldNames = {};
   fieldData = {};
