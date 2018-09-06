@@ -130,11 +130,11 @@ function toggleEditable(row) {
     }
   } else {
 
+    let r = 0;
+    while (r < fieldData.length) {
+      r++;
+    }
     if ($(`#row${r}Field0Name`).html() != '') {
-      let r = 0;
-      while (r < fieldData.length) {
-        r++;
-      }
       const newRow = {};
       for (let i = 0; i < names.length; i++) {
         const e = names[i];
