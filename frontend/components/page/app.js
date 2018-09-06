@@ -148,6 +148,7 @@ function toggleEditable(row) {
         contentType: 'application/json',
         success: (res) => {
           newCSV();
+          getRecords(res.id, res.import_name);
         },
         error: (err) => {
           modal(err.status, err.statusText);
