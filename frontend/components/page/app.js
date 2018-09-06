@@ -134,7 +134,9 @@ function toggleEditable(row) {
     while (r < fieldData.length) {
       r++;
     }
-    const newRow = {};
+    if ($(`#row${r}Field0Name`).html() != '') {
+      const newRow = {};
+    }
 
     updateFields(row);
     buildTable(row);
