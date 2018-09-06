@@ -138,7 +138,11 @@ function toggleEditable(row) {
       const newRow = {};
       for (let i = 0; i < names.length; i++) {
         const e = names[i];
-        newRow[`${e}`] = $(`#row${r}Field${i}${e.replace(/\s+/g, '')}`).html();
+        if (e == 'Lat' || e == 'Long') {
+          newRow[`${e}`] = '0.0';
+        } else {
+          newRow[`${e}`] = $(`#row${r}Field${i}${e.replace(/\s+/g, '')}`).html();
+        }
       }
       $.ajax({
         url: `/imports/${$('#row0Field12import_id').html()}/records/`,
