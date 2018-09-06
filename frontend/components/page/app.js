@@ -125,8 +125,10 @@ function toggleEditable(row) {
     if (mapped) {
       $('tbody').removeClass('latlong');
     }
-  }
-  else {
+    if (fieldData[0].id) {
+      $('#newRecord').removeClass('invisible');
+    }
+  } else {
     updateFields(row);
     buildTable(row);
     if (mapped && errorCount > 0) {
