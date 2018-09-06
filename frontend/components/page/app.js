@@ -426,23 +426,24 @@ function getFieldData(fd, row, fullAddress, addressList) {
       fd += `</tr>`;
       r++;
     });
-    fd += `<tr class="invisible" id="newRecord">
-             <th>Add New Record</th>
-             <th scope="row"></th>
-             <td id="row${r}Field0Name"></td>
-             <td id="row${r}Field1Address"></td>
-             <td id="row${r}Field2Address2"></td>
-             <td id="row${r}Field3City"></td>
-             <td id="row${r}Field4State"></td>
-             <td id="row${r}Field5Zip"></td>
-             <td id="row${r}Field6Purpose"></td>
-             <td id="row${r}Field7PropertyOwner"></td>
-             <td id="row${r}Field8CreationDate"></td>
-             <td id="row${r}Field9Lat"></td>
-             <td id="row${r}Field10Long"></td>
-             <td id="row${r}Field11record_id"></td>
-             <td id="row${r}Field12import_id"></td>
-           </tr>
+    fd += `
+          <tr class="invisible" id="newRecord">
+            <th contenteditable="false">Add New Record</th>
+            <th contenteditable="false" scope="row">${r + 1}</th>
+            <td id="row${r}Field0Name"></td>
+            <td id="row${r}Field1Address"></td>
+            <td id="row${r}Field2Address2"></td>
+            <td id="row${r}Field3City"></td>
+            <td id="row${r}Field4State"></td>
+            <td id="row${r}Field5Zip"></td>
+            <td id="row${r}Field6Purpose"></td>
+            <td id="row${r}Field7PropertyOwner"></td>
+            <td id="row${r}Field8CreationDate"></td>
+            <td id="row${r}Field9Lat"></td>
+            <td id="row${r}Field10Long"></td>
+            <td class="invisible" id="row${r}Field11record_id"></td>
+            <td class="invisible" id="row${r}Field12import_id"></td>
+          </tr>
           `;
   }
   return { fd, fullAddress };
