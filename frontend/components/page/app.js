@@ -125,8 +125,41 @@ function toggleEditable(row) {
     if (mapped) {
       $('tbody').removeClass('latlong');
     }
-  }
-  else {
+    if (fieldData[0].id) {
+      $('#newRecord').removeClass('invisible');
+    }
+  } else {
+
+    let r = 0;
+    while (r < fieldData.length) {
+      r++;
+    }
+    if ($(`#row${r}Field0Name`).html() != '') {
+      const newRow = {};
+      for (let i = 0; i < names.length; i++) {
+        const e = names[i];
+        if (e == 'Lat' || e == 'Long') {
+          newRow[`${e}`] = '0.0';
+        } else {
+          newRow[`${e}`] = $(`#row${r}Field${i}${e.replace(/\s+/g, '')}`).html();
+        }
+      }
+      $.ajax({
+        url: `/imports/${$('#row0Field12import_id').html()}/records/`,
+        type: 'post',
+        data: JSON.stringify(newRow),
+        dataType: 'json',
+        contentType: 'application/json',
+        success: (res) => {
+          newCSV();
+          getRecords(res.id, res.import_name);
+        },
+        error: (err) => {
+          modal(err.status, err.statusText);
+        }
+      });
+    }
+
     updateFields(row);
     buildTable(row);
     if (mapped && errorCount > 0) {
@@ -424,6 +457,25 @@ function getFieldData(fd, row, fullAddress, addressList) {
       fd += `</tr>`;
       r++;
     });
+    fd += `
+          <tr class="invisible" id="newRecord">
+            <th contenteditable="false">Add New Record</th>
+            <th contenteditable="false" scope="row">${r + 1}</th>
+            <td id="row${r}Field0Name"></td>
+            <td id="row${r}Field1Address"></td>
+            <td id="row${r}Field2Address2"></td>
+            <td id="row${r}Field3City"></td>
+            <td id="row${r}Field4State"></td>
+            <td id="row${r}Field5Zip"></td>
+            <td id="row${r}Field6Purpose"></td>
+            <td id="row${r}Field7PropertyOwner"></td>
+            <td id="row${r}Field8CreationDate"></td>
+            <td id="row${r}Field9Lat"></td>
+            <td id="row${r}Field10Long"></td>
+            <td class="invisible" id="row${r}Field11record_id"></td>
+            <td class="invisible" id="row${r}Field12import_id"></td>
+          </tr>
+          `;
   }
   return { fd, fullAddress };
 }
@@ -494,7 +546,7 @@ function updateFields(row) {
     function start() {
       if (counter == 0) {
         clearInterval(intervalId);
-        modal('Updated', 'Records Updated');
+        $('.csv').prepend('<p class="text-center">Records Updated</p>');
       } else {
         $.ajax({
           url: `/imports/${fieldData[i].import_id}/records/${fieldData[i].id}`,
@@ -520,6 +572,7 @@ function updateFields(row) {
 }
 
 function newCSV() {
+  errorCount = 0;
   fullResults = {};
   fieldNames = {};
   fieldData = {};
@@ -983,7 +1036,7 @@ function getRecords(id, importName) {
       }
     },
     error: (err) => {
-      modal(err.status, err.responseText);
+      modal(err.status, err.statusText);
     }
   });
 }
