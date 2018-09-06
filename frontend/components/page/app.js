@@ -425,6 +425,7 @@ function getFieldData(fd, row, fullAddress, addressList) {
       r++;
     });
     fd += `<tr id="row${r}">
+             <th class="invisible" id="newRecord">Add New Record</th>
              <th class="invisible" scope="row"></th>
              <td class="invisible" id="row${r}Field0Name"></td>
              <td class="invisible" id="row${r}Field1Address"></td>
