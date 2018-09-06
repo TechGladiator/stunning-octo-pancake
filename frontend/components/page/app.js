@@ -129,6 +129,12 @@ function toggleEditable(row) {
       $('#newRecord').removeClass('invisible');
     }
   } else {
+    
+    let r = 0;
+    while (r < fieldData.length) {
+      r++;
+    }
+
     updateFields(row);
     buildTable(row);
     if (mapped && errorCount > 0) {
