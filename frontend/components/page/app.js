@@ -136,6 +136,11 @@ function toggleEditable(row) {
     }
     if ($(`#row${r}Field0Name`).html() != '') {
       const newRow = {};
+      for (let i = 0; i < names.length; i++) {
+        const e = names[i];
+        newRow[`${e}`] = $(`#row${r}Field${i}${e.replace(/\s+/g, '')}`).html();
+      }
+      console.log(newRow);
     }
 
     updateFields(row);
