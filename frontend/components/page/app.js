@@ -1030,7 +1030,7 @@ function getRecords(id, importName) {
       }
     },
     error: (err) => {
-      modal(err.status, err.responseText);
+      modal(err.status, err.statusText);
     }
   });
 }
