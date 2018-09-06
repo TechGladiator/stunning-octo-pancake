@@ -515,7 +515,7 @@ function updateFields(row) {
     function start() {
       if (counter == 0) {
         clearInterval(intervalId);
-        modal('Updated', 'Records Updated');
+        $('.csv').prepend('<p class="text-center">Records Updated</p>');
       } else {
         $.ajax({
           url: `/imports/${fieldData[i].import_id}/records/${fieldData[i].id}`,
