@@ -140,7 +140,19 @@ function toggleEditable(row) {
         const e = names[i];
         newRow[`${e}`] = $(`#row${r}Field${i}${e.replace(/\s+/g, '')}`).html();
       }
-      console.log(newRow);
+      $.ajax({
+        url: `/imports/${$('#row0Field12import_id').html()}/records/`,
+        type: 'post',
+        data: JSON.stringify(newRow),
+        dataType: 'json',
+        contentType: 'application/json',
+        success: (res) => {
+          console.log(res);
+        },
+        error: (err) => {
+          modal(err.status, err.statusText);
+        }
+      });
     }
 
     updateFields(row);
