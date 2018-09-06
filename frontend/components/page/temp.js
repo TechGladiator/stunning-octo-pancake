@@ -52,8 +52,7 @@ function getFieldData(fd, row, fullAddress, addressList) {
         j++;
       }
     }
-  }
-  else {
+  } else {
     let r = 0;
     fieldData.forEach(e => {
       let j = 0;
@@ -66,6 +65,25 @@ function getFieldData(fd, row, fullAddress, addressList) {
       fd += `</tr>`;
       r++;
     });
+    fd += `
+          <tr class="invisible" id="newRecord">
+            <th contenteditable="false">Add New Record</th>
+            <th contenteditable="false" scope="row">${r + 1}</th>
+            <td id="row${r}Field0Name"></td>
+            <td id="row${r}Field1Address"></td>
+            <td id="row${r}Field2Address2"></td>
+            <td id="row${r}Field3City"></td>
+            <td id="row${r}Field4State"></td>
+            <td id="row${r}Field5Zip"></td>
+            <td id="row${r}Field6Purpose"></td>
+            <td id="row${r}Field7PropertyOwner"></td>
+            <td id="row${r}Field8CreationDate"></td>
+            <td id="row${r}Field9Lat"></td>
+            <td id="row${r}Field10Long"></td>
+            <td class="invisible" id="row${r}Field11record_id"></td>
+            <td class="invisible" id="row${r}Field12import_id"></td>
+          </tr>
+          `;
   }
   return { fd, fullAddress };
 }
@@ -76,12 +94,10 @@ function buildFields(fd, r, e, j, fullAddress) {
       const f = e[k];
       if (f == e.State && !fieldState || f == e.Zip && !fieldZip || f == e['Creation Date'] && !fieldDate) {
         fd += `<td class="table-danger" id="row${r}Field${j}${k.replace(/\s+/g, '')}">${f}</td>`;
-      }
-      else {
+      } else {
         if (k == 'id' || k == 'import_id') {
           j--;
-        }
-        else {
+        } else {
           fd += `<td id="row${r}Field${j}${k.replace(/\s+/g, '')}">${f}</td>`;
         }
         if (k == 'Name' || k == 'Address' || k == 'City' || k == 'State' || k == 'Zip') {
@@ -102,8 +118,7 @@ function updateFields(row) {
       validateFieldNames(fieldNames[i]);
       if (name) {
         $(`#header${i}`).removeClass('table-danger');
-      }
-      else {
+      } else {
         $(`#header${i}`).addClass('table-danger');
       }
     }
@@ -115,8 +130,7 @@ function updateFields(row) {
       validateField(fieldData[row], k, row, j);
       j++;
     }
-  }
-  else {
+  } else {
     let i = 0;
     fieldData.forEach(e => {
       let j = 0;
@@ -137,9 +151,8 @@ function updateFields(row) {
     function start() {
       if (counter == 0) {
         clearInterval(intervalId);
-        modal('Updated', 'Records Updated');
-      }
-      else {
+        $('.csv').prepend('<p class="text-center">Records Updated</p>');
+      } else {
         $.ajax({
           url: `/imports/${fieldData[i].import_id}/records/${fieldData[i].id}`,
           type: 'put',
@@ -162,6 +175,7 @@ function updateFields(row) {
   console.log('    Updated Data: ', fieldData);
 }
 function newCSV() {
+  errorCount = 0;
   fullResults = {};
   fieldNames = {};
   fieldData = {};
