@@ -35,6 +35,10 @@ const wrapper3 = `
 	</div>
 </div>
 `;
+const sortIcon = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="Слой_1" style="enable-background:new 0 0 139 139;" version="1.1" viewBox="0 0 139 139" xml:space="preserve"><style type="text/css">
+.st0{fill:none;stroke:#0D0F0F;stroke-width:6;stroke-miterlimit:10;}
+.st1{fill:#0D0F0F;}
+</style><line class="st0" id="XMLID_3_" x1="46.4" x2="46.4" y1="26" y2="112.2"/><line class="st0" id="XMLID_8_" x1="33.7" x2="46.4" y1="94.2" y2="111.2"/><line class="st0" id="XMLID_21_" x1="46.4" x2="59.1" y1="111.2" y2="94.2"/><rect class="st1" height="1.4" id="XMLID_23_" width="4.8" x="44" y="111.6"/><line class="st0" id="XMLID_9_" x1="92.7" x2="92.7" y1="26.4" y2="112.6"/><line class="st0" id="XMLID_7_" x1="92.7" x2="80" y1="27.4" y2="44.4"/><line class="st0" id="XMLID_6_" x1="105.4" x2="92.7" y1="44.4" y2="27.4"/><rect class="st1" height="1.4" id="XMLID_5_" width="4.8" x="90.3" y="25.6"/></svg>`;
 let code;
 let editable;
 let end;
@@ -410,7 +414,7 @@ function getFieldNames(fn) {
     let i = 0;
     fn += `
     <th class="border border-dark invisible">Delete Record</th>
-    <th scope="col" id="sortId">#</th>
+    <th scope="col" id="sortId"># ${sortIcon}</th>
     `;
     fieldNames.forEach(e => {
       validateFieldNames(e);
