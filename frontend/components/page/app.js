@@ -639,7 +639,9 @@ function buildTable(row) {
                     </div>
                   `);
 
-  $('#sortId').click();
+  $('#sortId').click(() => {
+    newCSV();
+  });
 
   if (mapped) {
     $('tbody').addClass('latlong');
