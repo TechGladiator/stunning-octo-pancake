@@ -1025,6 +1025,9 @@ function setPage(header, wrapper, elId0, func0, elId1, func1, elId2, func2) {
 }
 
 function getRecords(id, importName, sort) {
+  if (sort == undefined) {
+    sort = '';
+  }
   $.ajax({
     url: `/imports/${id}/records/${sort}`,
     type: 'get',
