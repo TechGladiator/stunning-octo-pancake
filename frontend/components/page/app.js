@@ -639,6 +639,8 @@ function buildTable(row) {
                     </div>
                   `);
 
+  $('#sortId').click();
+
   if (mapped) {
     $('tbody').addClass('latlong');
     $('#saveRecords').removeClass('invisible');
