@@ -8,6 +8,11 @@ class RecordsController < ApplicationController
   def index
     json_response(@import.records)
   end
+  
+  # GET /imports/:import_id/sort/records
+  def sort
+    json_response(@import.records.order(id: :asc))
+  end
 
   # GET /imports/:import_id/records/:id
   def show
