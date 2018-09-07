@@ -1035,7 +1035,9 @@ function getRecords(id, importName, sort) {
     success: (res) => {
       if (res.length > 0) {
         setHeader(importName);
-        names.push('Lat', 'Long');
+        if (names.length < 11) {
+          names.push('Lat', 'Long');
+        }
         fieldNames = names;
         fieldData = res;
         printRecords();
