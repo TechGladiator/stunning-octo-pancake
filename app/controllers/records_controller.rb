@@ -11,7 +11,8 @@ class RecordsController < ApplicationController
   
   # GET /imports/:import_id/sort/records
   def sort
-    json_response(@import.records.order(id: :asc))
+    term = params[:term] || nil
+    json_response(@import.records.order("#{term} ASC"))
   end
 
   # GET /imports/:import_id/records/:id
