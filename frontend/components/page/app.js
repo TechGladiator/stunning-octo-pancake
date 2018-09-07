@@ -640,7 +640,7 @@ function buildTable(row) {
 
   $('#sortId').click(() => {
     newCSV();
-    getRecords();
+    getRecords(id, importName, sort);
   });
 
   if (mapped) {
