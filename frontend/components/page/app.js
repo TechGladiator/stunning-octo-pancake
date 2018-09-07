@@ -410,7 +410,7 @@ function getFieldNames(fn) {
     let i = 0;
     fn += `
     <th class="border border-dark invisible">Delete Record</th>
-    <th scope="col">#</th>
+    <th scope="col" id="sortId">#</th>
     `;
     fieldNames.forEach(e => {
       validateFieldNames(e);
