@@ -642,7 +642,7 @@ function buildTable(row) {
     const id = $('#row0Field12import_id').html();
     const importName = $('#jumboHeader').html();
     newCSV();
-    getRecords(id, importName, 'sort');
+    getRecords(id, importName, '/sort');
   });
 
   if (mapped) {
@@ -1031,7 +1031,7 @@ function getRecords(id, importName, sort) {
     sort = '';
   }
   $.ajax({
-    url: `/imports/${id}/records/${sort}`,
+    url: `/imports/${id}${sort}/records/`,
     type: 'get',
     success: (res) => {
       if (res.length > 0) {
