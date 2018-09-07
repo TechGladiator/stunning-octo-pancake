@@ -639,8 +639,10 @@ function buildTable(row) {
                   `);
 
   $('#sortId').click(() => {
+    const id = $('#row0Field12import_id').html();
+    const importName = $('#jumboHeader').html();
     newCSV();
-    getRecords(id, importName, sort);
+    getRecords(id, importName, 'sort');
   });
 
   if (mapped) {
