@@ -646,7 +646,8 @@ function buildTable(row) {
 
   for (let i = 0; i < names.length; i++) {
     const e = names[i];
-    $(`#header${i}`).click(() => {
+    const headerId = `header${i}`;
+    $(`#${headerId}`).click(() => {
       const id = $('#row0Field12import_id').html();
       const importName = $('#jumboHeader').html();
       getRecords(id, importName, '/sort', `"${e}"`);
