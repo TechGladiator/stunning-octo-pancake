@@ -644,6 +644,11 @@ function buildTable(row) {
     getRecords(id, importName, '/sort', 'id');
   });
 
+  for (let i = 0; i < names.length; i++) {
+    const e = names[i];
+    $(`header${i}`).click();
+  }
+
   if (mapped) {
     $('tbody').addClass('latlong');
     $('#saveRecords').removeClass('invisible');
