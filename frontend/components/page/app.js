@@ -638,20 +638,12 @@ function buildTable(row) {
                     </div>
                   `);
 
-  $('#sortId').click(() => {
-    const id = $('#row0Field12import_id').html();
-    const importName = $('#jumboHeader').html();
-    getRecords(id, importName, '/sort', 'id');
-  });
+  sorter('sortId', 'id');
 
   for (let i = 0; i < names.length; i++) {
     const e = names[i];
     const headerId = `header${i}`;
-    $(`#${headerId}`).click(() => {
-      const id = $('#row0Field12import_id').html();
-      const importName = $('#jumboHeader').html();
-      getRecords(id, importName, '/sort', `"${e}"`);
-    });
+    sorter(headerId, e);
   }
 
   if (mapped) {
@@ -699,6 +691,14 @@ function buildTable(row) {
     main();
   });
   $('#newCSV').click(newCSV);
+
+  function sorter(headerId, e) {
+    $(`#${headerId}`).click(() => {
+      const id = $('#row0Field12import_id').html();
+      const importName = $('#jumboHeader').html();
+      getRecords(id, importName, '/sort', `"${e}"`);
+    });
+  }
 }
 
 // validate
