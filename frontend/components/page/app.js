@@ -649,7 +649,7 @@ function buildTable(row) {
     $(`header${i}`).click(() => {
       const id = $('#row0Field12import_id').html();
     const importName = $('#jumboHeader').html();
-    getRecords(id, importName, '/sort', 'id');
+    getRecords(id, importName, '/sort', e);
     });
   }
 
