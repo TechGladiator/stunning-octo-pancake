@@ -641,7 +641,7 @@ function buildTable(row) {
   $('#sortId').click(() => {
     const id = $('#row0Field12import_id').html();
     const importName = $('#jumboHeader').html();
-    getRecords(id, importName, '/sort');
+    getRecords(id, importName, '/sort', 'id');
   });
 
   if (mapped) {
@@ -1025,12 +1025,15 @@ function setPage(header, wrapper, elId0, func0, elId1, func1, elId2, func2) {
   })
 }
 
-function getRecords(id, importName, sort) {
+function getRecords(id, importName, sort, field) {
   if (sort == undefined) {
     sort = '';
+    field = '';
+  } else {
+    field = `?term=${field}`
   }
   $.ajax({
-    url: `/imports/${id}${sort}/records/`,
+    url: `/imports/${id}${sort}/records/${field}`,
     type: 'get',
     success: (res) => {
       if (res.length > 0) {
