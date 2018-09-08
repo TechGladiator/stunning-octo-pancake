@@ -646,10 +646,11 @@ function buildTable(row) {
 
   for (let i = 0; i < names.length; i++) {
     const e = names[i];
+    console.log(e);
     $(`header${i}`).click(() => {
       const id = $('#row0Field12import_id').html();
-    const importName = $('#jumboHeader').html();
-    getRecords(id, importName, '/sort', e);
+      const importName = $('#jumboHeader').html();
+      getRecords(id, importName, '/sort', e);
     });
   }
 
