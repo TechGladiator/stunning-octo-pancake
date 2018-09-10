@@ -701,6 +701,9 @@ function buildTable(row) {
                   `);
 
   if ($("#row0Field12import_id").html() !== undefined) {
+    // add pointer cursor
+    $(".headerRow").addClass("sorterRow");
+
     // sort by id
     sorter("sortId", "id");
 

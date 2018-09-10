@@ -5,7 +5,7 @@
 .input-group-append,
 .latlong,
 .deleteRow,
-.headerRow {
+.sorterRow {
   cursor: pointer;
 }
 
