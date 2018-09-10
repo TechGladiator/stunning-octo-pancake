@@ -1,6 +1,9 @@
 // global variables
 const $ = require("jquery");
 
+const errorResponse = err => {
+  modal(err.status, err.statusText);
+};
 const mainTitle = $("title").html();
 const names = [
   "Name",
@@ -166,9 +169,7 @@ function toggleEditable(row) {
           newCSV();
           getRecords(res.id, res.import_name);
         },
-        error: err => {
-          modal(err.status, err.statusText);
-        }
+        error: errorResponse
       });
     }
 
@@ -611,8 +612,8 @@ function updateFields(row) {
             counter--;
             i++;
           },
-          error: err => {
-            modal(err.status, err.statusText);
+          error: () => {
+            errorResponse;
             clearInterval(intervalId);
           }
         });
@@ -1212,9 +1213,7 @@ function getRecords(id, importName, sort, field) {
         modal("404", "Not Found");
       }
     },
-    error: err => {
-      modal(err.status, err.statusText);
-    }
+    error: errorResponse
   });
 }
 
@@ -1240,15 +1239,11 @@ function postData(importName) {
               modal("Success", `Saved ${res2.import_name}`);
             }
           },
-          error: err => {
-            modal(err.status, err.statusText);
-          }
+          error: errorResponse
         });
       }
     },
-    error: err => {
-      modal(err.status, err.statusText);
-    }
+    error: errorResponse
   });
 }
 
@@ -1271,9 +1266,7 @@ function searchImports(searchString) {
         });
       });
     },
-    error: err => {
-      modal(err.status, err.statusText);
-    }
+    error: errorResponse
   });
 }
 
