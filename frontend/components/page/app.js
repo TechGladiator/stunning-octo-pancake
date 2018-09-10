@@ -1219,6 +1219,15 @@ function getRecords(id, importName, sort, field) {
 
 function postData(importName) {
   const data = { import_name: importName };
+
+  function saveResponse(i) {
+    return res2 => {
+      if (i === fieldData.length - 1) {
+        modal("Success", `Saved ${res2.import_name}`);
+      }
+    };
+  }
+
   $.ajax({
     url: "/imports/",
     type: "post",
@@ -1234,11 +1243,7 @@ function postData(importName) {
           data: JSON.stringify(e),
           dataType: "json",
           contentType: "application/json",
-          success: res2 => {
-            if (i === fieldData.length - 1) {
-              modal("Success", `Saved ${res2.import_name}`);
-            }
-          },
+          success: saveResponse(i),
           error: errorResponse
         });
       }
