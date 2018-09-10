@@ -700,14 +700,16 @@ function buildTable(row) {
                     </div>
                   `);
 
-  // sort by id
-  sorter("sortId", "id");
+  if ($("#row0Field12import_id").html() !== undefined) {
+    // sort by id
+    sorter("sortId", "id");
 
-  // sort by field header
-  for (let i = 0; i < names.length; i += 1) {
-    const e = names[i];
-    const headerId = `header${i}`;
-    sorter(headerId, e);
+    // sort by field header
+    for (let i = 0; i < names.length; i += 1) {
+      const e = names[i];
+      const headerId = `header${i}`;
+      sorter(headerId, e);
+    }
   }
 
   // show pointer cursor after mapping to indicate
