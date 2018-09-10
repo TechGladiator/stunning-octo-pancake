@@ -1236,7 +1236,7 @@ function postData(importName) {
           dataType: "json",
           contentType: "application/json",
           success: res => {
-            if (i == fieldData.length - 1) {
+            if (i === fieldData.length - 1) {
               modal("Success", "Saved Data");
             }
           },
@@ -1305,7 +1305,7 @@ function main() {
 }
 
 function saveRecords() {
-  const code = "Save";
+  code = "Save";
   const button = "Cancel";
   const cancel = `<button type="button" class="btn btn-danger" id="${code}${button}">${button}</button>`;
   modal(code, "Name this imported data", cancel);
