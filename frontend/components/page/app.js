@@ -1190,14 +1190,9 @@ function setPage(header, wrapper, elId0, func0, elId1, func1, elId2, func2) {
 }
 
 function getRecords(id, importName, sort, field) {
-  if (sort == undefined) {
-    sort = "";
-    field = "";
-  } else {
-    field = `?term=${field}`;
-  }
+  const term = `?term=${field}`;
   $.ajax({
-    url: `/imports/${id}${sort}/records/${field}`,
+    url: `/imports/${id}${sort || ""}/records/${term || ""}`,
     type: "get",
     success: res => {
       if (res.length > 0) {
@@ -1235,7 +1230,7 @@ function postData(importName) {
     dataType: "json",
     contentType: "application/json",
     success: res => {
-      for (let i = 0; i < fieldData.length; i++) {
+      for (let i = 0; i < fieldData.length; i += 1) {
         const e = fieldData[i];
         $.ajax({
           url: `/imports/${res.id}/records`,
