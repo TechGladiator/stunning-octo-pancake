@@ -599,6 +599,14 @@ function buildTable(row) {
   let fullAddress = '';
   let addressList = [];
 
+  function sorter(headerId, e) {
+    $(`#${headerId}`).click(() => {
+      const id = $('#row0Field12import_id').html();
+      const importName = $('#jumboHeader').html();
+      getRecords(id, importName, '/sort', `"${e}"`);
+    });
+  }
+
   $('.csv').addClass('p-5');
   
   fn = getFieldNames(fn);
@@ -700,14 +708,6 @@ function buildTable(row) {
     main();
   });
   $('#newCSV').click(newCSV);
-
-  function sorter(headerId, e) {
-    $(`#${headerId}`).click(() => {
-      const id = $('#row0Field12import_id').html();
-      const importName = $('#jumboHeader').html();
-      getRecords(id, importName, '/sort', `"${e}"`);
-    });
-  }
 }
 
 // validate
