@@ -599,11 +599,11 @@ function buildTable(row) {
   let fullAddress = '';
   let addressList = [];
 
-  function sorter(headerId, e) {
+  function sorter(headerId, field) {
     $(`#${headerId}`).click(() => {
       const id = $('#row0Field12import_id').html();
       const importName = $('#jumboHeader').html();
-      getRecords(id, importName, '/sort', `"${e}"`);
+      getRecords(id, importName, '/sort', `"${field}"`);
     });
   }
 
