@@ -647,10 +647,10 @@ function newCSV() {
 // build table
 
 function buildTable(row) {
+  const addressList = [];
   let fn = "";
   let fd = "";
   let fullAddress = "";
-  const addressList = [];
 
   function sorter(headerId, field) {
     $(`#${headerId}`).click(() => {
