@@ -500,8 +500,10 @@ function buildFields(fd, r, e, j, fullAddress) {
       j++;
     }
   }
-  fd += `<td class="invisible" id="row${r}Field${j}record_id">${e.id}</td>
-         <td class="invisible" id="row${r}Field${j + 1}import_id">${e.import_id}</td>`;
+  if (e.id) {
+    fd += `<td class="invisible" id="row${r}Field${j}record_id">${e.id}</td>
+          <td class="invisible" id="row${r}Field${j + 1}import_id">${e.import_id}</td>`;
+  }
   return { fd, j, fullAddress };
 }
 
