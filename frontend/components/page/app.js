@@ -640,20 +640,25 @@ function buildTable(row) {
                     </div>
                   `);
 
+  // sort by id
   sorter('sortId', 'id');
 
+  // sort by field header
   for (let i = 0; i < names.length; i++) {
     const e = names[i];
     const headerId = `header${i}`;
     sorter(headerId, e);
   }
 
+  // show pointer cursor after mapping to indicate
+  // row is clickable for geocoding
   if (mapped) {
     $('tbody').addClass('latlong');
     $('#saveRecords').removeClass('invisible');
     $('title').html(`${$('#jumboHeader').html()} Mapped`);
   }
   
+  // add click handlers to delete buttons and rows
   for (let i = 0; i < fieldData.length; i++) {
     if (mapped) {
       $(`#row${i}`).click(() => {
@@ -665,12 +670,14 @@ function buildTable(row) {
     });
   }
 
+  // show or hide repair next or map data buttons
   if (firstError == undefined) {
     $('#repairNext').addClass('invisible');
   } else {
     $('#mapData').addClass('invisible');
   }
 
+  // add click handlers to button row
   $('#editData').click(() => {
     toggleEditable(row);
   });
