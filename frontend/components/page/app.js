@@ -712,7 +712,6 @@ function buildTable(row) {
 
 // validate
 
-// Validate field names
 function validateFieldNames(fieldName) {
 	for (let i = 0; i < names.length; i++) {
 		if (fieldName == names[i]) {
@@ -724,7 +723,6 @@ function validateFieldNames(fieldName) {
 	}
 }
 
-// Validate data type formats in each record
 function validateState(row) {
 	const states = ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MP', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY'];
 	if (row.State) {
