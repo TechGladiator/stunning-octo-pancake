@@ -76,6 +76,7 @@ let name = true;
 let pageSwitch = false;
 let row;
 let rowCount = 0;
+let sortASC = true;
 let start;
 
 // Modal
