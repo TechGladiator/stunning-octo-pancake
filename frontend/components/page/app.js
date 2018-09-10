@@ -145,13 +145,13 @@ function toggleEditable(row) {
   } else {
     let r = 0;
     while (r < fieldData.length) {
-      r++;
+      r += 1;
     }
     if ($(`#row${r}Field0Name`).html() != "") {
       const newRow = {};
-      for (let i = 0; i < names.length; i++) {
+      for (let i = 0; i < names.length; i += 1) {
         const e = names[i];
-        if (e == "Lat" || e == "Long") {
+        if (e === "Lat" || e === "Long") {
           newRow[`${e}`] = "0.0";
         } else {
           newRow[`${e}`] = $(
@@ -185,7 +185,7 @@ function removeEmptyField(row) {
   let i = 0;
   for (const k in fieldData[row]) {
     if (fieldData[row].hasOwnProperty(k)) {
-      if (k != names[i] && fieldData[row][k] == "") {
+      if (k != names[i] && fieldData[row][k] === "") {
         console.log(`${k} != ${names[i]}`);
         console.log("deleted empty field: ", k);
         delete fieldData[row][k];
@@ -198,17 +198,17 @@ function removeEmptyField(row) {
           fieldData[row][`${names[i + 1]}`] = "";
         }
       }
-      i++;
+      i += 1;
     }
   }
 }
 
 function removeFirstErrorMessage(row) {
   $(`.modal`).on("hidden.bs.modal", () => {
-    if (Object.values(fieldData[row]).length == fieldNames.length) {
+    if (Object.values(fieldData[row]).length === fieldNames.length) {
       fieldErrors.shift(0);
       console.log(fieldErrors);
-      errorCount--;
+      errorCount -= 1;
       firstError = fieldErrors[0];
       console.log("     Errors:", errorCount);
       console.log("First Error:", firstError);
@@ -227,7 +227,7 @@ function fixRow(code, close, row) {
 function deleteRow(row) {
   fieldData.splice(row, 1);
   if (errorCount > 0) {
-    errorCount--;
+    errorCount -= 1;
   }
   if ($(`#row${row}Field11record_id`).html()) {
     const recordId = $(`#row${row}Field11record_id`).html();
@@ -285,7 +285,7 @@ function printRecords(msg) {
     buildTable();
     return;
   }
-  for (let i = 0; i < fieldNames.length; i++) {
+  for (let i = 0; i < fieldNames.length; i += 1) {
     validateFieldNames(fieldNames[i]);
     if (!name) {
       console.log(fieldNames[i], " is invalid");
@@ -309,15 +309,15 @@ function printRecords(msg) {
           console.log("Field Name is now: ", newKey);
           fieldData.forEach(e => {
             for (const k in e) {
-              if (k == oldKey) {
+              if (k === oldKey) {
                 e[newKey] = e[oldKey];
                 delete e[oldKey];
-              } else if (k == "Address 2") {
+              } else if (k === "Address 2") {
                 e.Address2 = e["Address 2"];
                 delete e["Address 2"];
                 e["Address 2"] = e.Address2;
                 delete e.Address2;
-              } else if (k == "__parsed_extra") {
+              } else if (k === "__parsed_extra") {
                 e.parsed_extra = e.__parsed_extra;
                 delete e.__parsed_extra;
               }
@@ -456,7 +456,7 @@ function getFieldNames(fn) {
       } else {
         fn += `<th class="table-danger" id="header${i}">${e}</th>`;
       }
-      i++;
+      i += 1;
     });
   }
   return fn;
@@ -478,7 +478,7 @@ function getFieldData(fd, row, fullAddress, addressList) {
         validateZip(e);
         validateDate(e);
         fd += `<td id="row${row}Field${j}">${e}</td>`;
-        j++;
+        j += 1;
       }
     }
   } else {
@@ -492,7 +492,7 @@ function getFieldData(fd, row, fullAddress, addressList) {
       addressList.push(fullAddress);
       fullAddress = "";
       fd += `</tr>`;
-      r++;
+      r += 1;
     });
     fd += `
           <tr class="invisible" id="newRecord">
@@ -523,31 +523,31 @@ function buildFields(fd, r, e, j, fullAddress) {
     if (e.hasOwnProperty(k)) {
       const f = e[k];
       if (
-        (f == e.State && !fieldState) ||
-        (f == e.Zip && !fieldZip) ||
-        (f == e["Creation Date"] && !fieldDate)
+        (f === e.State && !fieldState) ||
+        (f === e.Zip && !fieldZip) ||
+        (f === e["Creation Date"] && !fieldDate)
       ) {
         fd += `<td class="table-danger" id="row${r}Field${j}${k.replace(
           /\s+/g,
           ""
         )}">${f}</td>`;
       } else {
-        if (k == "id" || k == "import_id") {
+        if (k === "id" || k === "import_id") {
           j--;
         } else {
           fd += `<td id="row${r}Field${j}${k.replace(/\s+/g, "")}">${f}</td>`;
         }
         if (
-          k == "Name" ||
-          k == "Address" ||
-          k == "City" ||
-          k == "State" ||
-          k == "Zip"
+          k === "Name" ||
+          k === "Address" ||
+          k === "City" ||
+          k === "State" ||
+          k === "Zip"
         ) {
           fullAddress += ` ${f}`;
         }
       }
-      j++;
+      j += 1;
     }
   }
   if (e.id) {
@@ -561,7 +561,7 @@ function buildFields(fd, r, e, j, fullAddress) {
 
 function updateFields(row) {
   if (headerCheck) {
-    for (let i = 0; i < fieldNames.length; i++) {
+    for (let i = 0; i < fieldNames.length; i += 1) {
       fieldNames[i] = $(`#header${i}`).html();
       validateFieldNames(fieldNames[i]);
       if (name) {
@@ -576,7 +576,7 @@ function updateFields(row) {
     for (const k in fieldData[row]) {
       fieldData[row][k] = $(`#row${row}Field${j}`).html();
       validateField(fieldData[row], k, row, j);
-      j++;
+      j += 1;
     }
   } else {
     let i = 0;
@@ -586,10 +586,10 @@ function updateFields(row) {
         if (k != "id" && k != "import_id") {
           e[k] = $(`#row${i}Field${j}${k.replace(/\s+/g, "")}`).html();
           validateField(e, k, i, j);
-          j++;
+          j += 1;
         }
       }
-      i++;
+      i += 1;
     });
   }
 
@@ -598,7 +598,7 @@ function updateFields(row) {
     let i = 0;
     let intervalId;
     function start() {
-      if (counter == 0) {
+      if (counter === 0) {
         clearInterval(intervalId);
         $(".csv").prepend('<p class="text-center">Records Updated</p>');
       } else {
@@ -610,7 +610,7 @@ function updateFields(row) {
           contentType: "application/json",
           success: res => {
             counter--;
-            i++;
+            i += 1;
           },
           error: () => {
             errorResponse;
@@ -666,7 +666,7 @@ function buildTable(row) {
   ({ fd, fullAddress } = getFieldData(fd, row, fullAddress, addressList));
 
   // force correction of header names
-  if (row == "header") {
+  if (row === "header") {
     fd = "";
   }
 
@@ -704,7 +704,7 @@ function buildTable(row) {
   sorter("sortId", "id");
 
   // sort by field header
-  for (let i = 0; i < names.length; i++) {
+  for (let i = 0; i < names.length; i += 1) {
     const e = names[i];
     const headerId = `header${i}`;
     sorter(headerId, e);
@@ -719,7 +719,7 @@ function buildTable(row) {
   }
 
   // add click handlers to delete buttons and rows
-  for (let i = 0; i < fieldData.length; i++) {
+  for (let i = 0; i < fieldData.length; i += 1) {
     if (mapped) {
       $(`#row${i}`).click(() => {
         geocodeLatLng(i);
@@ -731,7 +731,7 @@ function buildTable(row) {
   }
 
   // show or hide repair next or map data buttons
-  if (firstError == undefined) {
+  if (firstError === undefined) {
     $("#repairNext").addClass("invisible");
   } else {
     $("#mapData").addClass("invisible");
@@ -765,8 +765,8 @@ function buildTable(row) {
 // validate
 
 function validateFieldNames(fieldName) {
-  for (let i = 0; i < names.length; i++) {
-    if (fieldName == names[i]) {
+  for (let i = 0; i < names.length; i += 1) {
+    if (fieldName === names[i]) {
       name = true;
       return;
     }
@@ -838,8 +838,8 @@ function validateState(row) {
     "WY"
   ];
   if (row.State) {
-    for (let i = 0; i < states.length; i++) {
-      if (row.State == states[i]) {
+    for (let i = 0; i < states.length; i += 1) {
+      if (row.State === states[i]) {
         fieldState = true;
         return;
       }
@@ -855,9 +855,9 @@ function validateZip(row) {
     if (row.Zip.length != 5) {
       fieldZip = false;
     }
-    for (let i = 0; i < row.Zip.length; i++) {
+    for (let i = 0; i < row.Zip.length; i += 1) {
       const zipDigit = `${row.Zip.substring(i, i + 1)}`;
-      if (digits.indexOf(zipDigit) == "-1") {
+      if (digits.indexOf(zipDigit) === "-1") {
         fieldZip = false;
       }
     }
@@ -889,9 +889,9 @@ function validateField(e, k, i, j) {
   validateZip(e);
   validateDate(e);
   if (
-    (e[k] == e.State && !fieldState) ||
-    (e[k] == e.Zip && !fieldZip) ||
-    (e[k] == e["Creation Date"] && !fieldDate)
+    (e[k] === e.State && !fieldState) ||
+    (e[k] === e.Zip && !fieldZip) ||
+    (e[k] === e["Creation Date"] && !fieldDate)
   ) {
     $(`#row${i}Field${j}`).addClass("table-danger");
   } else {
@@ -959,7 +959,7 @@ function codeAddress(fullAddress, fieldData, intervalId, r) {
       address: fullAddress
     },
     (results, status) => {
-      if (status == "OK") {
+      if (status === "OK") {
         lat = results[0].geometry.location.lat();
         long = results[0].geometry.location.lng();
         for (const k in fieldData) {
@@ -969,11 +969,11 @@ function codeAddress(fullAddress, fieldData, intervalId, r) {
             switch (f) {
               case fieldData.Address:
                 let address = "";
-                for (let i = 0; i < addressComponents.length; i++) {
+                for (let i = 0; i < addressComponents.length; i += 1) {
                   const e = addressComponents[i];
-                  if (e.types[0] == "street_number") {
+                  if (e.types[0] === "street_number") {
                     address += e.short_name;
-                  } else if (e.types[0] == "route") {
+                  } else if (e.types[0] === "route") {
                     address += ` ${e.short_name}`;
                     if (fieldData.Address != address) {
                       fieldData.Address = address;
@@ -984,10 +984,10 @@ function codeAddress(fullAddress, fieldData, intervalId, r) {
                 buildTable();
                 break;
               case fieldData.City:
-                for (let i = 0; i < addressComponents.length; i++) {
+                for (let i = 0; i < addressComponents.length; i += 1) {
                   const e = addressComponents[i];
                   if (
-                    e.types[0] == "locality" &&
+                    e.types[0] === "locality" &&
                     fieldData.City != e.long_name
                   ) {
                     fieldData.City = e.long_name;
@@ -996,10 +996,10 @@ function codeAddress(fullAddress, fieldData, intervalId, r) {
                 buildTable();
                 break;
               case fieldData.State:
-                for (let i = 0; i < addressComponents.length; i++) {
+                for (let i = 0; i < addressComponents.length; i += 1) {
                   const e = addressComponents[i];
                   if (
-                    e.types[0] == "administrative_area_level_1" &&
+                    e.types[0] === "administrative_area_level_1" &&
                     fieldData.State != e.short_name
                   ) {
                     fieldData.State = e.short_name;
@@ -1008,10 +1008,10 @@ function codeAddress(fullAddress, fieldData, intervalId, r) {
                 buildTable();
                 break;
               case fieldData.Zip:
-                for (let i = 0; i < addressComponents.length; i++) {
+                for (let i = 0; i < addressComponents.length; i += 1) {
                   const e = addressComponents[i];
                   if (
-                    e.types[0] == "postal_code" &&
+                    e.types[0] === "postal_code" &&
                     fieldData.Zip != e.short_name
                   ) {
                     fieldData.Zip = e.short_name;
@@ -1119,37 +1119,14 @@ function showInfoWin(r, marker) {
   infowindow.open(map, marker);
 }
 
-function geoIterate(fullAddress) {
-  let counter = fullAddress.length;
-  let i = 0;
-  let intervalId;
-  function start() {
-    if (counter == 0) {
-      clearInterval(intervalId);
-      setMarkerBounds();
-    } else if (markers.length < fieldData.length) {
-      console.log("this record hasn't been geocoded");
-      codeAddress(fullAddress[i], fieldData[i], intervalId, i);
-    } else {
-      console.log("skip record already geocoded");
-    }
-    counter--;
-    i++;
-    buildTable();
-  }
-  intervalId = setInterval(start, 500);
-  showLatLong();
-  console.log("    Field Data:", fieldData);
-}
-
 function setMarkerBounds() {
   const bounds = new google.maps.LatLngBounds();
-  for (let i = 0; i < markers.length; i++) {
+  for (let i = 0; i < markers.length; i += 1) {
     const e = markers[i];
     bounds.extend(e.getPosition());
   }
   map.setCenter(bounds.getCenter());
-  google.maps.event.addListenerOnce(map, "zoom_changed", e => {
+  google.maps.event.addListenerOnce(map, "zoom_changed", () => {
     if (map.getZoom() > 15) {
       map.setZoom(15);
     }
@@ -1162,6 +1139,25 @@ function showLatLong() {
     names.push("Lat", "Long");
     fieldNames.push("Lat", "Long");
   }
+}
+
+function geoIterate(fullAddress) {
+  let counter = fullAddress.length;
+  let i = 0;
+  let intervalId;
+  function start() {
+    if (counter === 0) {
+      clearInterval(intervalId);
+      setMarkerBounds();
+    } else if (markers.length < fieldData.length) {
+      codeAddress(fullAddress[i], fieldData[i], intervalId, i);
+    }
+    counter -= 1;
+    i += 1;
+    buildTable();
+  }
+  intervalId = setInterval(start, 500);
+  showLatLong();
 }
 
 function geoClear() {
