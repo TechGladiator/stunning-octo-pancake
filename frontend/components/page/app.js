@@ -1235,9 +1235,9 @@ function postData(importName) {
           data: JSON.stringify(e),
           dataType: "json",
           contentType: "application/json",
-          success: res => {
+          success: res2 => {
             if (i === fieldData.length - 1) {
-              modal("Success", "Saved Data");
+              modal("Success", `Saved ${res2.import_name}`);
             }
           },
           error: err => {
