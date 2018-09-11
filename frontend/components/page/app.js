@@ -658,10 +658,10 @@ function buildTable(row) {
       const id = $("#row0Field12import_id").html();
       const importName = $("#jumboHeader").html();
       if (sortASC) {
-        sortOrder = 'ASC';
+        sortOrder = "ASC";
         sortASC = false;
       } else {
-        sortOrder = 'DESC'
+        sortOrder = "DESC";
         sortASC = true;
       }
       getRecords(id, importName, `/sort${sortOrder}`, `"${field}"`);
