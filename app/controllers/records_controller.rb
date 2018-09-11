@@ -8,6 +8,18 @@ class RecordsController < ApplicationController
   def index
     json_response(@import.records)
   end
+  
+  # GET /imports/:import_id/sortASC/records
+  def sortASC
+    term = params[:term] || nil
+    json_response(@import.records.order("#{term} ASC"))
+  end
+  
+  # GET /imports/:import_id/sortDESC/records
+  def sortDESC
+    term = params[:term] || nil
+    json_response(@import.records.order("#{term} DESC"))
+  end
 
   # GET /imports/:import_id/records/:id
   def show
