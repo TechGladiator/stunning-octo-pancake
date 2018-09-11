@@ -653,10 +653,18 @@ function buildTable(row) {
   let fullAddress = "";
 
   function sorter(headerId, field) {
+    let sortOrder;
     $(`#${headerId}`).click(() => {
       const id = $("#row0Field12import_id").html();
       const importName = $("#jumboHeader").html();
-      getRecords(id, importName, "/sort", `"${field}"`);
+      if (sortASC) {
+        sortOrder = 'ASC';
+        sortASC = false;
+      } else {
+        sortOrder = 'DESC'
+        sortASC = true;
+      }
+      getRecords(id, importName, `/sort${sortOrder}`, `"${field}"`);
     });
   }
 
