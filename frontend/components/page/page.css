@@ -4,7 +4,8 @@
 .custom-file-input,
 .input-group-append,
 .latlong,
-.deleteRow {
+.deleteRow,
+.sorterRow {
   cursor: pointer;
 }
 
