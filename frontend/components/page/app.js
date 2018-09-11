@@ -1,7 +1,21 @@
 // global variables
-const $ = require('jquery');
-const mainTitle = $('title').html();
-const names = ['Name', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Purpose', 'Property Owner', 'Creation Date'];
+const $ = require("jquery");
+
+const errorResponse = err => {
+  modal(err.status, err.statusText);
+};
+const mainTitle = $("title").html();
+const names = [
+  "Name",
+  "Address",
+  "Address 2",
+  "City",
+  "State",
+  "Zip",
+  "Purpose",
+  "Property Owner",
+  "Creation Date"
+];
 const wrapper1 = `
 <div class="text-center">
 	<button type="button" class="btn btn-dark" id="uploadCSV">Upload CSV File</button>
@@ -62,12 +76,13 @@ let name = true;
 let pageSwitch = false;
 let row;
 let rowCount = 0;
+let sortASC = true;
 let start;
 
 // Modal
 
 function modal(moId, moBody, moFooter) {
-	$('body').append(`
+  $("body").append(`
   <div class="modal fade" id="${moId}" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="${moId}Label" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -83,80 +98,79 @@ function modal(moId, moBody, moFooter) {
     </div>
 	</div>
 	`);
-	$(`#${moId}`).modal('show');
-	$('#modalBody').html(`<h5 class="text-center">${moBody}</h5>`);
-	let okButton = `<button type="button" class="btn btn-primary" id="${moId}Close2">Ok</button>`;
-	if (moFooter) {
-		$('#modalFooter').html(`${moFooter}${okButton}`);
-	} else {
-		$('#modalFooter').html(okButton);
-	}
-	modalDispose(moId, 'Close1');
-	modalDispose(moId, 'Close2');
+  $(`#${moId}`).modal("show");
+  $("#modalBody").html(`<h5 class="text-center">${moBody}</h5>`);
+  const okButton = `<button type="button" class="btn btn-primary" id="${moId}Close2">Ok</button>`;
+  if (moFooter) {
+    $("#modalFooter").html(`${moFooter}${okButton}`);
+  } else {
+    $("#modalFooter").html(okButton);
+  }
+  modalDispose(moId, "Close1");
+  modalDispose(moId, "Close2");
 }
 
 function modalDispose(moId, close, func) {
-	$(`#${moId}${close}`).click(() => {
-		$(`#${moId}`).modal('hide');
-		$(`#${moId}`).on('hidden.bs.modal', () => {
-			$('.modal').remove();
-			$('.modal-backdrop').remove();
-			if (func) func();
-		});
-	});
+  $(`#${moId}${close}`).click(() => {
+    $(`#${moId}`).modal("hide");
+    $(`#${moId}`).on("hidden.bs.modal", () => {
+      $(".modal").remove();
+      $(".modal-backdrop").remove();
+      if (func) func();
+    });
+  });
 }
 
 // fix errors
 
 function returnToList() {
-  $('#mapData').html('Return to list');
-  $('#mapData').click(() => {
+  $("#mapData").html("Return to list");
+  $("#mapData").click(() => {
     errorCount = 0;
     buildTable();
   });
 }
 
 function toggleEditable(row) {
-  editable = $('#csvTable');
+  editable = $("#csvTable");
   if (!editable[0].isContentEditable) {
-    editable[0].contentEditable = 'true';
-    $('#editData').html('Save Edits');
-    $('.border-dark').removeClass('invisible');
+    editable[0].contentEditable = "true";
+    $("#editData").html("Save Edits");
+    $(".border-dark").removeClass("invisible");
     if (mapped) {
-      $('tbody').removeClass('latlong');
+      $("tbody").removeClass("latlong");
     }
     if (fieldData[0].id) {
-      $('#newRecord').removeClass('invisible');
+      $("#newRecord").removeClass("invisible");
     }
   } else {
-
     let r = 0;
     while (r < fieldData.length) {
-      r++;
+      r += 1;
     }
-    if ($(`#row${r}Field0Name`).html() != '') {
+    if ($(`#row${r}Field0Name`).html() != "") {
       const newRow = {};
-      for (let i = 0; i < names.length; i++) {
+      for (let i = 0; i < names.length; i += 1) {
         const e = names[i];
-        if (e == 'Lat' || e == 'Long') {
-          newRow[`${e}`] = '0.0';
+        if (e === "Lat" || e === "Long") {
+          newRow[`${e}`] = "0.0";
         } else {
-          newRow[`${e}`] = $(`#row${r}Field${i}${e.replace(/\s+/g, '')}`).html();
+          newRow[`${e}`] = $(
+            `#row${r}Field${i}${e.replace(/\s+/g, "")}`
+          ).html();
         }
       }
       $.ajax({
-        url: `/imports/${$('#row0Field12import_id').html()}/records/`,
-        type: 'post',
+        url: `/imports/${$("#row0Field12import_id").html()}/records/`,
+        type: "post",
         data: JSON.stringify(newRow),
-        dataType: 'json',
-        contentType: 'application/json',
-        success: (res) => {
+        dataType: "json",
+        contentType: "application/json",
+        success: res => {
           newCSV();
           getRecords(res.id, res.import_name);
         },
-        error: (err) => {
-          modal(err.status, err.statusText);
-        }
+        error: errorResponse
       });
     }
 
@@ -172,33 +186,33 @@ function removeEmptyField(row) {
   let i = 0;
   for (const k in fieldData[row]) {
     if (fieldData[row].hasOwnProperty(k)) {
-      if (k != names[i] && fieldData[row][k] == '') {
+      if (k != names[i] && fieldData[row][k] === "") {
         console.log(`${k} != ${names[i]}`);
-        console.log('deleted empty field: ', k);
+        console.log("deleted empty field: ", k);
         delete fieldData[row][k];
       }
       if (Object.values(fieldData[row]).length < fieldNames.length) {
-        console.log('fieldData is less then fieldNames');
+        console.log("fieldData is less then fieldNames");
         if (fieldData[row][`${names[i + 1]}`] != undefined) {
           fieldData[row][`${names[i + 1]}`] = fieldData[row][`${names[i + 1]}`];
         } else {
-          fieldData[row][`${names[i + 1]}`] = '';
+          fieldData[row][`${names[i + 1]}`] = "";
         }
       }
-      i++;
+      i += 1;
     }
   }
 }
 
 function removeFirstErrorMessage(row) {
-  $(`.modal`).on('hidden.bs.modal', () => {
-    if (Object.values(fieldData[row]).length == fieldNames.length) {
+  $(`.modal`).on("hidden.bs.modal", () => {
+    if (Object.values(fieldData[row]).length === fieldNames.length) {
       fieldErrors.shift(0);
       console.log(fieldErrors);
-      errorCount--;
+      errorCount -= 1;
       firstError = fieldErrors[0];
-      console.log('     Errors:', errorCount);
-      console.log('First Error:', firstError);
+      console.log("     Errors:", errorCount);
+      console.log("First Error:", firstError);
     }
   });
 }
@@ -214,16 +228,16 @@ function fixRow(code, close, row) {
 function deleteRow(row) {
   fieldData.splice(row, 1);
   if (errorCount > 0) {
-    errorCount--;
+    errorCount -= 1;
   }
   if ($(`#row${row}Field11record_id`).html()) {
-    let recordId = $(`#row${row}Field11record_id`).html();
-    let importId = $(`#row${row}Field12import_id`).html();
+    const recordId = $(`#row${row}Field11record_id`).html();
+    const importId = $(`#row${row}Field12import_id`).html();
     $.ajax({
       url: `/imports/${importId}/records/${recordId}`,
-      type: 'delete',
-      success: (res) => {
-        modal('Deleted', `Deleted Record.`);
+      type: "delete",
+      success: res => {
+        modal("Deleted", `Deleted Record.`);
       }
     });
   }
@@ -242,67 +256,83 @@ function printRecords(msg) {
   let fix;
   if (msg) {
     console.log(msg);
-    console.log('       Time:', end - start || '(Unknown; your browser does not support the Performance API)', 'ms');
-    console.log('  Row count:', rowCount);
-    console.log('     Errors:', errorCount);
+    console.log(
+      "       Time:",
+      end - start ||
+        "(Unknown; your browser does not support the Performance API)",
+      "ms"
+    );
+    console.log("  Row count:", rowCount);
+    console.log("     Errors:", errorCount);
   }
   if (fieldNames && fieldNames.length != names.length) {
-    console.log('header length is wrong');
+    console.log("header length is wrong");
     let codeWord;
     if (fieldNames.length < names.length) {
-      codeWord = 'Few';
+      codeWord = "Few";
     } else {
-      codeWord = 'Many';
+      codeWord = "Many";
     }
     code = `Too${codeWord}Fields`;
-    message = `Too ${codeWord.toLowerCase()} fields: expected ${names.length} fields but parsed ${fieldNames.length}`;
-    modal(code, `${message} in "${fileName}", Row: 0. Header length errors must be corrected within file before further processing to prevent data loss.`);
+    message = `Too ${codeWord.toLowerCase()} fields: expected ${
+      names.length
+    } fields but parsed ${fieldNames.length}`;
+    modal(
+      code,
+      `${message} in "${fileName}", Row: 0. Header length errors must be corrected within file before further processing to prevent data loss.`
+    );
     return;
   } else if (!headerCheck) {
     buildTable();
     return;
   }
-  for (let i = 0; i < fieldNames.length; i++) {
+  for (let i = 0; i < fieldNames.length; i += 1) {
     validateFieldNames(fieldNames[i]);
     if (!name) {
-      console.log(fieldNames[i], ' is invalid');
-      buttonName = 'Cancel';
-      code = 'invalidHeader';
+      console.log(fieldNames[i], " is invalid");
+      buttonName = "Cancel";
+      code = "invalidHeader";
       fix = fixButton(code, buttonName);
-      modal(code, `${fieldNames[i]} is an invalid header name. Replace with correct header: ${names[i]}?`, fix);
+      modal(
+        code,
+        `${
+          fieldNames[i]
+        } is an invalid header name. Replace with correct header: ${names[i]}?`,
+        fix
+      );
       modalDispose(code, buttonName);
       $(`#${code}Close2`).click(() => {
-        $(`#${code}`).on('hidden.bs.modal', () => {
-          let oldKey = fieldNames[i];
+        $(`#${code}`).on("hidden.bs.modal", () => {
+          const oldKey = fieldNames[i];
           fieldNames[i] = names[i];
-          let newKey = fieldNames[i];
-          console.log('Field Name was: ', oldKey);
-          console.log('Field Name is now: ', newKey);
-          fieldData.forEach((e) => {
+          const newKey = fieldNames[i];
+          console.log("Field Name was: ", oldKey);
+          console.log("Field Name is now: ", newKey);
+          fieldData.forEach(e => {
             for (const k in e) {
-              if (k == oldKey) {
+              if (k === oldKey) {
                 e[newKey] = e[oldKey];
                 delete e[oldKey];
-              } else if (k == 'Address 2') {
-                e['Address2'] = e['Address 2'];
-                delete e['Address 2'];
-                e['Address 2'] = e['Address2'];
-                delete e['Address2'];
-              } else if (k == '__parsed_extra') {
-                e['parsed_extra'] = e['__parsed_extra'];
-                delete e['__parsed_extra'];
+              } else if (k === "Address 2") {
+                e.Address2 = e["Address 2"];
+                delete e["Address 2"];
+                e["Address 2"] = e.Address2;
+                delete e.Address2;
+              } else if (k === "__parsed_extra") {
+                e.parsed_extra = e.__parsed_extra;
+                delete e.__parsed_extra;
               }
             }
           });
-          printRecords('Key updated');
+          printRecords("Key updated");
         });
       });
       return;
     }
   }
   if (errorCount) {
-    console.log('First error:', firstError);
-    buttonName = 'Fix';
+    console.log("First error:", firstError);
+    buttonName = "Fix";
     code = firstError.code;
     fix = fixButton(code, buttonName);
     message = firstError.message;
@@ -316,12 +346,14 @@ function printRecords(msg) {
 
 // track parsing time
 function now() {
-  return typeof window.performance !== 'undefined' ? window.performance.now() : 0;
+  return typeof window.performance !== "undefined"
+    ? window.performance.now()
+    : 0;
 }
 
 function errorFn(err, file) {
   end = now();
-  console.log('ERROR:', err, file);
+  console.log("ERROR:", err, file);
 }
 
 function completeFn(results) {
@@ -339,55 +371,61 @@ function completeFn(results) {
       rowCount = fieldData.length;
     }
   }
-  printRecords('Parse complete');
-  console.log('    Results:', fullResults);
+  printRecords("Parse complete");
+  console.log("    Results:", fullResults);
 }
 
 // Enable application to parse file
 function parseFile() {
   pageSwitch = false;
 
-  setPage('Upload CSV File', wrapper2, '#goBack', main);
+  setPage("Upload CSV File", wrapper2, "#goBack", main);
 
-  $('#headerCheck').click(() => {
-    if ($('#headerCheck').prop('checked')) {
+  $("#headerCheck").click(() => {
+    if ($("#headerCheck").prop("checked")) {
       headerCheck = true;
-      console.log('check box is checked = ', headerCheck);
+      console.log("check box is checked = ", headerCheck);
     } else {
       headerCheck = false;
-      console.log('check box is checked = ', headerCheck);
+      console.log("check box is checked = ", headerCheck);
     }
   });
 
   // replace input placeholder with file name
-  $('#inputGroupFile02').on('change', function () {
+  $("#inputGroupFile02").on("change", function() {
     fileName = $(this).val();
-    fileName = fileName.substring(fileName.lastIndexOf('\\') + 1);
-    if (fileName != '') {
-      $(this).next('.custom-file-label').addClass('selected').html(fileName);
-      $('.csv').html('');
+    fileName = fileName.substring(fileName.lastIndexOf("\\") + 1);
+    if (fileName != "") {
+      $(this)
+        .next(".custom-file-label")
+        .addClass("selected")
+        .html(fileName);
+      $(".csv").html("");
     } else {
-      $(this).next('.custom-file-label').addClass('selected').html('Drag & Drop or click here to browse for your file');
-      $('.csv').html('');
+      $(this)
+        .next(".custom-file-label")
+        .addClass("selected")
+        .html("Drag & Drop or click here to browse for your file");
+      $(".csv").html("");
     }
   });
 
-  $('#upload').click(() => {
+  $("#upload").click(() => {
     rowCount = 0;
     errorCount = 0;
     firstError = undefined;
     if (!firstRun) {
-      console.log('--------------------------------------------------');
+      console.log("--------------------------------------------------");
     } else {
       firstRun = false;
     }
-    if (!$('#inputGroupFile02')[0].files.length) {
+    if (!$("#inputGroupFile02")[0].files.length) {
       modal("noFileChosen", "Please choose at least one file to parse.");
       return;
     }
-    const file = document.getElementById('inputGroupFile02').files[0];
+    const file = document.getElementById("inputGroupFile02").files[0];
     // use jquery to select files
-    const papa = require('papaparse');
+    const papa = require("papaparse");
     papa.parse(file, {
       // base config to use for each file
       delimiter: "",
@@ -410,7 +448,7 @@ function getFieldNames(fn) {
     let i = 0;
     fn += `
     <th class="border border-dark invisible">Delete Record</th>
-    <th scope="col">#</th>
+    <th scope="col" id="sortId">#</th>
     `;
     fieldNames.forEach(e => {
       validateFieldNames(e);
@@ -419,7 +457,7 @@ function getFieldNames(fn) {
       } else {
         fn += `<th class="table-danger" id="header${i}">${e}</th>`;
       }
-      i++;
+      i += 1;
     });
   }
   return fn;
@@ -428,7 +466,7 @@ function getFieldNames(fn) {
 function deleteButton(rowNum) {
   return `<th class="deleteRow table-danger text-center align-middle border border-dark invisible" id="deleteRow${rowNum}">X</th>
   <th scope="row">${rowNum + 1}</th>`;
-};
+}
 
 function getFieldData(fd, row, fullAddress, addressList) {
   if (errorCount) {
@@ -441,7 +479,7 @@ function getFieldData(fd, row, fullAddress, addressList) {
         validateZip(e);
         validateDate(e);
         fd += `<td id="row${row}Field${j}">${e}</td>`;
-        j++;
+        j += 1;
       }
     }
   } else {
@@ -453,9 +491,9 @@ function getFieldData(fd, row, fullAddress, addressList) {
       validateDate(e);
       ({ fd, j, fullAddress } = buildFields(fd, r, e, j, fullAddress));
       addressList.push(fullAddress);
-      fullAddress = '';
+      fullAddress = "";
       fd += `</tr>`;
-      r++;
+      r += 1;
     });
     fd += `
           <tr class="invisible" id="newRecord">
@@ -482,38 +520,55 @@ function getFieldData(fd, row, fullAddress, addressList) {
 
 function buildFields(fd, r, e, j, fullAddress) {
   fd += `<tr id ="row${r}">${deleteButton(r)}`;
-  for (let k in e) {
+  for (const k in e) {
     if (e.hasOwnProperty(k)) {
       const f = e[k];
-      if (f == e.State && !fieldState || f == e.Zip && !fieldZip || f == e['Creation Date'] && !fieldDate) {
-        fd += `<td class="table-danger" id="row${r}Field${j}${k.replace(/\s+/g, '')}">${f}</td>`;
+      if (
+        (f === e.State && !fieldState) ||
+        (f === e.Zip && !fieldZip) ||
+        (f === e["Creation Date"] && !fieldDate)
+      ) {
+        fd += `<td class="table-danger" id="row${r}Field${j}${k.replace(
+          /\s+/g,
+          ""
+        )}">${f}</td>`;
       } else {
-        if (k == 'id' || k == 'import_id') {
+        if (k === "id" || k === "import_id") {
           j--;
         } else {
-          fd += `<td id="row${r}Field${j}${k.replace(/\s+/g, '')}">${f}</td>`;
+          fd += `<td id="row${r}Field${j}${k.replace(/\s+/g, "")}">${f}</td>`;
         }
-        if (k == 'Name' || k == 'Address' || k == 'City' || k == 'State' || k == 'Zip') {
+        if (
+          k === "Name" ||
+          k === "Address" ||
+          k === "City" ||
+          k === "State" ||
+          k === "Zip"
+        ) {
           fullAddress += ` ${f}`;
         }
       }
-      j++;
+      j += 1;
     }
   }
-  fd += `<td class="invisible" id="row${r}Field${j}record_id">${e.id}</td>
-         <td class="invisible" id="row${r}Field${j + 1}import_id">${e.import_id}</td>`;
+  if (e.id) {
+    fd += `<td class="invisible" id="row${r}Field${j}record_id">${e.id}</td>
+          <td class="invisible" id="row${r}Field${j + 1}import_id">${
+      e.import_id
+    }</td>`;
+  }
   return { fd, j, fullAddress };
 }
 
 function updateFields(row) {
   if (headerCheck) {
-    for (let i = 0; i < fieldNames.length; i++) {
+    for (let i = 0; i < fieldNames.length; i += 1) {
       fieldNames[i] = $(`#header${i}`).html();
       validateFieldNames(fieldNames[i]);
       if (name) {
-        $(`#header${i}`).removeClass('table-danger');
+        $(`#header${i}`).removeClass("table-danger");
       } else {
-        $(`#header${i}`).addClass('table-danger');
+        $(`#header${i}`).addClass("table-danger");
       }
     }
   }
@@ -522,20 +577,20 @@ function updateFields(row) {
     for (const k in fieldData[row]) {
       fieldData[row][k] = $(`#row${row}Field${j}`).html();
       validateField(fieldData[row], k, row, j);
-      j++;
+      j += 1;
     }
   } else {
     let i = 0;
     fieldData.forEach(e => {
       let j = 0;
       for (const k in e) {
-        if (k != 'id' && k != 'import_id') {
-          e[k] = $(`#row${i}Field${j}${k.replace(/\s+/g, '')}`).html();
+        if (k != "id" && k != "import_id") {
+          e[k] = $(`#row${i}Field${j}${k.replace(/\s+/g, "")}`).html();
           validateField(e, k, i, j);
-          j++;
+          j += 1;
         }
       }
-      i++;
+      i += 1;
     });
   }
 
@@ -544,22 +599,22 @@ function updateFields(row) {
     let i = 0;
     let intervalId;
     function start() {
-      if (counter == 0) {
+      if (counter === 0) {
         clearInterval(intervalId);
-        $('.csv').prepend('<p class="text-center">Records Updated</p>');
+        $(".csv").prepend('<p class="text-center">Records Updated</p>');
       } else {
         $.ajax({
           url: `/imports/${fieldData[i].import_id}/records/${fieldData[i].id}`,
-          type: 'put',
+          type: "put",
           data: JSON.stringify(fieldData[i]),
-          dataType: 'json',
-          contentType: 'application/json',
-          success: (res) => {
+          dataType: "json",
+          contentType: "application/json",
+          success: res => {
             counter--;
-            i++;
+            i += 1;
           },
-          error: (err) => {
-            modal(err.status, err.statusText);
+          error: () => {
+            errorResponse;
             clearInterval(intervalId);
           }
         });
@@ -568,7 +623,7 @@ function updateFields(row) {
     intervalId = setInterval(start, 100);
   }
 
-  console.log('    Updated Data: ', fieldData);
+  console.log("    Updated Data: ", fieldData);
 }
 
 function newCSV() {
@@ -581,11 +636,10 @@ function newCSV() {
   headerCheck = true;
   mapped = false;
   markers = [];
-  console.log('    Results:', fullResults);
-  $('#map').html('');
-  $('#map').removeAttr('style');
-  $('.csv').removeClass('p-5');
-  $('#jumboHeader').addClass('mb-5');
+  $("#map").html("");
+  $("#map").removeAttr("style");
+  $(".csv").removeClass("p-5");
+  $("#jumboHeader").addClass("mb-5");
   geoClear();
   parseFile();
 }
@@ -593,28 +647,44 @@ function newCSV() {
 // build table
 
 function buildTable(row) {
-  let fn = '';
-  let fd = '';
-  let fullAddress = '';
-  let addressList = [];
+  const addressList = [];
+  let fn = "";
+  let fd = "";
+  let fullAddress = "";
 
-  $('.csv').addClass('p-5');
-  
+  function sorter(headerId, field) {
+    let sortOrder;
+    $(`#${headerId}`).click(() => {
+      const id = $("#row0Field12import_id").html();
+      const importName = $("#jumboHeader").html();
+      if (sortASC) {
+        sortOrder = 'ASC';
+        sortASC = false;
+      } else {
+        sortOrder = 'DESC'
+        sortASC = true;
+      }
+      getRecords(id, importName, `/sort${sortOrder}`, `"${field}"`);
+    });
+  }
+
+  $(".csv").addClass("p-5");
+
   fn = getFieldNames(fn);
 
   ({ fd, fullAddress } = getFieldData(fd, row, fullAddress, addressList));
 
   // force correction of header names
-  if (row == 'header') {
-    fd = '';
+  if (row === "header") {
+    fd = "";
   }
 
-  $('#jumboHeader').removeClass('mb-5');
-  $('#jumboHeader').html(fileName);
-  $('title').html(fileName);
-  $('.wrapper').html('');
+  $("#jumboHeader").removeClass("mb-5");
+  $("#jumboHeader").html(fileName);
+  $("title").html(fileName);
+  $(".wrapper").html("");
 
-  $('.csv').html(`
+  $(".csv").html(`
                     <div class="btn-group d-flex justify-content-center mb-3" role="group" aria-label="button group">
                       <button type="button" class="btn btn-secondary" id="editData">Edit Data</button>
                       <button type="button" class="btn btn-secondary invisible" id="saveRecords">Save Records</button>
@@ -639,13 +709,31 @@ function buildTable(row) {
                     </div>
                   `);
 
-  if (mapped) {
-    $('tbody').addClass('latlong');
-    $('#saveRecords').removeClass('invisible');
-    $('title').html(`${$('#jumboHeader').html()} Mapped`);
+  if ($("#row0Field12import_id").html() !== undefined) {
+    // add pointer cursor
+    $(".headerRow").addClass("sorterRow");
+
+    // sort by id
+    sorter("sortId", "id");
+
+    // sort by field header
+    for (let i = 0; i < names.length; i += 1) {
+      const e = names[i];
+      const headerId = `header${i}`;
+      sorter(headerId, e);
+    }
   }
-  
-  for (let i = 0; i < fieldData.length; i++) {
+
+  // show pointer cursor after mapping to indicate
+  // row is clickable for geocoding
+  if (mapped) {
+    $("tbody").addClass("latlong");
+    $("#saveRecords").removeClass("invisible");
+    $("title").html(`${$("#jumboHeader").html()} Mapped`);
+  }
+
+  // add click handlers to delete buttons and rows
+  for (let i = 0; i < fieldData.length; i += 1) {
     if (mapped) {
       $(`#row${i}`).click(() => {
         geocodeLatLng(i);
@@ -656,246 +744,329 @@ function buildTable(row) {
     });
   }
 
-  if (firstError == undefined) {
-    $('#repairNext').addClass('invisible');
+  // show or hide repair next or map data buttons
+  if (firstError === undefined) {
+    $("#repairNext").addClass("invisible");
   } else {
-    $('#mapData').addClass('invisible');
+    $("#mapData").addClass("invisible");
   }
 
-  $('#editData').click(() => {
+  // add click handlers to button row
+  $("#editData").click(() => {
     toggleEditable(row);
   });
-  $('#saveRecords').click(() => {
+  $("#saveRecords").click(() => {
     saveRecords();
   });
-  $('#mapData').click(() => {
+  $("#mapData").click(() => {
     if (!mapped) {
       initialize();
     }
     geoIterate(addressList);
   });
-  $('#repairNext').click(() => {
+  $("#repairNext").click(() => {
     updateFields(row);
     printRecords();
   });
-  $('#search').click(() => {
+  $("#search").click(() => {
     newCSV();
     pageSwitch = true;
     main();
   });
-  $('#newCSV').click(newCSV);
+  $("#newCSV").click(newCSV);
 }
 
 // validate
 
-// Validate field names
 function validateFieldNames(fieldName) {
-	for (let i = 0; i < names.length; i++) {
-		if (fieldName == names[i]) {
-			name = true;
-			return;
-		} else {
-			name = false;
-		}
-	}
+  for (let i = 0; i < names.length; i += 1) {
+    if (fieldName === names[i]) {
+      name = true;
+      return;
+    }
+    name = false;
+  }
 }
 
-// Validate data type formats in each record
 function validateState(row) {
-	const states = ['AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MP', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY'];
-	if (row.State) {
-		for (let i = 0; i < states.length; i++) {
-			if (row.State == states[i]) {
+  const states = [
+    "AL",
+    "AK",
+    "AS",
+    "AZ",
+    "AR",
+    "CA",
+    "CO",
+    "CT",
+    "DE",
+    "DC",
+    "FM",
+    "FL",
+    "GA",
+    "GU",
+    "HI",
+    "ID",
+    "IL",
+    "IN",
+    "IA",
+    "KS",
+    "KY",
+    "LA",
+    "ME",
+    "MH",
+    "MD",
+    "MA",
+    "MI",
+    "MN",
+    "MS",
+    "MO",
+    "MP",
+    "MT",
+    "NE",
+    "NV",
+    "NH",
+    "NJ",
+    "NM",
+    "NY",
+    "NC",
+    "ND",
+    "MP",
+    "OH",
+    "OK",
+    "OR",
+    "PW",
+    "PA",
+    "PR",
+    "RI",
+    "SC",
+    "SD",
+    "TN",
+    "TX",
+    "UT",
+    "VT",
+    "VI",
+    "VA",
+    "WA",
+    "WV",
+    "WI",
+    "WY"
+  ];
+  if (row.State) {
+    for (let i = 0; i < states.length; i += 1) {
+      if (row.State === states[i]) {
         fieldState = true;
         return;
-			} else {
-        fieldState = false;
       }
-		}
-	}
+      fieldState = false;
+    }
+  }
 }
 
 function validateZip(row) {
   fieldZip = true;
-	const digits = '0123456789';
-	if (row.Zip) {
-		if (row.Zip.length != 5) {
-			fieldZip = false;
-		}
-		for (let i = 0; i < row.Zip.length; i++) {
-			const zipDigit = `${row.Zip.substring(i, i+1)}`;
-			if (digits.indexOf(zipDigit) == '-1') {
-				fieldZip = false;
-			}
-		}
-	}
+  const digits = "0123456789";
+  if (row.Zip) {
+    if (row.Zip.length != 5) {
+      fieldZip = false;
+    }
+    for (let i = 0; i < row.Zip.length; i += 1) {
+      const zipDigit = `${row.Zip.substring(i, i + 1)}`;
+      if (digits.indexOf(zipDigit) === "-1") {
+        fieldZip = false;
+      }
+    }
+  }
 }
 
 function validateDate(row) {
-	fieldDate = true;
-	const regEx = /^\d{4}-\d{2}-\d{2}$/;
+  fieldDate = true;
+  const regEx = /^\d{4}-\d{2}-\d{2}$/;
 
-	if (row['Creation Date']) {
-		if (!row['Creation Date'].match(regEx)) { // Invalid format
-			fieldDate = false;
-		}
+  if (row["Creation Date"]) {
+    if (!row["Creation Date"].match(regEx)) {
+      // Invalid format
+      fieldDate = false;
+    }
 
-		const d = new Date(row['Creation Date']);
+    const d = new Date(row["Creation Date"]);
 
-		if (!d.getTime() && d.getTime() !== 0 && fieldDate) { // Invalid date
-			fieldDate = false;
-			console.log(`${row['Creation Date']} is an invalid date`);
-		}
-	}
+    if (!d.getTime() && d.getTime() !== 0 && fieldDate) {
+      // Invalid date
+      fieldDate = false;
+      console.log(`${row["Creation Date"]} is an invalid date`);
+    }
+  }
 }
 
 function validateField(e, k, i, j) {
   validateState(e);
   validateZip(e);
   validateDate(e);
-  if (e[k] == e.State && !fieldState || e[k] == e.Zip && !fieldZip || e[k] == e['Creation Date'] && !fieldDate) {
-    $(`#row${i}Field${j}`).addClass('table-danger');
+  if (
+    (e[k] === e.State && !fieldState) ||
+    (e[k] === e.Zip && !fieldZip) ||
+    (e[k] === e["Creation Date"] && !fieldDate)
+  ) {
+    $(`#row${i}Field${j}`).addClass("table-danger");
   } else {
-    $(`#row${i}Field${j}`).removeClass('table-danger');
+    $(`#row${i}Field${j}`).removeClass("table-danger");
   }
 }
 
 // geocode
 
 function ShowAllMarkers(showAllControlDiv, map) {
-  const controlUI = document.createElement('div');
-  controlUI.style.backgroundColor = '#fff';
-  controlUI.style.border = '2px solid #fff';
-  controlUI.style.borderRadius = '3px';
-  controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
-  controlUI.style.cursor = 'pointer';
-  controlUI.style.marginBottom = '22px';
-  controlUI.style.textAlign = 'center';
-  controlUI.title = 'Click to show all markers';
+  const controlUI = document.createElement("div");
+  controlUI.style.backgroundColor = "#fff";
+  controlUI.style.border = "2px solid #fff";
+  controlUI.style.borderRadius = "3px";
+  controlUI.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
+  controlUI.style.cursor = "pointer";
+  controlUI.style.marginBottom = "22px";
+  controlUI.style.textAlign = "center";
+  controlUI.title = "Click to show all markers";
   showAllControlDiv.appendChild(controlUI);
 
-  const controlText = document.createElement('div');
-  controlText.style.color = 'rgb(25,25,25)';
-  controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
-  controlText.style.fontSize = '16px';
-  controlText.style.lineHeight = '38px';
-  controlText.style.paddingLeft = '5px';
-  controlText.style.paddingRight = '5px';
-  controlText.innerHTML = 'Show All Markers';
+  const controlText = document.createElement("div");
+  controlText.style.color = "rgb(25,25,25)";
+  controlText.style.fontFamily = "Roboto,Arial,sans-serif";
+  controlText.style.fontSize = "16px";
+  controlText.style.lineHeight = "38px";
+  controlText.style.paddingLeft = "5px";
+  controlText.style.paddingRight = "5px";
+  controlText.innerHTML = "Show All Markers";
   controlUI.appendChild(controlText);
 
-  controlUI.addEventListener('click', setMarkerBounds);
+  controlUI.addEventListener("click", setMarkerBounds);
 }
 
 function initialize() {
-  $('#map').css({
-    'width': '75%',
-    'height': '400px',
-    'margin': 'auto'
+  $("#map").css({
+    width: "75%",
+    height: "400px",
+    margin: "auto"
   });
   geocoder = new google.maps.Geocoder();
   infowindow = new google.maps.InfoWindow({
     maxWidth: 400
   });
-  const latlng = new google.maps.LatLng(38.928610, -98.579458);
+  const latlng = new google.maps.LatLng(38.92861, -98.579458);
   const mapOptions = {
     zoom: 4,
     center: latlng
   };
-  map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  map = new google.maps.Map(document.getElementById("map"), mapOptions);
   mapped = true;
 
-  const showAllControlDiv = document.createElement('div');
+  const showAllControlDiv = document.createElement("div");
   const showAllMarkers = new ShowAllMarkers(showAllControlDiv, map);
 
   showAllControlDiv.index = 1;
-  map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(showAllControlDiv);
+  map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(
+    showAllControlDiv
+  );
 }
 
 function codeAddress(fullAddress, fieldData, intervalId, r) {
-  geocoder.geocode({
-    'address': fullAddress
-  }, (results, status) => {
-    if (status == 'OK') {
-      lat = results[0].geometry.location.lat();
-      long = results[0].geometry.location.lng();
-      for (const k in fieldData) {
-        if (fieldData.hasOwnProperty(k)) {
-          const f = fieldData[k];
-          const addressComponents = results[0].address_components;
-          switch (f) {
-            case fieldData.Address:
-              let address = '';
-              for (let i = 0; i < addressComponents.length; i++) {
-                const e = addressComponents[i];
-                if (e.types[0] == 'street_number') {
-                  address += e.short_name;
-                } else if (e.types[0] == 'route') {
-                  address += ` ${e.short_name}`;
-                  if (fieldData.Address != address) {
-                    fieldData.Address = address;
+  geocoder.geocode(
+    {
+      address: fullAddress
+    },
+    (results, status) => {
+      if (status === "OK") {
+        lat = results[0].geometry.location.lat();
+        long = results[0].geometry.location.lng();
+        for (const k in fieldData) {
+          if (fieldData.hasOwnProperty(k)) {
+            const f = fieldData[k];
+            const addressComponents = results[0].address_components;
+            switch (f) {
+              case fieldData.Address:
+                let address = "";
+                for (let i = 0; i < addressComponents.length; i += 1) {
+                  const e = addressComponents[i];
+                  if (e.types[0] === "street_number") {
+                    address += e.short_name;
+                  } else if (e.types[0] === "route") {
+                    address += ` ${e.short_name}`;
+                    if (fieldData.Address != address) {
+                      fieldData.Address = address;
+                    }
+                    break;
                   }
-                  break;
                 }
-              }
-              buildTable();
-              break;
-            case fieldData.City:
-              for (let i = 0; i < addressComponents.length; i++) {
-                const e = addressComponents[i];
-                if (e.types[0] == 'locality' && fieldData.City != e.long_name) {
-                  fieldData.City = e.long_name;
+                buildTable();
+                break;
+              case fieldData.City:
+                for (let i = 0; i < addressComponents.length; i += 1) {
+                  const e = addressComponents[i];
+                  if (
+                    e.types[0] === "locality" &&
+                    fieldData.City != e.long_name
+                  ) {
+                    fieldData.City = e.long_name;
+                  }
                 }
-              }
-              buildTable();
-              break;
-            case fieldData.State:
-              for (let i = 0; i < addressComponents.length; i++) {
-                const e = addressComponents[i];
-                if (e.types[0] == 'administrative_area_level_1' && fieldData.State != e.short_name) {
-                  fieldData.State = e.short_name;
+                buildTable();
+                break;
+              case fieldData.State:
+                for (let i = 0; i < addressComponents.length; i += 1) {
+                  const e = addressComponents[i];
+                  if (
+                    e.types[0] === "administrative_area_level_1" &&
+                    fieldData.State != e.short_name
+                  ) {
+                    fieldData.State = e.short_name;
+                  }
                 }
-              }
-              buildTable();
-              break;
-            case fieldData.Zip:
-              for (let i = 0; i < addressComponents.length; i++) {
-                const e = addressComponents[i];
-                if (e.types[0] == 'postal_code' && fieldData.Zip != e.short_name) {
-                  fieldData.Zip = e.short_name;
+                buildTable();
+                break;
+              case fieldData.Zip:
+                for (let i = 0; i < addressComponents.length; i += 1) {
+                  const e = addressComponents[i];
+                  if (
+                    e.types[0] === "postal_code" &&
+                    fieldData.Zip != e.short_name
+                  ) {
+                    fieldData.Zip = e.short_name;
+                  }
                 }
-              }
-              buildTable();
-              break;
-            default:
-              buildTable();
+                buildTable();
+                break;
+              default:
+                buildTable();
+            }
           }
         }
-      }
-      fieldData.Lat = lat;
-      fieldData.Long = long;
-      map.setCenter(results[0].geometry.location);
-      const marker = new google.maps.Marker({
-        map,
-        position: results[0].geometry.location
-      });
-      markers.push(marker);
-      marker.addListener('click', () => {
-        map.setZoom(15);
+        fieldData.Lat = lat;
+        fieldData.Long = long;
         map.setCenter(results[0].geometry.location);
-        showInfoWin(r, marker);
-      });
-    } else {
-      fixGeocodeFail(intervalId, status, fullAddress, r);
+        const marker = new google.maps.Marker({
+          map,
+          position: results[0].geometry.location
+        });
+        markers.push(marker);
+        marker.addListener("click", () => {
+          map.setZoom(15);
+          map.setCenter(results[0].geometry.location);
+          showInfoWin(r, marker);
+        });
+      } else {
+        fixGeocodeFail(intervalId, status, fullAddress, r);
+      }
     }
-  });
+  );
 }
 
 function fixGeocodeFail(intervalId, status, fullAddress, r) {
   clearInterval(intervalId);
-  let buttonName = 'Fix';
-  let fix = fixButton(status, buttonName);
-  modal(status, `Geocode was not successful for the following reason: ${status}: ${fullAddress}`, fix);
+  const buttonName = "Fix";
+  const fix = fixButton(status, buttonName);
+  modal(
+    status,
+    `Geocode was not successful for the following reason: ${status}: ${fullAddress}`,
+    fix
+  );
   modalDispose(status, buttonName, () => {
     errorCount = 1;
     buildTable(r);
@@ -910,8 +1081,8 @@ function geocodeLatLng(r) {
     lat: parseFloat(input0),
     lng: parseFloat(input1)
   };
-  geocoder.geocode({'location': latlng}, (results, status) => {
-    if (status === 'OK') {
+  geocoder.geocode({ location: latlng }, (results, status) => {
+    if (status === "OK") {
       if (results[0]) {
         map.setZoom(15);
         const marker = new google.maps.Marker({
@@ -919,7 +1090,7 @@ function geocodeLatLng(r) {
           map
         });
         markers.push(marker);
-        marker.addListener('click', () => {
+        marker.addListener("click", () => {
           map.setZoom(15);
           showInfoWin(r, marker);
           map.setCenter(results[0].geometry.location);
@@ -927,7 +1098,7 @@ function geocodeLatLng(r) {
         showInfoWin(r, marker);
         map.setCenter(results[0].geometry.location);
       } else {
-        modal('noResults', 'No results found');
+        modal("noResults", "No results found");
       }
     } else {
       modal(status, `Geocoder failed due to: ${status}`);
@@ -939,48 +1110,37 @@ function showInfoWin(r, marker) {
   infowindow.setContent(`
   <div id="content">
     <div id="siteNotice"></div>
-    <h5 id="firstHeading" class="firstHeading">${$(`#row${r}Field0Name`).html()}</h5>
+    <h5 id="firstHeading" class="firstHeading">${$(
+      `#row${r}Field0Name`
+    ).html()}</h5>
     <div id="bodyContent">
-      ${$(`#row${r}Field1Address`).html()} ${$(`#row${r}Field2Address2`).html()} ${$(`#row${r}Field3City`).html()} ${$(`#row${r}Field4State`).html()} ${$(`#row${r}Field5Zip`).html()}
+      ${$(`#row${r}Field1Address`).html()} ${$(
+    `#row${r}Field2Address2`
+  ).html()} ${$(`#row${r}Field3City`).html()} ${$(
+    `#row${r}Field4State`
+  ).html()} ${$(`#row${r}Field5Zip`).html()}
       <br>
-      <b style="font-weight: 900">Purpose:</b> ${$(`#row${r}Field6Purpose`).html()} <b style="font-weight: 900">Property Owner:</b> ${$(`#row${r}Field7PropertyOwner`).html()} <b style="font-weight: 900">Creation Date:</b> ${$(`#row${r}Field8CreationDate`).html()}
+      <b style="font-weight: 900">Purpose:</b> ${$(
+        `#row${r}Field6Purpose`
+      ).html()} <b style="font-weight: 900">Property Owner:</b> ${$(
+    `#row${r}Field7PropertyOwner`
+  ).html()} <b style="font-weight: 900">Creation Date:</b> ${$(
+    `#row${r}Field8CreationDate`
+  ).html()}
     </div>
   </div>
   `);
   infowindow.open(map, marker);
 }
 
-function geoIterate(fullAddress) {
-  let counter = fullAddress.length;
-  let i = 0;
-  let intervalId;
-  function start() {
-    if (counter == 0) {
-      clearInterval(intervalId);
-      setMarkerBounds();
-    } else if (markers.length < fieldData.length) {
-      console.log('this record hasn\'t been geocoded');
-      codeAddress(fullAddress[i], fieldData[i], intervalId, i);
-    } else {
-      console.log('skip record already geocoded');
-    }
-    counter--;
-    i++;
-    buildTable();
-  }
-  intervalId = setInterval(start, 500);
-  showLatLong();
-  console.log('    Field Data:', fieldData);
-}
-
 function setMarkerBounds() {
-  let bounds = new google.maps.LatLngBounds();
-  for (let i = 0; i < markers.length; i++) {
+  const bounds = new google.maps.LatLngBounds();
+  for (let i = 0; i < markers.length; i += 1) {
     const e = markers[i];
     bounds.extend(e.getPosition());
   }
   map.setCenter(bounds.getCenter());
-  google.maps.event.addListenerOnce(map, 'zoom_changed', (e) => {
+  google.maps.event.addListenerOnce(map, "zoom_changed", () => {
     if (map.getZoom() > 15) {
       map.setZoom(15);
     }
@@ -990,9 +1150,28 @@ function setMarkerBounds() {
 
 function showLatLong() {
   if (fieldNames && names.length < 11 && fieldNames.length < 11) {
-    names.push('Lat', 'Long');
-    fieldNames.push('Lat', 'Long');
+    names.push("Lat", "Long");
+    fieldNames.push("Lat", "Long");
   }
+}
+
+function geoIterate(fullAddress) {
+  let counter = fullAddress.length;
+  let i = 0;
+  let intervalId;
+  function start() {
+    if (counter === 0) {
+      clearInterval(intervalId);
+      setMarkerBounds();
+    } else if (markers.length < fieldData.length) {
+      codeAddress(fullAddress[i], fieldData[i], intervalId, i);
+    }
+    counter -= 1;
+    i += 1;
+    buildTable();
+  }
+  intervalId = setInterval(start, 500);
+  showLatLong();
 }
 
 function geoClear() {
@@ -1004,117 +1183,140 @@ function geoClear() {
 // main
 
 function setHeader(header, wrapper) {
-  $('title').html(header);
-  $('#jumboHeader').html(header);
-  $('.wrapper').html(wrapper);
-  $('#map').html('');
-  $('.csv').html('');
+  $("title").html(header);
+  $("#jumboHeader").html(header);
+  $(".wrapper").html(wrapper);
+  $("#map").html("");
+  $(".csv").html("");
 }
 
 function setPage(header, wrapper, elId0, func0, elId1, func1, elId2, func2) {
   setHeader(header, wrapper);
   $(elId0).click(func0);
   $(elId1).click(func1);
-  $(elId2).click((params) => {
+  $(elId2).click(params => {
     func2(params);
-  })
+  });
 }
 
-function getRecords(id, importName) {
+function getRecords(id, importName, sort, field) {
+  const term = `?term=${field}`;
   $.ajax({
-    url: `/imports/${id}/records/`,
-    type: 'get',
-    success: (res) => {
+    url: `/imports/${id}${sort || ""}/records/${term || ""}`,
+    type: "get",
+    success: res => {
       if (res.length > 0) {
         setHeader(importName);
-        names.push('Lat', 'Long');
+        const namesLength = Object.keys(res[0]).length - 2;
+        if (names.length < namesLength) {
+          names.push("Lat", "Long");
+        }
         fieldNames = names;
         fieldData = res;
         printRecords();
       } else {
-        modal('404', 'Not Found');
+        modal("404", "Not Found");
       }
     },
-    error: (err) => {
-      modal(err.status, err.statusText);
-    }
+    error: errorResponse
   });
 }
 
 function postData(importName) {
-  const data = { "import_name": importName };
+  const data = { import_name: importName };
+
+  function saveResponse(i) {
+    return res2 => {
+      if (i === fieldData.length - 1) {
+        modal("Success", `Saved ${res2.import_name}`);
+      }
+    };
+  }
+
   $.ajax({
-    url: '/imports/',
-    type: 'post',
+    url: "/imports/",
+    type: "post",
     data: JSON.stringify(data),
-    dataType: 'json',
-    contentType: 'application/json',
-    success: (res) => {
-      for (let i = 0; i < fieldData.length; i++) {
+    dataType: "json",
+    contentType: "application/json",
+    success: res => {
+      for (let i = 0; i < fieldData.length; i += 1) {
         const e = fieldData[i];
         $.ajax({
           url: `/imports/${res.id}/records`,
-          type: 'post',
+          type: "post",
           data: JSON.stringify(e),
-          dataType: 'json',
-          contentType: 'application/json',
-          success: (res) => {
-            if (i == fieldData.length - 1) {
-              modal('Success', 'Saved Data');
-            }
-          },
-          error: (err) => {
-            modal(err.status, err.statusText);
-            return;
-          }
+          dataType: "json",
+          contentType: "application/json",
+          success: saveResponse(i),
+          error: errorResponse
         });
       }
     },
-    error: (err) => {
-      modal(err.status, err.statusText);
-    }
+    error: errorResponse
   });
 }
 
 function searchImports(searchString) {
   $.ajax({
     url: `/imports/search?term=${$(searchString).val()}`,
-    type: 'get',
-    success: (res) => {
-      $('.csv').html('<div id="import-list" class="d-flex justify-content-center mb-3" role="group" aria-label="button group"></div>');
+    type: "get",
+    success: res => {
+      $(".csv").html(
+        '<div id="import-list" class="d-flex justify-content-center mb-3" role="group" aria-label="button group"></div>'
+      );
       res.forEach(e => {
-        $('#import-list').append(`<button type="button" class="btn btn-dark m-1" id="get-records-${e.id}">${e.import_name}</button>`);
+        $("#import-list").append(
+          `<button type="button" class="btn btn-dark m-1" id="get-records-${
+            e.id
+          }">${e.import_name}</button>`
+        );
         $(`#get-records-${e.id}`).click(() => {
           getRecords(e.id, e.import_name);
         });
       });
     },
-    error: (err) => {
-      modal(err.status, err.statusText);
-    }
+    error: errorResponse
   });
 }
 
 function main() {
   if (!pageSwitch) {
     pageSwitch = true;
-    setPage('Upload or Search', wrapper1, '#uploadCSV', parseFile, '#searchData', main);
-    $('title').html(mainTitle);
+    setPage(
+      "Upload or Search",
+      wrapper1,
+      "#uploadCSV",
+      parseFile,
+      "#searchData",
+      main
+    );
+    $("title").html(mainTitle);
   } else {
     pageSwitch = false;
-    setPage('Search By Import Name', wrapper3, '#goBack', main, '#searchDB', () => {
-      searchImports('#searchImports');
-    });
+    setPage(
+      "Search By Import Name",
+      wrapper3,
+      "#goBack",
+      main,
+      "#searchDB",
+      () => {
+        searchImports("#searchImports");
+      }
+    );
   }
 }
 
 function saveRecords() {
-  let code = 'Save';
-  let button = 'Cancel';
-  let cancel = `<button type="button" class="btn btn-danger" id="${code}${button}">${button}</button>`;
-  modal(code, 'Name this imported data', cancel);
-  $('#modalBody').append(`<input class="form-control" id="saveImportName" type="text" placeholder="Import Name" value="${fileName || $('#jumboHeader').html()}">`);
-  let saveName = document.getElementById('saveImportName');
+  code = "Save";
+  const button = "Cancel";
+  const cancel = `<button type="button" class="btn btn-danger" id="${code}${button}">${button}</button>`;
+  modal(code, "Name this imported data", cancel);
+  $("#modalBody").append(
+    `<input class="form-control" id="saveImportName" type="text" placeholder="Import Name" value="${fileName ||
+      $("#jumboHeader").html()}">`
+  );
+  const saveName = document.getElementById("saveImportName");
   let importName = saveName.value;
   function getSaveName() {
     importName = saveName.value;
@@ -1122,7 +1324,7 @@ function saveRecords() {
   saveName.onchange = getSaveName;
   $(`#${code}Close2`).html(code);
   modalDispose(code, button);
-  modalDispose(code, 'Close2', () => {
+  modalDispose(code, "Close2", () => {
     postData(importName);
   });
 }
