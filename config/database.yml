@@ -80,8 +80,6 @@ test:
 #
 production:
   <<: *default
-  host: DATABASE_HOST
-  database: DATABASE_NAME
-  username: DATABASE_USERNAME
-  password: <%= ENV['DATABASE_PASSWORD'] %>
-  port: DATABASE_PORT
+  database: stunning-octo-pancake_production
+  username: stunning-octo-pancake
+  password: <%= ENV['STUNNING-OCTO-PANCAKE_DATABASE_PASSWORD'] %>

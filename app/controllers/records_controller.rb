@@ -1,24 +1,11 @@
 # app/controllers/records_controller.rb
 class RecordsController < ApplicationController
-  skip_before_action :verify_authenticity_token
   before_action :set_import
   before_action :set_import_record, only: [:show, :update, :destroy]
 
   # GET /imports/:import_id/records
   def index
     json_response(@import.records)
-  end
-  
-  # GET /imports/:import_id/sortASC/records
-  def sortASC
-    term = params[:term] || nil
-    json_response(@import.records.order("#{term} ASC"))
-  end
-  
-  # GET /imports/:import_id/sortDESC/records
-  def sortDESC
-    term = params[:term] || nil
-    json_response(@import.records.order("#{term} DESC"))
   end
 
   # GET /imports/:import_id/records/:id
@@ -47,7 +34,7 @@ class RecordsController < ApplicationController
   private
 
   def record_params
-    params.permit(:Name, :Address, :"Address 2", :City, :State, :Zip, :Purpose, :"Property Owner", :"Creation Date", :Lat, :Long)
+    params.permit(:name, :address, :address_2, :city, :state, :zip, :purpose, :property_owner, :creation_date, :lat, :long)
   end
 
   def set_import

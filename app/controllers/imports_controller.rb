@@ -1,6 +1,5 @@
 # app/controllers/imports_controller.rb
 class ImportsController < ApplicationController
-  skip_before_action :verify_authenticity_token
   before_action :set_import, only: [:show, :update, :destroy]
 
   # GET /imports
@@ -30,14 +29,6 @@ class ImportsController < ApplicationController
   def destroy
     @import.destroy
     head :no_content
-  end
-
-  # SEARCH /imports/search
-  def search
-    term = params[:term] || nil
-    @imports = []
-    @imports = Import.where('import_name LIKE ?', "%#{term}%") if term
-    json_response(@imports)
   end
 
   private
