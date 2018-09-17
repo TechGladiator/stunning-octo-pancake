@@ -1,0 +1,29 @@
+/* frontend/components/page/page.css */
+
+/* cursor pointer when hover over file picker */
+.custom-file-input,
+.input-group-append,
+.latlong,
+.deleteRow,
+.sorterRow {
+  cursor: pointer;
+}
+
+.invisible {
+  position: absolute !important;
+}
+
+/* apply Source Code Pro Font to editable fields */
+[contenteditable="true"] {
+  font-family: "Source Code Pro", monospace;
+}
+
+[contenteditable="true"] th,
+[contenteditable="true"] td {
+  box-shadow: inset 0 0 0 2px black;
+}
+
+tr#newRecord th {
+  font-family: sans-serif;
+  box-shadow: 0 0;
+}

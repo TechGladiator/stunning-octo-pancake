@@ -74,22 +74,22 @@ INSERT INTO states ("short_name", "name") VALUES ('AK', 'Alaska'),
 
 CREATE TABLE records (
 	"id" bigserial NOT NULL,
-    "name" varchar NOT NULL,
-    "address" varchar NOT NULL,
-    "address_2" varchar,
-    "city" varchar NOT NULL,
-    "state" varchar(2) NOT NULL,
-    "zip" varchar(5) NOT NULL,
-    "purpose" varchar,
-    "property_owner" varchar,
-    "creation_date" date NOT NULL,
-    "lat" numeric NOT NULL,
-    "long" numeric NOT NULL,
+    "Name" varchar NOT NULL,
+    "Address" varchar NOT NULL,
+    "Address 2" varchar,
+    "City" varchar NOT NULL,
+    "State" varchar(2) NOT NULL,
+    "Zip" varchar(5) NOT NULL,
+    "Purpose" varchar,
+    "Property Owner" varchar,
+    "Creation Date" date NOT NULL,
+    "Lat" numeric NOT NULL,
+    "Long" numeric NOT NULL,
 	"import_id" bigint NOT NULL,
 	CONSTRAINT records_pkey PRIMARY KEY ("id"),
     CONSTRAINT records_import_id_fkey FOREIGN KEY ("import_id")
         REFERENCES imports ("id"),
-	CONSTRAINT records_statecode_fkey FOREIGN KEY ("state")
+	CONSTRAINT records_statecode_fkey FOREIGN KEY ("State")
 		REFERENCES states ("short_name")
 );
 
@@ -98,17 +98,17 @@ WITH get_import_id AS (
 	returning id
 )
 INSERT INTO records (
-	"name",
-	"address",
-	"address_2",
-	"city",
-	"state",
-	"zip",
-	"purpose",
-	"property_owner",
-	"creation_date",
-	"lat",
-	"long",
+	"Name",
+	"Address",
+	"Address 2",
+	"City",
+	"State",
+	"Zip",
+	"Purpose",
+	"Property Owner",
+	"Creation Date",
+	"Lat",
+	"Long",
 	"import_id"
 ) VALUES (
 	'National Zoological Park',
