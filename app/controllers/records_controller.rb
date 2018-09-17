@@ -7,6 +7,18 @@ class RecordsController < ApplicationController
   def index
     json_response(@import.records)
   end
+  
+  # GET /imports/:import_id/sortASC/records
+  def sortASC
+    term = params[:term] || nil
+    json_response(@import.records.order("#{term} ASC"))
+  end
+  
+  # GET /imports/:import_id/sortDESC/records
+  def sortDESC
+    term = params[:term] || nil
+    json_response(@import.records.order("#{term} DESC"))
+  end
 
   # GET /imports/:import_id/records/:id
   def show
@@ -34,7 +46,7 @@ class RecordsController < ApplicationController
   private
 
   def record_params
-    params.permit(:name, :address, :address_2, :city, :state, :zip, :purpose, :property_owner, :creation_date, :lat, :long)
+    params.permit(:Name, :Address, :"Address 2", :City, :State, :Zip, :Purpose, :"Property Owner", :"Creation Date", :Lat, :Long)
   end
 
   def set_import

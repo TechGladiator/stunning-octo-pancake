@@ -31,6 +31,14 @@ class ImportsController < ApplicationController
     head :no_content
   end
 
+  # SEARCH /imports/search
+  def search
+    term = params[:term] || nil
+    @imports = []
+    @imports = Import.where('import_name LIKE ?', "%#{term}%") if term
+    json_response(@imports)
+  end
+
   private
 
   def import_params
