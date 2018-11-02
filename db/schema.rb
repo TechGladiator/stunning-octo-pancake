@@ -21,17 +21,17 @@ ActiveRecord::Schema.define(version: 0) do
   end
 
   create_table "records", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "address", null: false
-    t.string "address_2"
-    t.string "city", null: false
-    t.string "state", limit: 2, null: false
-    t.string "zip", limit: 5, null: false
-    t.string "purpose"
-    t.string "property_owner"
-    t.date "creation_date", null: false
-    t.decimal "lat", null: false
-    t.decimal "long", null: false
+    t.string "Name", null: false
+    t.string "Address", null: false
+    t.string "Address 2"
+    t.string "City", null: false
+    t.string "State", limit: 2, null: false
+    t.string "Zip", limit: 5, null: false
+    t.string "Purpose"
+    t.string "Property Owner"
+    t.date "Creation Date", null: false
+    t.decimal "Lat", null: false
+    t.decimal "Long", null: false
     t.bigint "import_id", null: false
   end
 
@@ -41,5 +41,5 @@ ActiveRecord::Schema.define(version: 0) do
   end
 
   add_foreign_key "records", "imports", name: "records_import_id_fkey"
-  add_foreign_key "records", "states", column: "state", primary_key: "short_name", name: "records_statecode_fkey"
+  add_foreign_key "records", "states", column: "State", primary_key: "short_name", name: "records_statecode_fkey"
 end

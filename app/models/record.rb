@@ -3,5 +3,5 @@ class Record < ApplicationRecord
   belongs_to :import
 
   #validation
-  validates_presence_of :name, :address, :city, :state, :zip, :purpose, :property_owner, :creation_date, :lat, :long
+  validates_presence_of :Name, :Address, :City, :State, :Zip, :Purpose, :"Property Owner", :"Creation Date", :Lat, :Long
 end
