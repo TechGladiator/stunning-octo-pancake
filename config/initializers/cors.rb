@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'http://localhost'
+    origins 'https://stunning-octo-pancake-sencha.herokuapp.com/'
 
     resource '*',
       headers: :any,
