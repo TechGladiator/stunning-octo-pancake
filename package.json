@@ -46,6 +46,6 @@
     "prettier": "^1.7.3",
     "stylelint": "^8.1.1",
     "stylelint-config-standard": "^17.0.0",
-    "webpack-dev-server": "^2.9.7"
+    "webpack-dev-server": ">=3.1.11"
   }
 }
